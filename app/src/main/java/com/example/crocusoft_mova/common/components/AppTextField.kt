@@ -32,6 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.crocusoft_mova.core.BaseTheme
@@ -57,6 +59,11 @@ fun AppTextField(
         value = value,
         onValueChange = onValueChange,
         textStyle = BaseTheme.textStyle.t14SemiBold,
+        visualTransformation =
+            if (isPasswordField && !showPassword.value)
+                PasswordVisualTransformation()
+            else
+                VisualTransformation.None,
         keyboardOptions = KeyboardOptions(
             keyboardType = if (!isPasswordField) {
                 KeyboardType.Text
