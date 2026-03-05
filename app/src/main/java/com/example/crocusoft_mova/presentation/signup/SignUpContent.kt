@@ -55,8 +55,9 @@ fun SignUpContent(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(top = BaseTheme.dimens.dp10)
                 .fillMaxSize()
+                .padding(top = BaseTheme.dimens.dp15)
+                .padding(horizontal = BaseTheme.dimens.dp4)
 
         ) {
 
@@ -115,8 +116,6 @@ fun SignUpContent(
 
             }
 
-
-            Spacer(modifier = Modifier.width(BaseTheme.dimens.dp3))
 
             AppButton(
                 action = { postIntent(SignUpContract.Intent.Submit) },

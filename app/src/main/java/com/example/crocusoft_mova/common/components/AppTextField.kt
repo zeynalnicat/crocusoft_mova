@@ -56,6 +56,7 @@ fun AppTextField(
     BasicTextField(
         value = value,
         onValueChange = onValueChange,
+        textStyle = BaseTheme.textStyle.t14SemiBold,
         keyboardOptions = KeyboardOptions(
             keyboardType = if (!isPasswordField) {
                 KeyboardType.Text
