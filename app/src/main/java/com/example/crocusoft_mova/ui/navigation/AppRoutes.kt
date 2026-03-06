@@ -1,14 +1,24 @@
 package com.example.crocusoft_mova.ui.navigation
 
-sealed class AppRoutes(val route:String) {
+import kotlinx.serialization.Serializable
 
-    data object SignUp: AppRoutes("sign-up")
+sealed interface AppRoutes {
 
-    data object SignIn: AppRoutes("sign-in")
+    @Serializable
+    data object SignUp: AppRoutes
 
-    data object SignChoice: AppRoutes("sign-choice")
+    @Serializable
+    data object SignIn: AppRoutes
 
-    data object ChooseInterest: AppRoutes("choose-interest")
 
-    data object FillProfile: AppRoutes("fill-profile")
+    @Serializable
+    data object SignChoice: AppRoutes
+
+
+    @Serializable
+    data object ChooseInterest: AppRoutes
+
+
+    @Serializable
+    data object FillProfile: AppRoutes
 }

@@ -19,37 +19,38 @@ fun MainNavHost(
 
 
     NavHost(
-        startDestination = AppRoutes.SignChoice.route,
+        startDestination = AppRoutes.SignChoice,
         navController = navController,
 
         ) {
-        composable(AppRoutes.SignUp.route) {
+        // TODO: replace with serializable data class
+        composable<AppRoutes.SignUp> {
             SignUpView(
                 innerPadding = innerPadding,
                 navController
             )
         }
-        composable(AppRoutes.SignIn.route) {
+        composable<AppRoutes.SignIn> {
             SignInView(
                 innerPadding = innerPadding,
                 navController
             )
         }
-        composable(AppRoutes.SignChoice.route) {
+        composable<AppRoutes.SignChoice> {
             LoginChoiceView(
                 paddingValues = innerPadding,
                 navController
             )
         }
 
-        composable(AppRoutes.ChooseInterest.route) {
+        composable<AppRoutes.ChooseInterest> {
             ChooseInterestView(
                 paddingValues = innerPadding,
                 navController = navController
             )
         }
 
-        composable(AppRoutes.FillProfile.route) {
+        composable<AppRoutes.FillProfile> {
             FillProfileView(
                 paddingValues = innerPadding,
                 navController = navController

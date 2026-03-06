@@ -20,9 +20,9 @@ fun SignUpView(innerPadding: PaddingValues, navController: NavController ,viewMo
         paddingValues = innerPadding,
         state = state,
         postIntent = viewModel::onIntent,
-        onNavigate = { navController.navigate(AppRoutes.SignIn.route)},
-        onNavigateBack = {navController.popBackStack()},
-        onNavigateToChooseInterest = {navController.navigate(AppRoutes.ChooseInterest.route)}  ,
+        onNavigate = { navController.navigate(AppRoutes.SignIn)},
+        onNavigateBack = {navController.popBackStack()}, // TODO: fix navigation bug
+        onNavigateToChooseInterest = {navController.navigate(AppRoutes.ChooseInterest)}  ,
         effect = viewModel.effect
 
     )

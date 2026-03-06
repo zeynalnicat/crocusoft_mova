@@ -13,7 +13,7 @@ fun LoginChoiceView(paddingValues: PaddingValues, navController: NavController) 
 
     LoginChoiceContent(
         paddingValues = paddingValues,
-        onNavigateSignIn = { navController.navigate(AppRoutes.SignIn.route) },
-        onNavigateSignUp = { navController.navigate(AppRoutes.SignUp.route) }
+        onNavigateSignIn = { navController.navigate(AppRoutes.SignIn) },
+        onNavigateSignUp = { navController.navigate(AppRoutes.SignUp) }
     )
 }

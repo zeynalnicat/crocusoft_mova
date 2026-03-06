@@ -44,7 +44,8 @@ fun AppIconButton(
          modifier = modifier
              .clip(RoundedCornerShape(BaseTheme.dimens.dp4))
              .border(
-                 border = BorderStroke(width = BaseTheme.dimens.dp01, color = colorResource(Colors.dark2))
+                 border = BorderStroke(width = BaseTheme.dimens.dp01, color = colorResource(Colors.dark2)),
+                 shape = RoundedCornerShape(BaseTheme.dimens.dp4)
              )
              .background(color = colorResource(Colors.primary))
              .padding(horizontal = BaseTheme.dimens.dp8, vertical = BaseTheme.dimens.dp4Half)

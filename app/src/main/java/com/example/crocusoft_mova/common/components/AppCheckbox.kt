@@ -32,19 +32,21 @@ fun AppCheckbox(
     Box(
         modifier = Modifier
             .size(24.dp)
-
             .clip(
-            RoundedCornerShape(BaseTheme.dimens.dp2)
+                RoundedCornerShape(BaseTheme.dimens.dp2)
             )
             .border(
-                border = BorderStroke(width = BaseTheme.dimens.dp03, color =  colorResource(Colors.secondary) )
+                border = BorderStroke(
+                    width = BaseTheme.dimens.dp03,
+                    color = colorResource(Colors.secondary),
+                ), shape = RoundedCornerShape(BaseTheme.dimens.dp2)
             )
             .background(
-                color = if(checked) colorResource(Colors.secondary) else Color.Transparent
+                color = if (checked) colorResource(Colors.secondary) else Color.Transparent,
             )
 
             .clickable(
-                onClick = { onCheckedChange(!checked)}
+                onClick = { onCheckedChange(!checked) }
             )
     ) {
         if (checked) {

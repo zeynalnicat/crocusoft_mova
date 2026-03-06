@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -53,14 +54,15 @@ fun AppTextField(
     placeholder: String = ""
 ) {
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isFocused by interactionSource.collectIsFocusedAsState()
+    val isFocused = remember { mutableStateOf(false) }
 
     val showPassword = remember { mutableStateOf(false) }
 
     BasicTextField(
         value = value,
-        interactionSource = interactionSource,
+        modifier = Modifier.onFocusChanged{
+            isFocused.value = it.isFocused
+        },
         onValueChange = onValueChange,
         textStyle = BaseTheme.textStyle.t14SemiBold,
         visualTransformation =
@@ -83,14 +85,18 @@ fun AppTextField(
                     .clip(RoundedCornerShape(BaseTheme.dimens.dp3))
                     .height(BaseTheme.dimens.dp15)
 
-                    .background(color = if (! isFocused) colorResource(Colors.dark) else  colorResource(
-                        Colors.secondary).copy(alpha = 0.1f))
+                    .background(
+                        color = if (!isFocused.value) colorResource(Colors.dark) else colorResource(
+                            Colors.secondary
+                        ).copy(alpha = 0.1f),
+                    )
                     .border(
                         border = BorderStroke(
-                            width = BaseTheme.dimens.dp02, color = if (isFocused) colorResource(
+                            width = BaseTheme.dimens.dp02, color = if (isFocused.value) colorResource(
                                 Colors.secondary
                             ) else Color.Transparent
-                        )
+                        ),
+                        shape = RoundedCornerShape(BaseTheme.dimens.dp3)
                     )
                     .fillMaxWidth()
 
@@ -102,7 +108,7 @@ fun AppTextField(
                     Icon(
                         painter = painterResource(prefixIcon),
                         contentDescription = null,
-                        tint = if (isFocused) colorResource(Colors.secondary) else colorResource(
+                        tint = if (isFocused.value) colorResource(Colors.secondary) else colorResource(
                             Colors.gray)
                     )
                     Spacer(modifier = Modifier.width(BaseTheme.dimens.dp3))
@@ -129,7 +135,7 @@ fun AppTextField(
                         Icon(
                             painter = painterResource(suffixIcon),
                             contentDescription = null,
-                            tint = if (isFocused) colorResource(Colors.secondary) else colorResource(
+                            tint = if (isFocused.value) colorResource(Colors.secondary) else colorResource(
                                 Colors.gray
                             )
                         )
