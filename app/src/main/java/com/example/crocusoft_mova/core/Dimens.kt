@@ -14,12 +14,13 @@ object Dimens {
     val sp6 = 24.sp
     val sp12 = 32.sp
 
-    val dp01 = 1.dp   // index -> x/4
+    val dp01 = 1.dp
 
+    val dp02 = 2.dp
     val dp03 = 3.dp
 
 
-    val dp1 = 4.dp
+    val dp1 = 4.dp   // index -> x/4
 
 
     val dp2 = 8.dp

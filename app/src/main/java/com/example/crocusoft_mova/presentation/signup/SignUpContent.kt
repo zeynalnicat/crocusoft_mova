@@ -1,6 +1,12 @@
 package com.example.crocusoft_mova.presentation.signup
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -126,6 +133,20 @@ fun SignUpContent(
                         text = stringResource(Strings.remember),
                         style = BaseTheme.textStyle.t14SemiBold
                     )
+                }
+            }
+
+            item{
+                AnimatedVisibility(
+                    visible = state.isLoading,
+                    enter = slideInHorizontally(
+                        initialOffsetX = {-it}
+                    ) ,
+                    exit = slideOutHorizontally (
+                        targetOffsetX = {it}
+                    )
+                ) {
+                    CircularProgressIndicator()
                 }
             }
 

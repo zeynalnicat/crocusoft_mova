@@ -18,7 +18,8 @@ sealed interface SignUpContract {
     data class State(
         val email: String = "",
         val password: String = "",
-        val checked: Boolean = false
+        val checked: Boolean = false,
+        val isLoading: Boolean = false,
 
     )
 }

@@ -1,5 +1,7 @@
 package com.example.crocusoft_mova.presentation.signup
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +29,21 @@ class SignUpViewModel : ViewModel() {
                     _state.emit(_state.value.copy(password = intent.password))
                 }
             }
-            SignUpContract.Intent.Submit -> {}
+            SignUpContract.Intent.Submit -> {
+                viewModelScope.launch {
+                    _state.emit(_state.value.copy(isLoading = true))
+
+                    Handler(Looper.getMainLooper()).postDelayed(
+                        {
+
+                        },2000
+                    )
+                    _state.emit(_state.value.copy(isLoading = false))
+
+                }
+
+
+            }
             is SignUpContract.Intent.SetChecked -> {
                 viewModelScope.launch {
                     _state.emit(_state.value.copy(checked = intent.checked))

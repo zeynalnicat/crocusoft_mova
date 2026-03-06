@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -57,6 +58,7 @@ fun AppTextField(
 
     BasicTextField(
         value = value,
+        interactionSource = interactionSource,
         onValueChange = onValueChange,
         textStyle = BaseTheme.textStyle.t14SemiBold,
         visualTransformation =
@@ -76,17 +78,21 @@ fun AppTextField(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
+                    .clip(RoundedCornerShape(BaseTheme.dimens.dp3))
                     .height(BaseTheme.dimens.dp15)
+
+                    .background(color = if (! isFocused) colorResource(Colors.dark) else  colorResource(
+                        Colors.secondary).copy(alpha = 0.1f))
                     .border(
                         border = BorderStroke(
-                            width = BaseTheme.dimens.dp01, color = if (isFocused) colorResource(
+                            width = BaseTheme.dimens.dp02, color = if (isFocused) colorResource(
                                 Colors.secondary
                             ) else Color.Transparent
                         )
                     )
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(BaseTheme.dimens.dp3))
-                    .background(colorResource(Colors.dark))
+
+
                     .padding(horizontal = BaseTheme.dimens.dp2, vertical = BaseTheme.dimens.dp1)
             ) {
 
