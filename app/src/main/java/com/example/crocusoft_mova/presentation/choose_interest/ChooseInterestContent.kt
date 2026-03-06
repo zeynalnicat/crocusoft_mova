@@ -62,7 +62,7 @@ fun ChooseInterestContent(
             Column(
                 verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp4),
                 modifier = Modifier
-                    .padding(BaseTheme.dimens.dp4)
+                    .padding(vertical = BaseTheme.dimens.dp10)
                     .fillMaxSize()
             ) {
 

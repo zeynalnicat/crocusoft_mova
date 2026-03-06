@@ -8,7 +8,7 @@ object Dimens {
     val image_height = 200.dp
     val image_width = 380.dp
 
-    val min_width = 80.dp
+    val min_width = 90.dp
 
     val radius = 100.dp
 
