@@ -8,6 +8,12 @@ sealed class ChooseInterestContract {
         data class ToggleTag(val tagEntity: TagEntity):Intent
 
         data object FetchTags: Intent
+
+        data object Continue: Intent
+    }
+
+    sealed interface Effect {
+        data object NavigateFillProfile: Effect
     }
 
     data class State(

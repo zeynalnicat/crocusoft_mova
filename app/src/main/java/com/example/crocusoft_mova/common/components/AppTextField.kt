@@ -47,7 +47,9 @@ fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     prefixIcon: Int? = null,
+    suffixIcon: Int = Drawables.hide,
     isPasswordField: Boolean = false,
+    requiredSuffixIcon: Boolean = false,
     placeholder: String = ""
 ) {
 
@@ -118,14 +120,14 @@ fun AppTextField(
                     innerTextField()
                 }
 
-                if (isPasswordField) {
+                if (isPasswordField || requiredSuffixIcon) {
                     Spacer(modifier = Modifier.width(BaseTheme.dimens.dp3))
 
                     IconButton(
-                        onClick = { showPassword.value = !showPassword.value }
+                        onClick = { if(isPasswordField) showPassword.value = !showPassword.value }
                     ) {
                         Icon(
-                            painter = painterResource(Drawables.hide),
+                            painter = painterResource(suffixIcon),
                             contentDescription = null,
                             tint = if (isFocused) colorResource(Colors.secondary) else colorResource(
                                 Colors.gray

@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.crocusoft_mova.presentation.choose_interest.ChooseInterestView
+import com.example.crocusoft_mova.presentation.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.signin.SignInView
 import com.example.crocusoft_mova.presentation.signup.SignUpView
@@ -44,7 +45,14 @@ fun MainNavHost(
         composable(AppRoutes.ChooseInterest.route) {
             ChooseInterestView(
                 paddingValues = innerPadding,
-                navController= navController
+                navController = navController
+            )
+        }
+
+        composable(AppRoutes.FillProfile.route) {
+            FillProfileView(
+                paddingValues = innerPadding,
+                navController = navController
             )
         }
     }

@@ -23,4 +23,9 @@
 
     <string name="skip">Skip</string>
     <string name="btn_continue">Continue</string>
+    <string name="fill_profile">Fill Your Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="nick_name">Nickname</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="gender">Gender</string>
 </resources>

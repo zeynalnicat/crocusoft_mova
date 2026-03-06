@@ -9,4 +9,6 @@ sealed class AppRoutes(val route:String) {
     data object SignChoice: AppRoutes("sign-choice")
 
     data object ChooseInterest: AppRoutes("choose-interest")
+
+    data object FillProfile: AppRoutes("fill-profile")
 }

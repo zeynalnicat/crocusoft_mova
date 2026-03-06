@@ -5,6 +5,8 @@ import androidx.compose.ui.unit.sp
 
 object Dimens {
 
+
+    val avatar_size = 140.dp
     val image_height = 200.dp
     val image_width = 380.dp
 

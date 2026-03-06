@@ -22,7 +22,9 @@ fun ChooseInterestView(
         innerPaddingValues = paddingValues,
         onNavigateBack = { navController.navigate(AppRoutes.ChooseInterest.route) },
         state = state,
-        postIntent = viewModel::onIntent
+        postIntent = viewModel::onIntent,
+        effect = viewModel.effect,
+        onNavigateFillProfile = {navController.navigate(AppRoutes.FillProfile.route)}
     )
 
 }

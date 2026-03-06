@@ -27,6 +27,7 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Strings
 import com.example.crocusoft_mova.presentation.choose_interest.components.TagChipList
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -34,9 +35,19 @@ import com.example.crocusoft_mova.presentation.choose_interest.components.TagChi
 fun ChooseInterestContent(
     innerPaddingValues: PaddingValues,
     onNavigateBack: () -> Unit,
+    onNavigateFillProfile: () -> Unit,
     postIntent: (ChooseInterestContract.Intent) -> Unit,
     state: ChooseInterestContract.State,
+    effect: SharedFlow<ChooseInterestContract.Effect>
 ) {
+
+    LaunchedEffect(effect) {
+        effect.collect {
+            when (it) {
+                ChooseInterestContract.Effect.NavigateFillProfile -> onNavigateFillProfile()
+            }
+        }
+    }
 
 
     LaunchedEffect(Unit) {
@@ -86,14 +97,14 @@ fun ChooseInterestContent(
             ) {
                 AppButton(
                     modifier = Modifier.weight(1f),
-                    action = {},
+                    action = onNavigateFillProfile,
                     text = stringResource(Strings.skip),
                     color = colorResource(Colors.dark2)
                 )
 
                 AppButton(
                     modifier = Modifier.weight(1f),
-                    action = {},
+                    action = { postIntent(ChooseInterestContract.Intent.Continue) },
                     text = stringResource(Strings.btn_continue),
                     color = colorResource(Colors.secondary)
                 )
