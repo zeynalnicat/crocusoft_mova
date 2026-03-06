@@ -5,14 +5,20 @@ import androidx.compose.ui.unit.sp
 
 object Dimens {
 
+    val image_height = 200.dp
+    val image_width = 380.dp
 
     val sp0 = 12.sp // formula : index -> x - 12 /2
 
     val sp1 = 14.sp
     val sp2 = 16.sp
 
+    val sp3 = 18.sp
+
     val sp6 = 24.sp
     val sp12 = 32.sp
+
+    val sp18 = 48.sp
 
     val dp01 = 1.dp
 

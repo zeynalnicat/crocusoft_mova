@@ -36,6 +36,7 @@ import com.example.crocusoft_mova.common.components.AppCheckbox
 import com.example.crocusoft_mova.common.components.AppIconButton
 import com.example.crocusoft_mova.common.components.AppTextField
 import com.example.crocusoft_mova.common.components.AppTopBar
+import com.example.crocusoft_mova.common.components.SignContent
 import com.example.crocusoft_mova.core.BaseTextStyle
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
@@ -49,168 +50,26 @@ import com.example.crocusoft_mova.presentation.signup.components.SignUpWithList
 fun SignUpContent(
     paddingValues: PaddingValues,
     state: SignUpContract.State,
-    postIntent: (SignUpContract.Intent) -> Unit
+    onNavigate: ()-> Unit,
+    postIntent: (SignUpContract.Intent) -> Unit,
+    onNavigateBack: () -> Unit,
 ) {
 
-    Scaffold(
-        topBar = {
-            AppTopBar(prefixAction = {})
-        },
-        containerColor = colorResource(Colors.primary),
-        modifier = Modifier
-            .padding(paddingValues)
-            .fillMaxSize()
-    ) {
+    SignContent(
+        paddingValues = paddingValues,
+        email = state.email,
+        password = state.password,
+        onEmailChange = {postIntent(SignUpContract.Intent.SetEmail(it))},
+        onPasswordChange = {postIntent(SignUpContract.Intent.SetPassword(it))},
+        onSetChecked = {postIntent(SignUpContract.Intent.SetChecked(it))},
+        onSubmit = {postIntent(SignUpContract.Intent.Submit)},
+        isLoading = state.isLoading,
+        checked = state.checked,
+        isSignUp = true,
+        onNavigate = onNavigate,
+        onNavigateBack = onNavigateBack
 
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = BaseTheme.dimens.dp5),
-        ) {
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp12)) }
-
-            item {
-                Icon(
-                    painter = painterResource(Drawables.logo),
-                    contentDescription = null,
-                    tint = colorResource(Colors.secondary),
-                )
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
-
-            item {
-                Text(
-                    text = stringResource(Strings.createAccount),
-                    style = BaseTextStyle.t36Bold
-                )
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp8)) }
-
-            item {
-                AppTextField(
-                    prefixIcon = Drawables.inbox,
-                    value = state.email,
-                    onValueChange = {
-                        postIntent(SignUpContract.Intent.SetEmail(it))
-                    },
-                    placeholder = stringResource(Strings.email)
-                )
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp4)) }
-
-            item {
-                AppTextField(
-                    prefixIcon = Drawables.lock,
-                    value = state.password,
-                    onValueChange = {
-                        postIntent(SignUpContract.Intent.SetPassword(it))
-                    },
-                    isPasswordField = true,
-                    placeholder = stringResource(Strings.password)
-                )
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp5)) }
-
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    AppCheckbox(
-                        checked = state.checked
-                    ) {
-                        postIntent(SignUpContract.Intent.SetChecked(it))
-                    }
-
-                    Spacer(Modifier.width(BaseTheme.dimens.dp3))
-
-                    Text(
-                        text = stringResource(Strings.remember),
-                        style = BaseTheme.textStyle.t14SemiBold
-                    )
-                }
-            }
-
-            item{
-                AnimatedVisibility(
-                    visible = state.isLoading,
-                    enter = slideInHorizontally(
-                        initialOffsetX = {  -it*3 }
-                    ) + fadeIn() ,
-                    exit = slideOutHorizontally (
-                        targetOffsetX = {it*2}
-                    ) + fadeOut()
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
-
-            item {
-                AppButton(
-                    action = { postIntent(SignUpContract.Intent.Submit) },
-                    text = stringResource(Strings.sign_up),
-                )
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
-
-            item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        thickness = 1.dp,
-                    )
-
-                    Text(
-                        text = " or continue with ",
-                        style = BaseTheme.textStyle.t14SemiBold
-                    )
-
-                    HorizontalDivider(
-                        modifier = Modifier.weight(1f),
-                        color = colorResource(Colors.gray).copy(alpha = 0.4f)
-                    )
-                }
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
-
-            item {
-                SignUpWithList()
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
-
-            item {
-                Row {
-                    Text(
-                        text =  stringResource(Strings.already),
-                        style = BaseTheme.textStyle.t14SemiBold
-                    )
-
-                    Text(
-                        text = stringResource(Strings.sign_in),
-                        color = colorResource(Colors.secondary),
-                        style = BaseTheme.textStyle.t14SemiBold
-                    )
-                }
-            }
-
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp10)) }
-        }
-    }
+    )
 }
 
 

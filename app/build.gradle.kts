@@ -66,4 +66,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose.v280)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Navigation
+
+
+    implementation(libs.androidx.navigation.compose)
+
 }

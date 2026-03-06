@@ -7,4 +7,15 @@
     <string name="password"> Password </string>
     <string name="already">Already have an account?</string>
     <string name="sign_in">Sign in</string>
+    <string name="login">Login to Your Account</string>
+    <string name="donthave">Don’t have an account?</string>
+    <string name="forgot">Forgot the password?</string>
+    <string name="welcome">Welcome to Mova</string>
+    <string name="splash_description">The best movie streaming app of the century to make your days great!</string>
+    <string name="get_started">Get Started</string>
+    <string name="lets_in">Let’s you in</string>
+    <string name="continue_facebook">Continue with Facebook</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="continue_apple">Continue with Apple</string>
+    <string name="sign_password">Sign in with password</string>
 </resources>
