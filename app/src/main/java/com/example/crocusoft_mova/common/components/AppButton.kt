@@ -8,6 +8,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.crocusoft_mova.core.BaseTheme
@@ -16,17 +17,17 @@ import com.example.crocusoft_mova.core.Colors
 
 @Composable
 fun AppButton(
+    modifier: Modifier = Modifier.fillMaxWidth(),
     action: ()->Unit,
     text:String,
-
+    color: Color = colorResource(Colors.secondary)
 ){
 
     Button(
-        modifier = Modifier.fillMaxWidth()
-        ,
+        modifier = modifier,
         shape = RoundedCornerShape(BaseTheme.dimens.dp4),
         colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(Colors.secondary)
+            containerColor = color
         )
         ,
         onClick = action

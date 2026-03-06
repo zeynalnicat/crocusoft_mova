@@ -2,8 +2,9 @@ package com.example.crocusoft_mova.presentation.signin
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.example.crocusoft_mova.common.components.SignContent
-import com.example.crocusoft_mova.core.Strings
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @Composable
@@ -11,9 +12,19 @@ fun SignInContent(
     paddingValues: PaddingValues,
     postIntent: (SignInContract.Intent)->Unit,
     state: SignInContract.State,
+    effect: SharedFlow<SignInContract.UiEffect>,
     onNavigate: ()->Unit,
     onNavigateBack: ()->Unit,
+    onNavigateToChooseInterest: ()->Unit,
 ){
+
+    LaunchedEffect(effect) {
+        effect.collect {
+            when(it){
+                SignInContract.UiEffect.NavigateToChoose -> onNavigateToChooseInterest()
+            }
+        }
+    }
 
     SignContent(
         paddingValues = paddingValues,
@@ -27,6 +38,7 @@ fun SignInContent(
         checked = state.checked,
         onNavigate = onNavigate,
         isSignUp = false,
-        onNavigateBack = onNavigateBack
+        onNavigateBack = onNavigateBack,
+        onNavigateToChooseInterest = onNavigateToChooseInterest
     )
 }

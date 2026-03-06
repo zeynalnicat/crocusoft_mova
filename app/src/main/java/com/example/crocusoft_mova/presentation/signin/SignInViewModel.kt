@@ -2,14 +2,19 @@ package com.example.crocusoft_mova.presentation.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.crocusoft_mova.presentation.signup.SignUpContract
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SignInViewModel: ViewModel() {
 
     private val _state = MutableStateFlow(SignInContract.State())
+
+    private val _effect = MutableSharedFlow<SignInContract.UiEffect>()
+
+    val effect = _effect.asSharedFlow()
 
     val state = _state.asStateFlow()
 
@@ -29,7 +34,7 @@ class SignInViewModel: ViewModel() {
             SignInContract.Intent.Submit -> {
                 viewModelScope.launch {
                     _state.emit(_state.value.copy(isLoading = !_state.value.isLoading))
-
+                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
 
                 }
 

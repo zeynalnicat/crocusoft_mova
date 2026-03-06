@@ -10,7 +10,11 @@ import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 
 @Composable
-fun SignInView(innerPadding: PaddingValues, navController: NavController,viewModel: SignInViewModel = hiltViewModel()) {
+fun SignInView(
+    innerPadding: PaddingValues,
+    navController: NavController,
+    viewModel: SignInViewModel = hiltViewModel()
+) {
 
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -19,7 +23,9 @@ fun SignInView(innerPadding: PaddingValues, navController: NavController,viewMod
         postIntent = viewModel::onIntent,
         state = state,
         paddingValues = innerPadding,
-        onNavigate = {navController.navigate(AppRoutes.SignUp.route)},
-        onNavigateBack = {navController.popBackStack()}
+        onNavigate = { navController.navigate(AppRoutes.SignUp.route) },
+        onNavigateBack = { navController.popBackStack() },
+        onNavigateToChooseInterest = { navController.navigate(AppRoutes.ChooseInterest.route) },
+        effect = viewModel.effect
     )
 }

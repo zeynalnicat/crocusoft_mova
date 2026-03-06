@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -43,6 +44,7 @@ import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
 import com.example.crocusoft_mova.presentation.signup.components.SignUpWithList
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -53,7 +55,17 @@ fun SignUpContent(
     onNavigate: ()-> Unit,
     postIntent: (SignUpContract.Intent) -> Unit,
     onNavigateBack: () -> Unit,
+    onNavigateToChooseInterest: ()->Unit,
+    effect: SharedFlow<SignUpContract.UiEffect>
 ) {
+
+    LaunchedEffect(effect) {
+        effect.collect {
+            when(it){
+                SignUpContract.UiEffect.NavigateToChoose -> onNavigateToChooseInterest()
+            }
+        }
+    }
 
     SignContent(
         paddingValues = paddingValues,
@@ -67,7 +79,8 @@ fun SignUpContent(
         checked = state.checked,
         isSignUp = true,
         onNavigate = onNavigate,
-        onNavigateBack = onNavigateBack
+        onNavigateBack = onNavigateBack,
+        onNavigateToChooseInterest = onNavigateToChooseInterest
 
     )
 }

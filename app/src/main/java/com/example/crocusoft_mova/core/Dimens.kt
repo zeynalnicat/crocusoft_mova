@@ -8,6 +8,10 @@ object Dimens {
     val image_height = 200.dp
     val image_width = 380.dp
 
+    val min_width = 80.dp
+
+    val radius = 100.dp
+
     val sp0 = 12.sp // formula : index -> x - 12 /2
 
     val sp1 = 14.sp

@@ -21,7 +21,10 @@ fun SignUpView(innerPadding: PaddingValues, navController: NavController ,viewMo
         state = state,
         postIntent = viewModel::onIntent,
         onNavigate = { navController.navigate(AppRoutes.SignIn.route)},
-        onNavigateBack = {navController.popBackStack()}
+        onNavigateBack = {navController.popBackStack()},
+        onNavigateToChooseInterest = {navController.navigate(AppRoutes.ChooseInterest.route)}  ,
+        effect = viewModel.effect
+
     )
 }
 

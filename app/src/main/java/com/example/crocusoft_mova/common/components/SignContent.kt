@@ -51,7 +51,9 @@ fun SignContent(
     isLoading: Boolean,
     checked: Boolean,
     isSignUp: Boolean = true,
+    onNavigateToChooseInterest: ()->Unit,
     onNavigateBack: () -> Unit = {},
+
 
 
     ) {

@@ -15,6 +15,10 @@ sealed interface SignUpContract {
 
     }
 
+    sealed interface UiEffect {
+        data object NavigateToChoose: UiEffect
+    }
+
     data class State(
         val email: String = "",
         val password: String = "",

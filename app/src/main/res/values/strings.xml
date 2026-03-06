@@ -18,4 +18,9 @@
     <string name="continue_google">Continue with Google</string>
     <string name="continue_apple">Continue with Apple</string>
     <string name="sign_password">Sign in with password</string>
+    <string name="choose_interest">Choose Your Interest</string>
+    <string name="choose_interest_description">Choose your interests and get the best movie recommendations. Don\'t worry, you can always change it later.</string>
+
+    <string name="skip">Skip</string>
+    <string name="btn_continue">Continue</string>
 </resources>

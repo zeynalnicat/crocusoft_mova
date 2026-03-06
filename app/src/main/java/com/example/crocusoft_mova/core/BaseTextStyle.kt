@@ -27,6 +27,12 @@ object BaseTextStyle {
         fontWeight = FontWeight.W700
     )
 
+    val t16BoldRed = TextStyle(
+        color = Red,
+        fontSize = BaseTheme.dimens.sp2,
+        fontWeight = FontWeight.W700
+    )
+
     val t16SemiBoldRed = TextStyle(
         color = Red,
         fontSize = BaseTheme.dimens.sp2,
