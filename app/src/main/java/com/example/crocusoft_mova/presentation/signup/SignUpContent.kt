@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.signup
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -140,11 +141,11 @@ fun SignUpContent(
                 AnimatedVisibility(
                     visible = state.isLoading,
                     enter = slideInHorizontally(
-                        initialOffsetX = {-it}
-                    ) ,
+                        initialOffsetX = {  -it*3 }
+                    ) + fadeIn() ,
                     exit = slideOutHorizontally (
-                        targetOffsetX = {it}
-                    )
+                        targetOffsetX = {it*2}
+                    ) + fadeOut()
                 ) {
                     CircularProgressIndicator()
                 }

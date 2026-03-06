@@ -31,14 +31,8 @@ class SignUpViewModel : ViewModel() {
             }
             SignUpContract.Intent.Submit -> {
                 viewModelScope.launch {
-                    _state.emit(_state.value.copy(isLoading = true))
+                    _state.emit(_state.value.copy(isLoading = !_state.value.isLoading))
 
-                    Handler(Looper.getMainLooper()).postDelayed(
-                        {
-
-                        },2000
-                    )
-                    _state.emit(_state.value.copy(isLoading = false))
 
                 }
 
