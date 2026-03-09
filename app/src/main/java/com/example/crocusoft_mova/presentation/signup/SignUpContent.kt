@@ -80,7 +80,6 @@ fun SignUpContent(
         isSignUp = true,
         onNavigate = onNavigate,
         onNavigateBack = onNavigateBack,
-        onNavigateToChooseInterest = onNavigateToChooseInterest
 
     )
 }

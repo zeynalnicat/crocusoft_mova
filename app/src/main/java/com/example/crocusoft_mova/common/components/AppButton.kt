@@ -1,10 +1,16 @@
 package com.example.crocusoft_mova.common.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,24 +24,41 @@ import com.example.crocusoft_mova.core.Colors
 @Composable
 fun AppButton(
     modifier: Modifier = Modifier.fillMaxWidth(),
-    action: ()->Unit,
-    text:String,
+    action: () -> Unit,
+    isLoading: Boolean = false,
+    text: String,
     color: Color = colorResource(Colors.secondary)
-){
+) {
 
     Button(
         modifier = modifier,
         shape = RoundedCornerShape(BaseTheme.dimens.dp4),
         colors = ButtonDefaults.buttonColors(
             containerColor = color
-        )
-        ,
+        ),
         onClick = action
     ) {
-        Text(
-            text = text,
-            style = BaseTheme.textStyle.t16Bold
-        )
+        AnimatedVisibility(
+            visible = isLoading,
+            enter = slideInHorizontally(
+                initialOffsetX = { -it * 3 }
+            ) + fadeIn(),
+            exit = slideOutHorizontally(
+                targetOffsetX = { it * 2 }
+            ) + fadeOut()
+        ) {
+            CircularProgressIndicator()
+
+        }
+
+        if (!isLoading)
+
+            Text(
+                text = text,
+                style = BaseTheme.textStyle.t16Bold
+            )
+
+
     }
 
 }
@@ -43,7 +66,7 @@ fun AppButton(
 
 @Preview
 @Composable
-fun AppButtonPreview(){
+fun AppButtonPreview() {
 
     AppButton(
         action = {},

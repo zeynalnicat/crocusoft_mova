@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -51,12 +54,15 @@ fun SignContent(
     isLoading: Boolean,
     checked: Boolean,
     isSignUp: Boolean = true,
-    onNavigateToChooseInterest: ()->Unit,
     onNavigateBack: () -> Unit = {},
 
 
 
     ) {
+
+    val scrollState = rememberScrollState()
+
+
 
     Scaffold(
         topBar = {
@@ -68,46 +74,45 @@ fun SignContent(
             .fillMaxSize()
     ) {
 
-        LazyColumn(
+        Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(horizontal = BaseTheme.dimens.dp5),
         ) {
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp12)) }
+           Spacer(Modifier.height(BaseTheme.dimens.dp12))
 
-            item {
+
                 Icon(
                     painter = painterResource(Drawables.logo),
                     contentDescription = null,
                     tint = colorResource(Colors.secondary),
                 )
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
 
-            item {
+            Spacer(Modifier.height(BaseTheme.dimens.dp6))
+
+
                 Text(
                     text = stringResource(if (isSignUp) Strings.createAccount else Strings.login),
                     style = BaseTextStyle.t36Bold
                 )
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp8)) }
 
-            item {
+           Spacer(Modifier.height(BaseTheme.dimens.dp8))
+
                 AppTextField(
                     prefixIcon = Drawables.inbox,
                     value = email,
                     onValueChange = onEmailChange,
                     placeholder = stringResource(Strings.email)
                 )
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp4)) }
 
-            item {
+          Spacer(Modifier.height(BaseTheme.dimens.dp4))
+
                 AppTextField(
                     prefixIcon = Drawables.lock,
                     value = password,
@@ -115,11 +120,11 @@ fun SignContent(
                     isPasswordField = true,
                     placeholder = stringResource(Strings.password)
                 )
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp5)) }
 
-            item {
+             Spacer(Modifier.height(BaseTheme.dimens.dp5))
+
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -137,68 +142,54 @@ fun SignContent(
                         style = BaseTheme.textStyle.t14SemiBold
                     )
                 }
-            }
 
-            item {
-                AnimatedVisibility(
-                    visible = isLoading,
-                    enter = slideInHorizontally(
-                        initialOffsetX = { -it * 3 }
-                    ) + fadeIn(),
-                    exit = slideOutHorizontally(
-                        targetOffsetX = { it * 2 }
-                    ) + fadeOut()
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
+            Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
-            item {
+
                 AppButton(
+                    isLoading = isLoading,
                     action = onSubmit,
                     text = stringResource(if (isSignUp) Strings.sign_up else Strings.sign_in),
                 )
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
+
+            Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
             if (!isSignUp) {
-                item {
+
                     Text(
                         text = stringResource(Strings.forgot),
                         style = BaseTheme.textStyle.t16SemiBoldRed
                     )
-                }
 
-                item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
+
+                Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
             }
 
 
-            item {
+
                 DividerWithText(" or continue with ")
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
 
-            item {
+             Spacer(Modifier.height(BaseTheme.dimens.dp6))
+
+
                 SignUpWithList()
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp6)) }
 
-            item {
+            Spacer(Modifier.height(BaseTheme.dimens.dp6))
+
+
                  ClickableText(
                      preText = stringResource(if (isSignUp) Strings.already else Strings.donthave),
                      sufText = stringResource(if (isSignUp) Strings.sign_in else Strings.sign_up)
                  ) {
                      onNavigate()
                  }
-            }
 
-            item { Spacer(Modifier.height(BaseTheme.dimens.dp10)) }
+            Spacer(Modifier.height(BaseTheme.dimens.dp10))
         }
     }
 }

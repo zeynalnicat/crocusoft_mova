@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -34,7 +35,9 @@ class SignInViewModel: ViewModel() {
             SignInContract.Intent.Submit -> {
                 viewModelScope.launch {
                     _state.emit(_state.value.copy(isLoading = !_state.value.isLoading))
+                    delay(3000)
                     _effect.emit(SignInContract.UiEffect.NavigateToChoose)
+                    _state.emit(_state.value.copy(isLoading = !_state.value.isLoading))
 
                 }
 

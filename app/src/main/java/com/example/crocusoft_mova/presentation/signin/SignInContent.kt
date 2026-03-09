@@ -39,6 +39,5 @@ fun SignInContent(
         onNavigate = onNavigate,
         isSignUp = false,
         onNavigateBack = onNavigateBack,
-        onNavigateToChooseInterest = onNavigateToChooseInterest
     )
 }
