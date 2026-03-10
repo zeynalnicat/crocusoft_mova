@@ -36,8 +36,8 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
-import com.example.crocusoft_mova.presentation.signup.SignUpContract
-import com.example.crocusoft_mova.presentation.signup.components.SignUpWithList
+import com.example.crocusoft_mova.presentation.auth.signup.SignUpContract
+import com.example.crocusoft_mova.presentation.auth.signup.components.SignUpWithList
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -176,7 +176,7 @@ fun SignContent(
              Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
 
-                SignUpWithList()
+            _root_ide_package_.com.example.crocusoft_mova.presentation.auth.signup.components.SignUpWithList()
 
 
             Spacer(Modifier.height(BaseTheme.dimens.dp6))

@@ -5,12 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.crocusoft_mova.presentation.choose_interest.ChooseInterestView
-import com.example.crocusoft_mova.presentation.create_new_pin.CreateNewPin
-import com.example.crocusoft_mova.presentation.fill_profile.FillProfileView
-import com.example.crocusoft_mova.presentation.login_choice.LoginChoiceView
-import com.example.crocusoft_mova.presentation.signin.SignInView
-import com.example.crocusoft_mova.presentation.signup.SignUpView
+import com.example.crocusoft_mova.presentation.auth.choose_interest.ChooseInterestView
+import com.example.crocusoft_mova.presentation.auth.create_new_pin.CreateNewPin
+import com.example.crocusoft_mova.presentation.auth.fill_profile.FillProfileView
+import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
+import com.example.crocusoft_mova.presentation.auth.signin.SignInView
+import com.example.crocusoft_mova.presentation.auth.signup.SignUpView
 
 @Composable
 fun MainNavHost(
@@ -24,7 +24,6 @@ fun MainNavHost(
         navController = navController,
 
         ) {
-        // TODO: replace with serializable data class
         composable<AppRoutes.SignUp> {
             SignUpView(
                 innerPadding = innerPadding,
