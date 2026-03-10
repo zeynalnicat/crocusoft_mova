@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.crocusoft_mova.presentation.choose_interest.ChooseInterestView
+import com.example.crocusoft_mova.presentation.create_new_pin.CreateNewPin
 import com.example.crocusoft_mova.presentation.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.signin.SignInView
@@ -53,6 +54,13 @@ fun MainNavHost(
         composable<AppRoutes.FillProfile> {
             FillProfileView(
                 paddingValues = innerPadding,
+                navController = navController
+            )
+        }
+
+        composable<AppRoutes.NewPin> {
+            CreateNewPin(
+                innerPaddingValues = innerPadding,
                 navController = navController
             )
         }

@@ -4,7 +4,9 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -13,6 +15,10 @@ class FillProfileViewModel: ViewModel() {
     private val _state = MutableStateFlow(FillProfileContract.State())
 
     val state = _state.asStateFlow()
+
+    private val _effect = MutableSharedFlow<FillProfileContract.Effect>()
+
+    val effect = _effect.asSharedFlow()
 
     fun onIntent(intent: FillProfileContract.Intent){
         when(intent){
@@ -46,6 +52,18 @@ class FillProfileViewModel: ViewModel() {
             is FillProfileContract.Intent.SetProfile -> {
                 viewModelScope.launch {
                     _state.emit(_state.value.copy(imgUri = intent.uri))
+                }
+            }
+
+            FillProfileContract.Intent.Submit -> {
+                viewModelScope.launch {
+                    _effect.emit(FillProfileContract.Effect.NavigatePin)
+                }
+            }
+
+            FillProfileContract.Intent.Skip -> {
+                viewModelScope.launch {
+                    _effect.emit(FillProfileContract.Effect.NavigatePin)
                 }
             }
         }

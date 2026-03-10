@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 sealed interface AppRoutes {
 
     @Serializable
+    data object NewPin: AppRoutes
+
+    @Serializable
     data object SignUp: AppRoutes
 
     @Serializable

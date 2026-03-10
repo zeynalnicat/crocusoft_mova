@@ -28,4 +28,7 @@
     <string name="nick_name">Nickname</string>
     <string name="phone_number">Phone Number</string>
     <string name="gender">Gender</string>
+    <string name="create_new_pin">Create New PIN</string>
+    <string name="new_pin_description">Add a PIN number to make your account
+more secure.</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -27,6 +28,7 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
+import kotlinx.coroutines.flow.SharedFlow
 import java.security.Key
 
 
@@ -36,10 +38,20 @@ fun FillProfileContent(
     paddingValues: PaddingValues,
     state: FillProfileContract.State,
     postIntent: (FillProfileContract.Intent) -> Unit,
+    effect: SharedFlow<FillProfileContract.Effect>,
     onNavigateBack : ()->Unit,
+    onNavigatePin: ()->Unit,
 ) {
 
     val scrollState = rememberScrollState()
+
+    LaunchedEffect(effect) {
+        effect.collect {
+            when(it){
+                FillProfileContract.Effect.NavigatePin -> onNavigatePin()
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier.padding(paddingValues),
@@ -102,14 +114,18 @@ fun FillProfileContent(
             ) {
                 AppButton(
                     modifier = Modifier.weight(1f),
-                    action = {},
+                    action = {
+                        postIntent(FillProfileContract.Intent.Skip)
+                    },
                     text = stringResource(Strings.skip),
                     color = colorResource(Colors.dark2)
                 )
 
                 AppButton(
                     modifier = Modifier.weight(1f),
-                    action = {},
+                    action = {
+                        postIntent(FillProfileContract.Intent.Submit)
+                    },
                     text = stringResource(Strings.btn_continue),
                     color = colorResource(Colors.secondary)
                 )

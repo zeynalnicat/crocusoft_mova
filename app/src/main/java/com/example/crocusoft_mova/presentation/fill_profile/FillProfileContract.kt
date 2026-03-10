@@ -12,7 +12,17 @@ sealed interface FillProfileContract {
         data class SetGender(val gender:String):Intent
 
         data class SetProfile(val uri:Uri):Intent
+
+        data object Submit: Intent
+
+        data object Skip:Intent
     }
+
+
+    sealed interface Effect {
+        data object NavigatePin: Effect
+    }
+
 
 
     data class State(

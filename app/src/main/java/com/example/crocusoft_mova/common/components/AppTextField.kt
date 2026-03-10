@@ -50,10 +50,12 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     prefixIcon: Int? = null,
     suffixIcon: Int = Drawables.hide,
+    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordField: Boolean = false,
     requiredSuffixIcon: Boolean = false,
-    placeholder: String = ""
+    placeholder: String = "",
+    isPin: Boolean = false,
 ) {
 
     val isFocused = remember { mutableStateOf(false) }
@@ -62,7 +64,7 @@ fun AppTextField(
 
     BasicTextField(
         value = value,
-        modifier = Modifier.onFocusChanged{
+        modifier = modifier.onFocusChanged{
             isFocused.value = it.isFocused
         },
         onValueChange = onValueChange,
@@ -128,7 +130,7 @@ fun AppTextField(
                     innerTextField()
                 }
 
-                if (isPasswordField || requiredSuffixIcon) {
+                if ((isPasswordField || requiredSuffixIcon) && !isPin ) {
                     Spacer(modifier = Modifier.width(BaseTheme.dimens.dp3))
 
                     IconButton(

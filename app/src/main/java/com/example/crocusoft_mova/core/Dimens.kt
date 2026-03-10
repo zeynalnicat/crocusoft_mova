@@ -57,5 +57,7 @@ object Dimens {
 
     val dp15 = 60.dp
 
+    val dp16 = 64.dp
+
 
 }
