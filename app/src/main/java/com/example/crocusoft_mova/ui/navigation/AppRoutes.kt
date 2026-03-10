@@ -4,24 +4,35 @@ import kotlinx.serialization.Serializable
 
 sealed interface AppRoutes {
 
-    @Serializable
-    data object NewPin: AppRoutes
 
-    @Serializable
-    data object SignUp: AppRoutes
+    sealed interface AuthRoute {
+        @Serializable
+        data object NewPin: AuthRoute
 
-    @Serializable
-    data object SignIn: AppRoutes
+        @Serializable
+        data object SignUp: AuthRoute
 
-
-    @Serializable
-    data object SignChoice: AppRoutes
+        @Serializable
+        data object SignIn: AuthRoute
 
 
-    @Serializable
-    data object ChooseInterest: AppRoutes
+        @Serializable
+        data object SignChoice: AuthRoute
 
 
-    @Serializable
-    data object FillProfile: AppRoutes
+        @Serializable
+        data object ChooseInterest: AuthRoute
+
+
+        @Serializable
+        data object FillProfile: AuthRoute
+    }
+
+    sealed interface DashboardRoute{
+        @Serializable
+        data object Home:DashboardRoute
+    }
+
+
+
 }

@@ -11,55 +11,57 @@ import com.example.crocusoft_mova.presentation.auth.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.auth.signin.SignInView
 import com.example.crocusoft_mova.presentation.auth.signup.SignUpView
+import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 
 @Composable
-fun MainNavHost(
+fun AuthRoutes(
     innerPadding: PaddingValues,
     navController: NavHostController,
 ) {
 
 
     NavHost(
-        startDestination = AppRoutes.SignChoice,
+        startDestination = AppRoutes.AuthRoute.SignChoice,
         navController = navController,
 
         ) {
-        composable<AppRoutes.SignUp> {
+        composable<AppRoutes.AuthRoute.SignUp> {
             SignUpView(
                 innerPadding = innerPadding,
                 navController
             )
         }
-        composable<AppRoutes.SignIn> {
+        composable<AppRoutes.AuthRoute.SignIn> {
             SignInView(
-                innerPadding = innerPadding,
                 navController
             )
         }
-        composable<AppRoutes.SignChoice> {
+        composable<AppRoutes.AuthRoute.SignChoice> {
             LoginChoiceView(
-                paddingValues = innerPadding,
                 navController
             )
         }
 
-        composable<AppRoutes.ChooseInterest> {
+        composable<AppRoutes.AuthRoute.ChooseInterest> {
             ChooseInterestView(
-                paddingValues = innerPadding,
                 navController = navController
             )
         }
 
-        composable<AppRoutes.FillProfile> {
+        composable<AppRoutes.AuthRoute.FillProfile> {
             FillProfileView(
-                paddingValues = innerPadding,
                 navController = navController
             )
         }
 
-        composable<AppRoutes.NewPin> {
+        composable<AppRoutes.AuthRoute.NewPin> {
             CreateNewPin(
-                innerPaddingValues = innerPadding,
+                navController = navController
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.Home> {
+            HomeView(
                 navController = navController
             )
         }

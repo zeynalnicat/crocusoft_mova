@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -25,20 +26,29 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Strings
 import com.example.crocusoft_mova.presentation.auth.create_new_pin.components.OtpInput
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CreateNewPinContent(
-    innerPaddingValues: PaddingValues,
     postIntent: (CreateNewPinContract.Intent)->Unit,
     state: CreateNewPinContract.State,
+    effect : SharedFlow<CreateNewPinContract.Effect>,
+    onNavigateHome: ()->Unit,
 ){
 
     val scrollState = rememberScrollState()
 
+    LaunchedEffect(effect) {
+         effect.collect {
+             when(it){
+                 CreateNewPinContract.Effect.NavigateHome -> onNavigateHome()
+             }
+         }
+    }
+
     Scaffold(
-        modifier = Modifier.padding(innerPaddingValues),
         containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar(
@@ -74,7 +84,7 @@ fun CreateNewPinContent(
             AppButton(
                 modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
                 action = {
-
+                    postIntent(CreateNewPinContract.Intent.Submit)
                 },
                 text = stringResource(Strings.btn_continue),
                 color = colorResource(Colors.secondary)

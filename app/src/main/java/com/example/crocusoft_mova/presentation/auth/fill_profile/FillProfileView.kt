@@ -11,7 +11,6 @@ import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 @Composable
 fun FillProfileView(
-    paddingValues: PaddingValues,
     viewModel: FillProfileViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -19,11 +18,10 @@ fun FillProfileView(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     FillProfileContent(
-        paddingValues = paddingValues,
         state = state,
         postIntent = viewModel::onIntent,
         onNavigateBack = {navController.popBackStack()},
         effect = viewModel.effect,
-        onNavigatePin = {navController.navigate(AppRoutes.NewPin)}
+        onNavigatePin = {navController.navigate(AppRoutes.AuthRoute.NewPin)}
     )
 }

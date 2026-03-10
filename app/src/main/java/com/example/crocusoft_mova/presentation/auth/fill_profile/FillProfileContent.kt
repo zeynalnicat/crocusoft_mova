@@ -35,7 +35,6 @@ import java.security.Key
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun FillProfileContent(
-    paddingValues: PaddingValues,
     state: FillProfileContract.State,
     postIntent: (FillProfileContract.Intent) -> Unit,
     effect: SharedFlow<FillProfileContract.Effect>,
@@ -54,7 +53,6 @@ fun FillProfileContent(
     }
 
     Scaffold(
-        modifier = Modifier.padding(paddingValues),
         containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar({

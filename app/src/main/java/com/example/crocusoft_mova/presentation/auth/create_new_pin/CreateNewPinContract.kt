@@ -9,6 +9,11 @@ sealed interface CreateNewPinContract {
         data object Submit : Intent
     }
 
+    
+    sealed interface Effect {
+        data object  NavigateHome: Effect
+    }
+
 
     data class State(
         val pin: List<String> = List(4){""},

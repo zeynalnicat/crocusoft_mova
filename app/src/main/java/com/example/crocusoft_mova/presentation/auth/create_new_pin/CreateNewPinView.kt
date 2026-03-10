@@ -6,17 +6,19 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 
 @Composable
-fun CreateNewPin(innerPaddingValues: PaddingValues, navController: NavController,viewModel: CreateNewPinViewModel= hiltViewModel()){
+fun CreateNewPin(navController: NavController,viewModel: CreateNewPinViewModel= hiltViewModel()){
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     CreateNewPinContent(
-        innerPaddingValues = innerPaddingValues,
         state = state,
-        postIntent = viewModel::onIntent
+        postIntent = viewModel::onIntent,
+        effect = viewModel.effect,
+        onNavigateHome = {navController.navigate(AppRoutes.DashboardRoute.Home)}
     )
 
 }

@@ -79,4 +79,13 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
 
+
+    // Ktor
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.content.negotiation)
+
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.jetbrains.kotlinx.serialization.json)
+
 }

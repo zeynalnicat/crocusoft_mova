@@ -41,7 +41,6 @@ import com.example.crocusoft_mova.presentation.auth.login_choice.components.Logi
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LoginChoiceContent(
-    paddingValues: PaddingValues,
     onNavigateSignIn: () -> Unit,
     onNavigateSignUp: () -> Unit
 ) {
@@ -49,8 +48,6 @@ fun LoginChoiceContent(
 
     Scaffold(
         containerColor = colorResource(Colors.primary),
-        modifier = Modifier
-            .padding(paddingValues),
 
         topBar = {
             AppTopBar(

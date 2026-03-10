@@ -1,7 +1,5 @@
 package com.example.crocusoft_mova.presentation.auth.signup
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 

@@ -1,0 +1,12 @@
+package com.example.crocusoft_mova.data.mappers
+
+import com.example.crocusoft_mova.data.service.remote.MovieModel
+import com.example.crocusoft_mova.domain.MovieUiModel
+
+
+fun MovieModel.toUiModel(): MovieUiModel = MovieUiModel(
+    id = id,
+    title = title,
+    vote_average = vote_average,
+    release_date = release_date
+)

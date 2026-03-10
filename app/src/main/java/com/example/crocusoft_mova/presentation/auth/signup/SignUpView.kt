@@ -17,12 +17,11 @@ fun SignUpView(innerPadding: PaddingValues, navController: NavController ,viewMo
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     SignUpContent(
-        paddingValues = innerPadding,
         state = state,
         postIntent = viewModel::onIntent,
-        onNavigate = { navController.navigate(AppRoutes.SignIn)},
-        onNavigateBack = {navController.popBackStack()}, // TODO: fix navigation bug
-        onNavigateToChooseInterest = {navController.navigate(AppRoutes.ChooseInterest)}  ,
+        onNavigate = { navController.navigate(AppRoutes.AuthRoute.SignIn)},
+        onNavigateBack = {navController.popBackStack()},
+        onNavigateToChooseInterest = {navController.navigate(AppRoutes.AuthRoute.ChooseInterest)}  ,
         effect = viewModel.effect
 
     )

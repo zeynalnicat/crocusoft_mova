@@ -1,26 +1,15 @@
-package com.example.crocusoft_mova.common.components
+package com.example.crocusoft_mova.presentation.auth.components
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,20 +19,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import com.example.crocusoft_mova.common.components.AppButton
+import com.example.crocusoft_mova.common.components.AppCheckbox
+import com.example.crocusoft_mova.common.components.AppTextField
+import com.example.crocusoft_mova.common.components.AppTopBar
+import com.example.crocusoft_mova.common.components.ClickableText
+import com.example.crocusoft_mova.common.components.DividerWithText
 import com.example.crocusoft_mova.core.BaseTextStyle
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
-import com.example.crocusoft_mova.presentation.auth.signup.SignUpContract
 import com.example.crocusoft_mova.presentation.auth.signup.components.SignUpWithList
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SignContent(
-    paddingValues: PaddingValues,
     email: String,
     password: String,
     onEmailChange: (String) -> Unit,
@@ -70,7 +62,6 @@ fun SignContent(
         },
         containerColor = colorResource(Colors.primary),
         modifier = Modifier
-            .padding(paddingValues)
             .fillMaxSize()
     ) {
 
@@ -103,23 +94,23 @@ fun SignContent(
 
            Spacer(Modifier.height(BaseTheme.dimens.dp8))
 
-                AppTextField(
-                    prefixIcon = Drawables.inbox,
-                    value = email,
-                    onValueChange = onEmailChange,
-                    placeholder = stringResource(Strings.email)
-                )
+            AppTextField(
+                prefixIcon = Drawables.inbox,
+                value = email,
+                onValueChange = onEmailChange,
+                placeholder = stringResource(Strings.email)
+            )
 
 
           Spacer(Modifier.height(BaseTheme.dimens.dp4))
 
-                AppTextField(
-                    prefixIcon = Drawables.lock,
-                    value = password,
-                    onValueChange = onPasswordChange,
-                    isPasswordField = true,
-                    placeholder = stringResource(Strings.password)
-                )
+            AppTextField(
+                prefixIcon = Drawables.lock,
+                value = password,
+                onValueChange = onPasswordChange,
+                isPasswordField = true,
+                placeholder = stringResource(Strings.password)
+            )
 
 
              Spacer(Modifier.height(BaseTheme.dimens.dp5))
@@ -147,11 +138,11 @@ fun SignContent(
             Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
 
-                AppButton(
-                    isLoading = isLoading,
-                    action = onSubmit,
-                    text = stringResource(if (isSignUp) Strings.sign_up else Strings.sign_in),
-                )
+            AppButton(
+                isLoading = isLoading,
+                action = onSubmit,
+                text = stringResource(if (isSignUp) Strings.sign_up else Strings.sign_in),
+            )
 
 
             Spacer(Modifier.height(BaseTheme.dimens.dp6))
@@ -170,24 +161,24 @@ fun SignContent(
 
 
 
-                DividerWithText(" or continue with ")
+            DividerWithText(" or continue with ")
 
 
              Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
 
-            _root_ide_package_.com.example.crocusoft_mova.presentation.auth.signup.components.SignUpWithList()
+            SignUpWithList()
 
 
             Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
 
-                 ClickableText(
-                     preText = stringResource(if (isSignUp) Strings.already else Strings.donthave),
-                     sufText = stringResource(if (isSignUp) Strings.sign_in else Strings.sign_up)
-                 ) {
-                     onNavigate()
-                 }
+            ClickableText(
+                preText = stringResource(if (isSignUp) Strings.already else Strings.donthave),
+                sufText = stringResource(if (isSignUp) Strings.sign_in else Strings.sign_up)
+            ) {
+                onNavigate()
+            }
 
             Spacer(Modifier.height(BaseTheme.dimens.dp10))
         }

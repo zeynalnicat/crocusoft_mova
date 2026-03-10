@@ -11,7 +11,6 @@ import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 @Composable
 fun ChooseInterestView(
-    paddingValues: PaddingValues,
     navController: NavController,
     viewModel: ChooseInterestViewModel = hiltViewModel()
 ) {
@@ -19,12 +18,11 @@ fun ChooseInterestView(
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ChooseInterestContent(
-        innerPaddingValues = paddingValues,
         onNavigateBack = { navController.popBackStack() },
         state = state,
         postIntent = viewModel::onIntent,
         effect = viewModel.effect,
-        onNavigateFillProfile = {navController.navigate(AppRoutes.FillProfile)}
+        onNavigateFillProfile = {navController.navigate(AppRoutes.AuthRoute.FillProfile)}
     )
 
 }

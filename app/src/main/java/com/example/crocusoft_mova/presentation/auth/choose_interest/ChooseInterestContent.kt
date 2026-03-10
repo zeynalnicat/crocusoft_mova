@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.SharedFlow
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ChooseInterestContent(
-    innerPaddingValues: PaddingValues,
     onNavigateBack: () -> Unit,
     onNavigateFillProfile: () -> Unit,
     postIntent: (ChooseInterestContract.Intent) -> Unit,
@@ -56,7 +55,6 @@ fun ChooseInterestContent(
 
 
     Scaffold(
-        modifier = Modifier.padding(innerPaddingValues),
         containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar(

@@ -6,9 +6,14 @@ import androidx.compose.ui.unit.sp
 object Dimens {
 
 
+
+    val bottom_bar_height = 90.dp
     val avatar_size = 140.dp
     val image_height = 200.dp
     val image_width = 380.dp
+
+    val movie_cover_width = 150.dp
+    val movie_cover_height = 200.dp
 
     val min_width = 90.dp
 
