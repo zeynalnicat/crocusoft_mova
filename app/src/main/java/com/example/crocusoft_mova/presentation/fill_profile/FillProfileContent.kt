@@ -17,14 +17,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import com.example.crocusoft_mova.common.components.AppButton
 import com.example.crocusoft_mova.common.components.AppTextField
 import com.example.crocusoft_mova.common.components.AppTopBar
+import com.example.crocusoft_mova.common.components.GenderSelector
 import com.example.crocusoft_mova.common.components.ProfileAvatar
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
+import java.security.Key
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -81,13 +84,13 @@ fun FillProfileContent(
                 )
                 AppTextField(
                     value = state.phoneNumber,
-                    onValueChange = {postIntent(FillProfileContract.Intent.SetEmail(it))},
-                    placeholder = stringResource(Strings.phone_number)
+                    onValueChange = {postIntent(FillProfileContract.Intent.SetPhoneNumber(it))},
+                    placeholder = stringResource(Strings.phone_number),
+                    keyboardType = KeyboardType.Number
                 )
-                AppTextField(
+                GenderSelector(
                     value = state.gender,
-                    onValueChange = {postIntent(FillProfileContract.Intent.SetEmail(it))},
-                    placeholder = stringResource(Strings.gender)
+                    onGenderSelected = {postIntent(FillProfileContract.Intent.SetGender(it))}
                 )
             }
 

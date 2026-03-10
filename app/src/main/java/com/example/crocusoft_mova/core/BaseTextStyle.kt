@@ -8,7 +8,6 @@ import com.example.crocusoft_mova.ui.theme.White
 object BaseTextStyle {
 
 
-
     val t36Bold = TextStyle(
          color = White,
          fontSize = BaseTheme.dimens.sp12,

@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.common.components
 
+import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -49,6 +50,7 @@ fun AppTextField(
     onValueChange: (String) -> Unit,
     prefixIcon: Int? = null,
     suffixIcon: Int = Drawables.hide,
+    keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordField: Boolean = false,
     requiredSuffixIcon: Boolean = false,
     placeholder: String = ""
@@ -72,7 +74,7 @@ fun AppTextField(
                 VisualTransformation.None,
         keyboardOptions = KeyboardOptions(
             keyboardType = if (!isPasswordField) {
-                KeyboardType.Text
+                keyboardType
             } else {
                 if (showPassword.value) KeyboardType.Text else KeyboardType.Password
             }
