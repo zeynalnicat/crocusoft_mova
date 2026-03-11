@@ -18,7 +18,8 @@ fun CreateNewPin(navController: NavController,viewModel: CreateNewPinViewModel= 
         state = state,
         postIntent = viewModel::onIntent,
         effect = viewModel.effect,
-        onNavigateHome = {navController.navigate(AppRoutes.DashboardRoute.Home)}
+        onNavigateHome = {navController.navigate(AppRoutes.DashboardRoute.Home)},
+        onNavigateBack = navController::popBackStack
     )
 
 }

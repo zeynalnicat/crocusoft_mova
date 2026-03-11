@@ -36,6 +36,7 @@ fun CreateNewPinContent(
     state: CreateNewPinContract.State,
     effect : SharedFlow<CreateNewPinContract.Effect>,
     onNavigateHome: ()->Unit,
+    onNavigateBack: ()->Unit,
 ){
 
     val scrollState = rememberScrollState()
@@ -52,7 +53,7 @@ fun CreateNewPinContent(
         containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar(
-                prefixAction = {},
+                prefixAction = onNavigateBack,
                 title = stringResource(Strings.create_new_pin)
             )
         }

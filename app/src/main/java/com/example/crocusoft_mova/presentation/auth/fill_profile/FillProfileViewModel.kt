@@ -34,7 +34,7 @@ class FillProfileViewModel: ViewModel() {
             }
             is FillProfileContract.Intent.SetNickName -> {
                 viewModelScope.launch {
-                    _state.emit(_state.value.copy(email = intent.nickName))
+                    _state.emit(_state.value.copy(nickName = intent.nickName))
                 }
             }
 
