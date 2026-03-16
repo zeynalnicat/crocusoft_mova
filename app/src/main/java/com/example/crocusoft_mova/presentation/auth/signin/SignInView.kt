@@ -23,9 +23,10 @@ fun SignInView(
 
         postIntent = viewModel::onIntent,
         state = state,
-        onNavigate = { navController.navigate(AppRoutes.AuthRoute.SignUp) },
+        onNavigateSignUp = { navController.navigate(AppRoutes.AuthRoute.SignUp) },
         onNavigateBack = { navController.popBackStack() },
         onNavigateToChooseInterest = { navController.navigate(AppRoutes.AuthRoute.ChooseInterest) },
-        effect = viewModel.effect
+        effect = viewModel.effect,
+        onNavigateHome = { navController.navigate(AppRoutes.DashboardRoute.Home) }
     )
 }

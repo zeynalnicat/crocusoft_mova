@@ -94,6 +94,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
     implementation(libs.firebase.firestore)
 
 }

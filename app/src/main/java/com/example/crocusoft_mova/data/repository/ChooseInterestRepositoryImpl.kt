@@ -17,20 +17,38 @@ class ChooseInterestRepositoryImpl @Inject constructor(
 
     val firebaseCollection = firestore.collection(FirebaseConstants.userCollection)
 
-    override suspend fun checkWhetherExist(): ContentState<Boolean> =
+    override suspend fun addTags(tags: List<String>): ContentState<Unit> =
         suspendCancellableCoroutine { continuation ->
-
             try {
-                firebaseAuth.currentUser?.let { userId ->
-                    firebaseCollection.whereEqualTo("userId", userId).get()
-                        .addOnSuccessListener { snapshots ->
-                            if (snapshots.isEmpty) {
-                                continuation.resume(ContentState.Success(false))
-                            } else {
-                                continuation.resume(ContentState.Success(true))
-                            }
 
+
+                firebaseAuth.currentUser?.let { user ->
+
+                    firebaseCollection.whereEqualTo("userId", user.uid).get().addOnSuccessListener {
+                        if (!it.isEmpty) {
+                            continuation.resume(ContentState.Success(Unit))
+                            return@addOnSuccessListener
                         }
+                    }
+
+                    firebaseCollection.add(
+                        hashMapOf(
+                            "userId" to user.uid,
+                            "tags" to tags,
+                            "email" to user.email,
+                            "fullName" to "",
+                            "gender" to "",
+                            "nickname" to "",
+                            "phoneNumber" to "",
+                            "pin" to "",
+                            "profileUri" to "",
+
+
+                            )
+                    ).addOnSuccessListener {
+                        continuation.resume(ContentState.Success(Unit))
+
+                    }
                         .addOnFailureListener {
                             continuation.resume(
                                 ContentState.Error(
@@ -38,8 +56,8 @@ class ChooseInterestRepositoryImpl @Inject constructor(
                                 )
                             )
                         }
-
                 }
+
 
             } catch (e: Exception) {
                 if (continuation.isActive) {

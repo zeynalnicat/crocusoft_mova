@@ -4,13 +4,23 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.crocusoft_mova.core.ContentState
+import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase
+import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class FillProfileViewModel: ViewModel() {
+
+@HiltViewModel
+class FillProfileViewModel @Inject constructor(
+    private val fillProfileUseCase: FillProfileUseCase,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(FillProfileContract.State())
 
@@ -20,52 +30,76 @@ class FillProfileViewModel: ViewModel() {
 
     val effect = _effect.asSharedFlow()
 
-    fun onIntent(intent: FillProfileContract.Intent){
-        when(intent){
+    fun onIntent(intent: FillProfileContract.Intent) {
+        when (intent) {
             is FillProfileContract.Intent.SetEmail -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(email = intent.email))
-                }
+                _state.update { it.copy(email = intent.email) }
+
             }
+
             is FillProfileContract.Intent.SetFullName -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(fullName = intent.fullName))
-                }
+                _state.update { it.copy(fullName = intent.fullName) }
+
             }
+
             is FillProfileContract.Intent.SetNickName -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(nickName = intent.nickName))
-                }
+
+                _state.update { it.copy(nickName = intent.nickName) }
+
             }
 
             is FillProfileContract.Intent.SetGender -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(gender = intent.gender))
-                }
+
+                _state.update { it.copy(gender = intent.gender) }
+
             }
-            is FillProfileContract.Intent.SetPhoneNumber ->{
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(phoneNumber = intent.phoneNumber))
-                }
+
+            is FillProfileContract.Intent.SetPhoneNumber -> {
+
+                _state.update { it.copy(phoneNumber = intent.phoneNumber) }
+
             }
 
             is FillProfileContract.Intent.SetProfile -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(imgUri = intent.uri))
-                }
+
+                _state.update { it.copy(imgUri = intent.uri) }
+
             }
 
-            FillProfileContract.Intent.Submit -> {
-                viewModelScope.launch {
-                    _effect.emit(FillProfileContract.Effect.NavigatePin)
-                }
-            }
+            FillProfileContract.Intent.Submit -> submit()
 
             FillProfileContract.Intent.Skip -> {
                 viewModelScope.launch {
                     _effect.emit(FillProfileContract.Effect.NavigatePin)
                 }
             }
+        }
+    }
+
+    private fun submit() {
+        viewModelScope.launch {
+            when (val res = fillProfileUseCase.invoke(
+                Params(
+                    fullName = state.value.fullName,
+                    gender = state.value.gender,
+                    nickname = state.value.nickName,
+                    phoneNumber = state.value.phoneNumber,
+                    profileUri = ""
+                )
+            )) {
+                is ContentState.Error<*> -> _effect.emit(
+
+                    FillProfileContract.Effect.ShowError(
+                        res.message
+                    )
+
+                )
+
+                is ContentState.Success<*> -> {
+                    _effect.emit(FillProfileContract.Effect.NavigatePin)
+                }
+            }
+
         }
     }
 }

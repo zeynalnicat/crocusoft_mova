@@ -2,10 +2,10 @@ package com.example.crocusoft_mova.presentation.auth.choose_interest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.tag.TagEntity
-import com.example.crocusoft_mova.domain.usecases.CheckIfTagsExistUseCase
+import com.example.crocusoft_mova.domain.usecases.AddTagUseCase
+import com.example.crocusoft_mova.domain.usecases.CheckIfUserExistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ChooseInterestViewModel @Inject constructor(
-    private val checkIfTagsExistUseCase: CheckIfTagsExistUseCase
+    private val addTagUseCase: AddTagUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ChooseInterestContract.State())
@@ -30,7 +30,6 @@ class ChooseInterestViewModel @Inject constructor(
 
     init {
         fetchTags()
-        checkIfExist()
     }
 
 
@@ -38,30 +37,28 @@ class ChooseInterestViewModel @Inject constructor(
         when (intent) {
             is ChooseInterestContract.Intent.ToggleTag -> toggleTag(intent.tagEntity)
 
-            ChooseInterestContract.Intent.Continue -> {
-                viewModelScope.launch {
-                    _effect.emit(ChooseInterestContract.Effect.NavigateFillProfile)
-                }
-            }
+            ChooseInterestContract.Intent.Continue -> addTags()
         }
     }
 
 
-    private fun checkIfExist() {
+    private fun addTags() {
         viewModelScope.launch {
-            when (val res = checkIfTagsExistUseCase()) {
+            when (val res = addTagUseCase(_state.value.selectedTags.map { it.name })) {
                 is ContentState.Error<*> -> {
                     _effect.emit(ChooseInterestContract.Effect.ShowError(res.message))
                 }
 
-                is ContentState.Success<Boolean> -> {
-                    if (res.data) {
-                        _effect.emit(ChooseInterestContract.Effect.NavigateHome)
-                    }
+                is ContentState.Success<*> -> {
+                    _effect.emit(ChooseInterestContract.Effect.NavigateFillProfile)
                 }
             }
+
+
         }
     }
+
+
 
     private fun toggleTag(tagEntity: TagEntity) {
 

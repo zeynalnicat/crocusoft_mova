@@ -3,7 +3,9 @@ package com.example.crocusoft_mova.presentation.auth.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.ContentState
+import com.example.crocusoft_mova.domain.usecases.CheckIfUserExistUseCase
 import com.example.crocusoft_mova.domain.usecases.SignInUseCase
+import com.example.crocusoft_mova.presentation.auth.choose_interest.ChooseInterestContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.delay
@@ -16,7 +18,10 @@ import kotlinx.coroutines.launch
 
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCase) : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val signInUseCase: SignInUseCase,
+    private val checkIfTagsExistUseCase: CheckIfUserExistUseCase,
+) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInContract.State())
 
@@ -46,6 +51,26 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
         }
     }
 
+    private suspend fun checkIfExist() {
+
+        when (val res = checkIfTagsExistUseCase()) {
+            is ContentState.Error<*> -> {
+                _effect.emit(SignInContract.UiEffect.ShowError(res.message))
+            }
+
+            is ContentState.Success<Boolean> -> {
+                if (res.data) {
+                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
+                    _effect.emit(SignInContract.UiEffect.NavigateHome)
+                } else {
+                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
+                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
+                }
+            }
+        }
+
+    }
+
     private fun signIn() {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
@@ -57,8 +82,8 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
                 }
 
                 is ContentState.Success<*> -> {
-                    _state.update { it.copy(isLoading = false) }
-                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
+                    checkIfExist()
+
                 }
             }
         }

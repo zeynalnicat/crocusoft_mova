@@ -14,8 +14,9 @@ fun SignInContent(
     postIntent: (SignInContract.Intent) -> Unit,
     state: SignInContract.State,
     effect: SharedFlow<SignInContract.UiEffect>,
-    onNavigate: () -> Unit,
+    onNavigateSignUp: () -> Unit,
     onNavigateBack: () -> Unit,
+    onNavigateHome: () -> Unit,
     onNavigateToChooseInterest: () -> Unit,
 ) {
 
@@ -30,6 +31,8 @@ fun SignInContent(
                 is SignInContract.UiEffect.ShowError -> {
                     snackBarHostState.showSnackbar(it.message)
                 }
+
+                SignInContract.UiEffect.NavigateHome -> onNavigateHome()
             }
 
         }
@@ -45,7 +48,7 @@ fun SignInContent(
         onSubmit = { postIntent(SignInContract.Intent.Submit) },
         isLoading = state.isLoading,
         checked = state.checked,
-        onNavigate = onNavigate,
+        onNavigate = onNavigateSignUp,
         isSignUp = false,
         onNavigateBack = onNavigateBack,
         snackbarHostState = snackBarHostState

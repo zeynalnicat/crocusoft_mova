@@ -21,6 +21,8 @@ sealed interface FillProfileContract {
 
     sealed interface Effect {
         data object NavigatePin: Effect
+
+        data class ShowError(val message:String):Effect
     }
 
 
