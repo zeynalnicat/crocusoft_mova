@@ -32,10 +32,6 @@ class FillProfileViewModel @Inject constructor(
 
     fun onIntent(intent: FillProfileContract.Intent) {
         when (intent) {
-            is FillProfileContract.Intent.SetEmail -> {
-                _state.update { it.copy(email = intent.email) }
-
-            }
 
             is FillProfileContract.Intent.SetFullName -> {
                 _state.update { it.copy(fullName = intent.fullName) }

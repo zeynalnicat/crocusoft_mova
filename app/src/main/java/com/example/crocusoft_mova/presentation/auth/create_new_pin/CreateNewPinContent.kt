@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -32,24 +35,29 @@ import kotlinx.coroutines.flow.SharedFlow
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CreateNewPinContent(
-    postIntent: (CreateNewPinContract.Intent)->Unit,
+    postIntent: (CreateNewPinContract.Intent) -> Unit,
     state: CreateNewPinContract.State,
-    effect : SharedFlow<CreateNewPinContract.Effect>,
-    onNavigateHome: ()->Unit,
-    onNavigateBack: ()->Unit,
-){
+    effect: SharedFlow<CreateNewPinContract.Effect>,
+    onNavigateHome: () -> Unit,
+    onNavigateBack: () -> Unit,
+) {
 
     val scrollState = rememberScrollState()
 
+    val snackBarHostState = remember { SnackbarHostState() }
+
+
     LaunchedEffect(effect) {
-         effect.collect {
-             when(it){
-                 CreateNewPinContract.Effect.NavigateHome -> onNavigateHome()
-             }
-         }
+        effect.collect {
+            when (it) {
+                CreateNewPinContract.Effect.NavigateHome -> onNavigateHome()
+                is CreateNewPinContract.Effect.ShowError -> snackBarHostState.showSnackbar(it.message)
+            }
+        }
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar(
@@ -59,12 +67,16 @@ fun CreateNewPinContent(
         }
     ) {
         Box(
-            modifier = Modifier.fillMaxSize().padding(BaseTheme.dimens.dp4)
-        ){
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(BaseTheme.dimens.dp4)
+        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
                     .padding(BaseTheme.dimens.dp6)
             ) {
                 Text(
@@ -77,13 +89,22 @@ fun CreateNewPinContent(
 
                 OtpInput(
                     otpValues = state.pin,
-                    onValueChange = { index, pin-> postIntent(CreateNewPinContract.Intent.SetPin(index,pin))}
+                    onValueChange = { index, pin ->
+                        postIntent(
+                            CreateNewPinContract.Intent.SetPin(
+                                index,
+                                pin
+                            )
+                        )
+                    }
 
                 )
             }
 
             AppButton(
-                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
                 action = {
                     postIntent(CreateNewPinContract.Intent.Submit)
                 },

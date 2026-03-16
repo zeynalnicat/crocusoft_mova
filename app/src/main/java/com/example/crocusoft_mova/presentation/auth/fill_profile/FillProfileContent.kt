@@ -95,13 +95,6 @@ fun FillProfileContent(
                     placeholder = stringResource(Strings.nick_name)
                 )
                 AppTextField(
-                    value = state.email,
-                    onValueChange = { postIntent(FillProfileContract.Intent.SetEmail(it)) },
-                    suffixIcon = Drawables.inbox,
-                    requiredSuffixIcon = true,
-                    placeholder = stringResource(Strings.email)
-                )
-                AppTextField(
                     value = state.phoneNumber,
                     onValueChange = { postIntent(FillProfileContract.Intent.SetPhoneNumber(it)) },
                     placeholder = stringResource(Strings.phone_number),

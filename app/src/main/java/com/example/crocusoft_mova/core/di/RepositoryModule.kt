@@ -2,10 +2,12 @@ package com.example.crocusoft_mova.core.di
 
 import com.example.crocusoft_mova.data.repository.ChooseInterestRepositoryImpl
 import com.example.crocusoft_mova.data.repository.FillProfileRepositoryImpl
+import com.example.crocusoft_mova.data.repository.PinRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignInRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignUpRepositoryImpl
 import com.example.crocusoft_mova.domain.repository.ChooseInterestRepository
 import com.example.crocusoft_mova.domain.repository.FillProfileRepository
+import com.example.crocusoft_mova.domain.repository.PinRepository
 import com.example.crocusoft_mova.domain.repository.SignInRepository
 import com.example.crocusoft_mova.domain.repository.SignUpRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -50,6 +52,13 @@ object RepositoryModule {
         firestore: FirebaseFirestore
     ): FillProfileRepository =
         FillProfileRepositoryImpl(firebaseAuth, firestore)
+
+    @Singleton
+    @Provides
+    fun providePinRepository(
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): PinRepository = PinRepositoryImpl(firebaseAuth, firestore)
 
 
 }
