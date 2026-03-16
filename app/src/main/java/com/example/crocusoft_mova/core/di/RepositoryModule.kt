@@ -1,6 +1,8 @@
 package com.example.crocusoft_mova.core.di
 
+import com.example.crocusoft_mova.data.repository.SignInRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignUpRepositoryImpl
+import com.example.crocusoft_mova.domain.repository.SignInRepository
 import com.example.crocusoft_mova.domain.repository.SignUpRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -19,5 +21,9 @@ object RepositoryModule {
     fun provideSignUpRepository(firebaseAuth: FirebaseAuth): SignUpRepository =
         SignUpRepositoryImpl(firebaseAuth)
 
+    @Singleton
+    @Provides
+    fun provideSignInRepository(firebaseAuth: FirebaseAuth): SignInRepository =
+        SignInRepositoryImpl(firebaseAuth)
 
 }

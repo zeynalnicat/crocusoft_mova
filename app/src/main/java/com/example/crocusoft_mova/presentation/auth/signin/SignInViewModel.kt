@@ -2,14 +2,21 @@ package com.example.crocusoft_mova.presentation.auth.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.ContentState
+import com.example.crocusoft_mova.domain.usecases.SignInUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SignInViewModel: ViewModel() {
+
+@HiltViewModel
+class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCase) : ViewModel() {
 
     private val _state = MutableStateFlow(SignInContract.State())
 
@@ -25,24 +32,20 @@ class SignInViewModel: ViewModel() {
             is SignInContract.Intent.SetEmail -> (
                     viewModelScope.launch {
                         _state.emit(_state.value.copy(email = intent.email))
-                    } )
+                    })
 
             is SignInContract.Intent.SetPassword -> {
                 viewModelScope.launch {
                     _state.emit(_state.value.copy(password = intent.password))
                 }
             }
-            SignInContract.Intent.Submit -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(isLoading = !_state.value.isLoading))
-                    delay(3000)
-                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
-                    _state.emit(_state.value.copy(isLoading = !_state.value.isLoading))
 
-                }
+            SignInContract.Intent.Submit -> {
+                signIn()
 
 
             }
+
             is SignInContract.Intent.SetChecked -> {
                 viewModelScope.launch {
                     _state.emit(_state.value.copy(checked = intent.checked))
@@ -50,5 +53,24 @@ class SignInViewModel: ViewModel() {
             }
         }
     }
+
+    private fun signIn() {
+        _state.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            when (val res = signInUseCase(_state.value.email, _state.value.password)) {
+                is ContentState.Error<*> -> {
+                    _state.update { it.copy(isLoading = false) }
+                    _effect.emit(SignInContract.UiEffect.ShowError(res.message))
+
+                }
+
+                is ContentState.Success<*> -> {
+                    _state.update { it.copy(isLoading = false) }
+                    _effect.emit(SignInContract.UiEffect.NavigateToChoose)
+                }
+            }
+        }
+    }
+
 
 }

@@ -4,20 +4,21 @@ sealed interface SignInContract {
 
     sealed interface Intent {
 
-        data object Submit: Intent
+        data object Submit : Intent
 
-        data class SetEmail(val email:String): Intent
+        data class SetEmail(val email: String) : Intent
 
-        data class SetPassword(val password:String):Intent
+        data class SetPassword(val password: String) : Intent
 
-        data class SetChecked(val checked: Boolean):Intent
+        data class SetChecked(val checked: Boolean) : Intent
 
 
     }
 
 
     sealed interface UiEffect {
-        data object NavigateToChoose: UiEffect
+        data object NavigateToChoose : UiEffect
+        data class ShowError(val message: String) : UiEffect
     }
 
     data class State(
