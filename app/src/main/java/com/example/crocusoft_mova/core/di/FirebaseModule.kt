@@ -3,6 +3,8 @@ package com.example.crocusoft_mova.core.di
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,12 +16,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
 
-    @Singleton
+
     @Provides
     fun provideFirebase(): Firebase = Firebase
 
-    @Singleton
     @Provides
-    fun provideFirebaseAuth(firebase: Firebase): FirebaseAuth = Firebase.auth
+    fun provideFirestore(firebase: Firebase): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    fun provideFireAuth(firebase: Firebase): FirebaseAuth = Firebase.auth
 
 }

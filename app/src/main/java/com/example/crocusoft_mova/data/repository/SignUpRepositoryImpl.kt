@@ -4,8 +4,9 @@ import com.example.crocusoft_mova.core.AppErrors
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.repository.SignUpRepository
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
+import kotlin.coroutines.resume
 
 class SignUpRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
@@ -15,23 +16,36 @@ class SignUpRepositoryImpl @Inject constructor(
     override suspend fun signUp(
         email: String,
         password: String
-    ): ContentState<Unit> =
+    ): ContentState<Unit> = suspendCancellableCoroutine { continuation ->
+        if (email.isBlank() || password.isBlank()) {
+            continuation.resume(ContentState.Error(AppErrors.emptyField))
+            return@suspendCancellableCoroutine
+        }
         try {
-            if (email.isBlank() || password.isBlank()) {
-                return ContentState.Error(AppErrors.emptyField)
-            }
+            firebaseAuth
+                .createUserWithEmailAndPassword(email, password).addOnFailureListener {
+                    if (continuation.isActive) {
+                        continuation.resume(
+                            ContentState.Error(
+                                it.message ?: AppErrors.unknownError
+                            )
+                        )
 
-            val res = firebaseAuth
-                .createUserWithEmailAndPassword(email, password)
-                .await()
-            if (res.user == null) {
-                return ContentState.Error(AppErrors.unknownError)
-            }
-            ContentState.Success(Unit)
+                    }
+                }
+                .addOnSuccessListener {
+                    if (continuation.isActive) {
+                        continuation.resume(ContentState.Success(Unit))
+                    }
+                }
+
 
         } catch (e: Exception) {
-            return ContentState.Error(e.message ?: AppErrors.unknownError)
+            if (continuation.isActive) {
+                continuation.resume(ContentState.Error(e.message ?: AppErrors.unknownError))
+            }
         }
+    }
 
 
 }

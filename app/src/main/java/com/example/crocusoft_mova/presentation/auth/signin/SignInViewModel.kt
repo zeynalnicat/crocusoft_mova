@@ -29,27 +29,19 @@ class SignInViewModel @Inject constructor(private val signInUseCase: SignInUseCa
 
     fun onIntent(intent: SignInContract.Intent) {
         when (intent) {
-            is SignInContract.Intent.SetEmail -> (
-                    viewModelScope.launch {
-                        _state.emit(_state.value.copy(email = intent.email))
-                    })
+            is SignInContract.Intent.SetEmail -> _state.update { it.copy(email = intent.email) }
 
-            is SignInContract.Intent.SetPassword -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(password = intent.password))
-                }
-            }
 
-            SignInContract.Intent.Submit -> {
+            is SignInContract.Intent.SetPassword -> _state.update { it.copy(password = intent.password) }
+
+
+            SignInContract.Intent.Submit ->
                 signIn()
 
 
-            }
-
             is SignInContract.Intent.SetChecked -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(checked = intent.checked))
-                }
+                _state.update { it.copy(checked = intent.checked) }
+
             }
         }
     }

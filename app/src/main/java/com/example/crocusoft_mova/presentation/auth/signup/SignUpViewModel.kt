@@ -30,27 +30,19 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
 
     fun onIntent(intent: SignUpContract.Intent) {
         when (intent) {
-            is SignUpContract.Intent.SetEmail -> (
-                    viewModelScope.launch {
-                        _state.emit(_state.value.copy(email = intent.email))
-                    })
-
-            is SignUpContract.Intent.SetPassword -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(password = intent.password))
-                }
-            }
-
-            SignUpContract.Intent.Submit -> {
-                signUp()
+            is SignUpContract.Intent.SetEmail ->
+                _state.update { it.copy(email = intent.email) }
 
 
-            }
+            is SignUpContract.Intent.SetPassword -> _state.update { it.copy(password = intent.password) }
+
+
+            SignUpContract.Intent.Submit -> signUp()
+
 
             is SignUpContract.Intent.SetChecked -> {
-                viewModelScope.launch {
-                    _state.emit(_state.value.copy(checked = intent.checked))
-                }
+                _state.update { it.copy(checked = intent.checked) }
+
             }
         }
     }
@@ -61,13 +53,13 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
 
             when (val res = signUpUseCase(_state.value.email, _state.value.password)) {
                 is ContentState.Error<*> -> {
-                    _state.update { it.copy(isLoading = false)}
-                        _effect.emit(SignUpContract.UiEffect.ShowError(res.message))
+                    _state.update { it.copy(isLoading = false) }
+                    _effect.emit(SignUpContract.UiEffect.ShowError(res.message))
 
                 }
 
                 is ContentState.Success<*> -> {
-                    _state.update { it.copy(isLoading = false)}
+                    _state.update { it.copy(isLoading = false) }
                     _effect.emit(SignUpContract.UiEffect.NavigateToChoose)
                 }
             }

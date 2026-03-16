@@ -52,6 +52,7 @@ fun SignUpContent(
         isSignUp = true,
         onNavigate = onNavigate,
         onNavigateBack = onNavigateBack,
+        snackbarHostState = snackbarHostState
 
         )
 }
