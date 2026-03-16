@@ -12,8 +12,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -45,9 +48,9 @@ fun SignContent(
     onSubmit: () -> Unit,
     isLoading: Boolean,
     checked: Boolean,
+    snackbarHostState: SnackbarHostState? = null,
     isSignUp: Boolean = true,
     onNavigateBack: () -> Unit = {},
-
 
 
     ) {
@@ -56,7 +59,9 @@ fun SignContent(
 
 
 
+
     Scaffold(
+        snackbarHost = { if (snackbarHostState != null) SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             AppTopBar(prefixAction = onNavigateBack)
         },
@@ -65,7 +70,7 @@ fun SignContent(
             .fillMaxSize()
     ) {
 
-        Column (
+        Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
@@ -73,26 +78,26 @@ fun SignContent(
                 .padding(horizontal = BaseTheme.dimens.dp5),
         ) {
 
-           Spacer(Modifier.height(BaseTheme.dimens.dp12))
+            Spacer(Modifier.height(BaseTheme.dimens.dp12))
 
 
-                Icon(
-                    painter = painterResource(Drawables.logo),
-                    contentDescription = null,
-                    tint = colorResource(Colors.secondary),
-                )
+            Icon(
+                painter = painterResource(Drawables.logo),
+                contentDescription = null,
+                tint = colorResource(Colors.secondary),
+            )
 
 
             Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
 
-                Text(
-                    text = stringResource(if (isSignUp) Strings.createAccount else Strings.login),
-                    style = BaseTextStyle.t36Bold
-                )
+            Text(
+                text = stringResource(if (isSignUp) Strings.createAccount else Strings.login),
+                style = BaseTextStyle.t36Bold
+            )
 
 
-           Spacer(Modifier.height(BaseTheme.dimens.dp8))
+            Spacer(Modifier.height(BaseTheme.dimens.dp8))
 
             AppTextField(
                 prefixIcon = Drawables.inbox,
@@ -102,7 +107,7 @@ fun SignContent(
             )
 
 
-          Spacer(Modifier.height(BaseTheme.dimens.dp4))
+            Spacer(Modifier.height(BaseTheme.dimens.dp4))
 
             AppTextField(
                 prefixIcon = Drawables.lock,
@@ -113,26 +118,26 @@ fun SignContent(
             )
 
 
-             Spacer(Modifier.height(BaseTheme.dimens.dp5))
+            Spacer(Modifier.height(BaseTheme.dimens.dp5))
 
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                AppCheckbox(
+                    checked = checked
                 ) {
-
-                    AppCheckbox(
-                        checked = checked
-                    ) {
-                        onSetChecked(it)
-                    }
-
-                    Spacer(Modifier.width(BaseTheme.dimens.dp3))
-
-                    Text(
-                        text = stringResource(Strings.remember),
-                        style = BaseTheme.textStyle.t14SemiBold
-                    )
+                    onSetChecked(it)
                 }
+
+                Spacer(Modifier.width(BaseTheme.dimens.dp3))
+
+                Text(
+                    text = stringResource(Strings.remember),
+                    style = BaseTheme.textStyle.t14SemiBold
+                )
+            }
 
 
             Spacer(Modifier.height(BaseTheme.dimens.dp6))
@@ -149,10 +154,10 @@ fun SignContent(
 
             if (!isSignUp) {
 
-                    Text(
-                        text = stringResource(Strings.forgot),
-                        style = BaseTheme.textStyle.t16SemiBoldRed
-                    )
+                Text(
+                    text = stringResource(Strings.forgot),
+                    style = BaseTheme.textStyle.t16SemiBoldRed
+                )
 
 
                 Spacer(Modifier.height(BaseTheme.dimens.dp6))
@@ -164,7 +169,7 @@ fun SignContent(
             DividerWithText(" or continue with ")
 
 
-             Spacer(Modifier.height(BaseTheme.dimens.dp6))
+            Spacer(Modifier.height(BaseTheme.dimens.dp6))
 
 
             SignUpWithList()

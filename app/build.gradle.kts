@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -74,10 +75,10 @@ dependencies {
 
 
     // Coil
-    implementation("io.coil-kt.coil3:coil-compose:3.4.0")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.4.0")
+    implementation(libs.coil3.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
+    implementation(libs.jetbrains.kotlinx.serialization.json)
 
 
     // Ktor
@@ -87,5 +88,12 @@ dependencies {
 
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.jetbrains.kotlinx.serialization.json)
+
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
 }

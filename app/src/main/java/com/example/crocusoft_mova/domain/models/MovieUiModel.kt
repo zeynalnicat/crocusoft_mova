@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.domain
+package com.example.crocusoft_mova.domain.models
 
 data class MovieUiModel(
     val id:Int,

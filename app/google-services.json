@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "976814076719",
+    "project_id": "mova-60751",
+    "storage_bucket": "mova-60751.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976814076719:android:9b4ceff1200794ce61a7da",
+        "android_client_info": {
+          "package_name": "com.example.crocusoft_mova"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI_UAkMOfc_g_UrzwrOBQi_u5fZZB5FVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
