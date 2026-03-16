@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.core
+package com.example.crocusoft_mova.core.constants
 
 object FirebaseConstants {
 

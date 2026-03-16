@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.core
+package com.example.crocusoft_mova.core.constants
 
 object AppErrors {
 
@@ -9,4 +9,6 @@ object AppErrors {
     val userNotFound = "User not found"
 
     val wrongPin = "Wrong Pin"
+
+    val noMovies = "No movies found"
 }

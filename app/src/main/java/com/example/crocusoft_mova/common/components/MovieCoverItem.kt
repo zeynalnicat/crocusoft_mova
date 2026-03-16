@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.crocusoft_mova.core.BaseTheme
-import com.example.crocusoft_mova.data.service.remote.MovieModel
+import com.example.crocusoft_mova.data.service.remote.model.MovieModel
 
 
 @Composable

@@ -1,6 +1,6 @@
 package com.example.crocusoft_mova.data.mappers
 
-import com.example.crocusoft_mova.data.service.remote.MovieModel
+import com.example.crocusoft_mova.data.service.remote.model.MovieModel
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 
 
