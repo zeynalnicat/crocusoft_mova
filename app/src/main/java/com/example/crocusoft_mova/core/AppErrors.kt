@@ -5,4 +5,6 @@ object AppErrors {
     val unknownError = "Unknown Error occurred!"
 
     val emptyField = "Email and password cannot be empty"
+
+    val userNotFound = "User not found"
 }

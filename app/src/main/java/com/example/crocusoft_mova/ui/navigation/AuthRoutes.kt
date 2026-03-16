@@ -12,13 +12,18 @@ import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.auth.signin.SignInView
 import com.example.crocusoft_mova.presentation.auth.signup.SignUpView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AuthRoutes(
     innerPadding: PaddingValues,
     navController: NavHostController,
+    firebaseAuth: FirebaseAuth,
 ) {
 
+    val currentUser = firebaseAuth.currentUser
+    val startDest =
+        if (currentUser == null) AppRoutes.AuthRoute.SignChoice else AppRoutes.DashboardRoute.Home
 
     NavHost(
         startDestination = AppRoutes.AuthRoute.SignChoice,

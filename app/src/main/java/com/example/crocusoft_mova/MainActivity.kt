@@ -12,12 +12,20 @@ import androidx.compose.ui.res.colorResource
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.presentation.App
 import com.example.crocusoft_mova.ui.theme.Crocusoft_movaTheme
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -29,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
 
                 ) { innerPadding ->
-                    App(innerPaddingValues = innerPadding)
+                    App(innerPaddingValues = innerPadding, firebaseAuth)
                 }
             }
         }

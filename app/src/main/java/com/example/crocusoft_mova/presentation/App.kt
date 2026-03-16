@@ -21,11 +21,12 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.ui.navigation.AppRoutes
 import com.example.crocusoft_mova.ui.navigation.AuthRoutes
+import com.google.firebase.auth.FirebaseAuth
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun App(innerPaddingValues: PaddingValues) {
+fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
 
     val navController = rememberNavController()
 
@@ -38,13 +39,13 @@ fun App(innerPaddingValues: PaddingValues) {
 
     Scaffold(
         bottomBar = {
-           val hiddenRoutes = listOf(
-               AppRoutes.AuthRoute.NewPin.toString(),
-               AppRoutes.AuthRoute.SignUp.toString(),
-               AppRoutes.AuthRoute.SignIn.toString(),
-               AppRoutes.AuthRoute.ChooseInterest.toString(),
-               AppRoutes.AuthRoute.FillProfile.toString(),
-           )
+            val hiddenRoutes = listOf(
+                AppRoutes.AuthRoute.NewPin.toString(),
+                AppRoutes.AuthRoute.SignUp.toString(),
+                AppRoutes.AuthRoute.SignIn.toString(),
+                AppRoutes.AuthRoute.ChooseInterest.toString(),
+                AppRoutes.AuthRoute.FillProfile.toString(),
+            )
 
 
         },
@@ -52,7 +53,11 @@ fun App(innerPaddingValues: PaddingValues) {
         modifier = Modifier.padding(innerPaddingValues)
     ) {
 
-        AuthRoutes(innerPadding = innerPaddingValues, navController = navController)
+        AuthRoutes(
+            innerPadding = innerPaddingValues,
+            navController = navController,
+            firebaseAuth = firebaseAuth
+        )
     }
 
 }
