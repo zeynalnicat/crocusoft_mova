@@ -7,4 +7,6 @@ object AppErrors {
     val emptyField = "Email and password cannot be empty"
 
     val userNotFound = "User not found"
+
+    val wrongPin = "Wrong Pin"
 }

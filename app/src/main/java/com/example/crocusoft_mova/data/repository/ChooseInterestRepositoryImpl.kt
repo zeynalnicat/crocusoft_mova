@@ -30,9 +30,23 @@ class ChooseInterestRepositoryImpl @Inject constructor(
             firebaseCollection.whereEqualTo("userId", user.uid).get()
                 .addOnSuccessListener { querySnapshot ->
                     if (!querySnapshot.isEmpty) {
-                        if (continuation.isActive) {
-                            continuation.resume(ContentState.Success(Unit))
+                        val ref = querySnapshot.documents[0].reference.path
+
+                        firestore.document(ref).update(
+                            "tags", tags
+                        ).addOnSuccessListener {
+                            if (continuation.isActive) {
+                                continuation.resume(ContentState.Success(Unit))
+                            }
                         }
+                            .addOnFailureListener {
+                                if (continuation.isActive) {
+                                    continuation.resume(
+                                        ContentState.Error(it.message ?: AppErrors.unknownError)
+                                    )
+                                }
+                            }
+
                     } else {
                         firebaseCollection.add(
                             hashMapOf(

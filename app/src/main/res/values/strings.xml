@@ -31,4 +31,5 @@
     <string name="create_new_pin">Create New PIN</string>
     <string name="new_pin_description">Add a PIN number to make your account
 more secure.</string>
+    <string name="enter_pin">Enter your PIN number to continue</string>
 </resources>

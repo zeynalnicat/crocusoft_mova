@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.crocusoft_mova.presentation.auth.choose_interest.ChooseInterestView
-import com.example.crocusoft_mova.presentation.auth.create_new_pin.CreateNewPin
+import com.example.crocusoft_mova.presentation.auth.create_new_pin.PinView
 import com.example.crocusoft_mova.presentation.auth.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.auth.signin.SignInView
@@ -18,12 +18,8 @@ import com.google.firebase.auth.FirebaseAuth
 fun AuthRoutes(
     innerPadding: PaddingValues,
     navController: NavHostController,
-    firebaseAuth: FirebaseAuth,
 ) {
 
-    val currentUser = firebaseAuth.currentUser
-    val startDest =
-        if (currentUser == null) AppRoutes.AuthRoute.SignChoice else AppRoutes.DashboardRoute.Home
 
     NavHost(
         startDestination = AppRoutes.AuthRoute.SignChoice,
@@ -60,7 +56,7 @@ fun AuthRoutes(
         }
 
         composable<AppRoutes.AuthRoute.NewPin> {
-            CreateNewPin(
+            PinView(
                 navController = navController
             )
         }

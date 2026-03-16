@@ -1,10 +1,12 @@
 package com.example.crocusoft_mova.presentation.auth.create_new_pin
 
-sealed interface CreateNewPinContract {
+sealed interface PinContract {
 
     sealed interface Intent {
 
         data class SetPin(val index: Int, val pin: String) : Intent
+
+        data object EnterPin: Intent
 
         data object Submit : Intent
     }
@@ -18,5 +20,6 @@ sealed interface CreateNewPinContract {
 
     data class State(
         val pin: List<String> = List(4) { "" },
+        val error : String = "",
     )
 }

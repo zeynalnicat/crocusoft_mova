@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.crocusoft_mova.presentation.auth.create_new_pin.PinView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 
 @Composable
@@ -13,7 +14,7 @@ fun DashboardRoutes(
 
 
     NavHost(
-        startDestination = AppRoutes.DashboardRoute.Home,
+        startDestination = AppRoutes.DashboardRoute.Pin,
         navController = navController,
 
         ) {
@@ -21,6 +22,13 @@ fun DashboardRoutes(
             HomeView(
 
                 navController = navController
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.Pin> {
+            PinView(
+                navController = navController,
+                isNewPinScreen = false
             )
         }
 

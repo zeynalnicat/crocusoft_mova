@@ -21,6 +21,7 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.ui.navigation.AppRoutes
 import com.example.crocusoft_mova.ui.navigation.AuthRoutes
+import com.example.crocusoft_mova.ui.navigation.DashboardRoutes
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -53,11 +54,18 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         modifier = Modifier.padding(innerPaddingValues)
     ) {
 
-        AuthRoutes(
-            innerPadding = innerPaddingValues,
-            navController = navController,
-            firebaseAuth = firebaseAuth
-        )
+        if (firebaseAuth.currentUser == null
+        ) {
+            AuthRoutes(
+                innerPadding = innerPaddingValues,
+                navController = navController,
+            )
+        } else {
+            DashboardRoutes(
+                navController = navController
+            )
+        }
+
     }
 
 }

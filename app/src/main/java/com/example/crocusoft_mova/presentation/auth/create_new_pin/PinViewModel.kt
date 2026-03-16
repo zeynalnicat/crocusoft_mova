@@ -3,8 +3,10 @@ package com.example.crocusoft_mova.presentation.auth.create_new_pin
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.CreatePinUseCase
+import com.example.crocusoft_mova.domain.usecases.EnterPinUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,24 +15,27 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.lang.Character.digit
 
 
 @HiltViewModel
-class CreateNewPinViewModel @Inject constructor(private val createPinUseCase: CreatePinUseCase) :
+class PinViewModel @Inject constructor(
+    private val createPinUseCase: CreatePinUseCase,
+    private val enterPinUseCase: EnterPinUseCase
+) :
     ViewModel() {
 
-    private val _state = MutableStateFlow(CreateNewPinContract.State())
+    private val _state = MutableStateFlow(PinContract.State())
 
     val state = _state.asStateFlow()
 
-    private val _effect = MutableSharedFlow<CreateNewPinContract.Effect>()
+    private val _effect = MutableSharedFlow<PinContract.Effect>()
 
     val effect = _effect.asSharedFlow()
 
-    fun onIntent(intent: CreateNewPinContract.Intent) {
+    fun onIntent(intent: PinContract.Intent) {
         when (intent) {
-            is CreateNewPinContract.Intent.SetPin -> {
+            is PinContract.Intent.SetPin -> {
+                _state.update { it.copy(error = "") }
                 viewModelScope.launch {
                     val newPin = _state.value.pin.toMutableList()
                     newPin[intent.index] = intent.pin
@@ -40,22 +45,43 @@ class CreateNewPinViewModel @Inject constructor(private val createPinUseCase: Cr
                 Log.i("pin", state.value.pin.toString())
             }
 
-            CreateNewPinContract.Intent.Submit -> {
+            PinContract.Intent.Submit -> {
                 createPin()
+            }
+
+            PinContract.Intent.EnterPin -> {
+                enterPin()
             }
         }
 
+    }
+
+    private fun enterPin() {
+
+        viewModelScope.launch {
+            when (val res = enterPinUseCase(_state.value.pin.joinToString(separator = ""))) {
+                is ContentState.Error<*> -> {
+                    _state.update { it.copy(error = res.message) }
+
+                }
+
+                is ContentState.Success<*> -> {
+                    _state.update { it.copy(error = "") }
+                    _effect.emit(PinContract.Effect.NavigateHome)
+                }
+            }
+        }
     }
 
     private fun createPin() {
         viewModelScope.launch {
             when (val res = createPinUseCase(_state.value.pin.joinToString(separator = ""))) {
                 is ContentState.Error<*> -> {
-                    _effect.emit(CreateNewPinContract.Effect.ShowError(res.message))
+                    _effect.emit(PinContract.Effect.ShowError(res.message))
                 }
 
                 is ContentState.Success<*> -> {
-                    _effect.emit(CreateNewPinContract.Effect.NavigateHome)
+                    _effect.emit(PinContract.Effect.NavigateHome)
                 }
             }
 

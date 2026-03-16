@@ -53,4 +53,36 @@ class PinRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun enterPin(pin: String): ContentState<Unit> =
+        suspendCancellableCoroutine { continuation ->
+
+            try {
+                val user = firebaseAuth.currentUser
+                if (user == null) {
+                    if (continuation.isActive) continuation.resume(ContentState.Error(AppErrors.userNotFound))
+                    return@suspendCancellableCoroutine
+                }
+
+                collection.whereEqualTo("userId", user.uid).get()
+                    .addOnSuccessListener { querySnapshots ->
+                        val snapshots = querySnapshots.documents[0]
+                        if (snapshots.get("pin") == pin) {
+                            continuation.resume(ContentState.Success(Unit))
+                        } else {
+                            continuation.resume(ContentState.Error(AppErrors.wrongPin))
+                        }
+                    }.addOnFailureListener {
+                        continuation.resume(
+                            ContentState.Error(
+                                it.message ?: AppErrors.unknownError
+                            )
+                        )
+                    }
+
+
+            } catch (e: Exception) {
+                continuation.resume(ContentState.Error(e.message ?: AppErrors.unknownError))
+            }
+        }
+
 }

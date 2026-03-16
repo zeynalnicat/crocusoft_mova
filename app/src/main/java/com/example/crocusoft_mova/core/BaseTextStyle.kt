@@ -9,9 +9,9 @@ object BaseTextStyle {
 
 
     val t36Bold = TextStyle(
-         color = White,
-         fontSize = BaseTheme.dimens.sp12,
-         fontWeight = FontWeight.W700,
+        color = White,
+        fontSize = BaseTheme.dimens.sp12,
+        fontWeight = FontWeight.W700,
     )
 
     val t48Bold = TextStyle(
@@ -38,7 +38,7 @@ object BaseTextStyle {
         fontWeight = FontWeight.W500
     )
 
-    val t18SemiBold =  TextStyle(
+    val t18SemiBold = TextStyle(
         color = White,
         fontSize = BaseTheme.dimens.sp3,
         fontWeight = FontWeight.W600

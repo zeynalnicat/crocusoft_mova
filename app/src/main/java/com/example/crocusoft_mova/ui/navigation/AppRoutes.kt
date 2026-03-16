@@ -7,32 +7,35 @@ sealed interface AppRoutes {
 
     sealed interface AuthRoute {
         @Serializable
-        data object NewPin: AuthRoute
+        data object NewPin : AuthRoute
 
         @Serializable
-        data object SignUp: AuthRoute
+        data object SignUp : AuthRoute
 
         @Serializable
-        data object SignIn: AuthRoute
-
-
-        @Serializable
-        data object SignChoice: AuthRoute
+        data object SignIn : AuthRoute
 
 
         @Serializable
-        data object ChooseInterest: AuthRoute
+        data object SignChoice : AuthRoute
 
 
         @Serializable
-        data object FillProfile: AuthRoute
+        data object ChooseInterest : AuthRoute
+
+
+        @Serializable
+        data object FillProfile : AuthRoute
     }
 
-    sealed interface DashboardRoute{
-        @Serializable
-        data object Home:DashboardRoute
-    }
+    sealed interface DashboardRoute {
 
+        @Serializable
+        data object Pin : DashboardRoute
+
+        @Serializable
+        data object Home : DashboardRoute
+    }
 
 
 }

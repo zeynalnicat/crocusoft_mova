@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,12 +33,13 @@ import kotlinx.coroutines.flow.SharedFlow
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CreateNewPinContent(
-    postIntent: (CreateNewPinContract.Intent) -> Unit,
-    state: CreateNewPinContract.State,
-    effect: SharedFlow<CreateNewPinContract.Effect>,
+fun PinContent(
+    postIntent: (PinContract.Intent) -> Unit,
+    state: PinContract.State,
+    effect: SharedFlow<PinContract.Effect>,
     onNavigateHome: () -> Unit,
     onNavigateBack: () -> Unit,
+    isNewPinScreen: Boolean = true,
 ) {
 
     val scrollState = rememberScrollState()
@@ -50,8 +50,8 @@ fun CreateNewPinContent(
     LaunchedEffect(effect) {
         effect.collect {
             when (it) {
-                CreateNewPinContract.Effect.NavigateHome -> onNavigateHome()
-                is CreateNewPinContract.Effect.ShowError -> snackBarHostState.showSnackbar(it.message)
+                PinContract.Effect.NavigateHome -> onNavigateHome()
+                is PinContract.Effect.ShowError -> snackBarHostState.showSnackbar(it.message)
             }
         }
     }
@@ -60,10 +60,12 @@ fun CreateNewPinContent(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         containerColor = colorResource(Colors.primary),
         topBar = {
-            AppTopBar(
-                prefixAction = onNavigateBack,
-                title = stringResource(Strings.create_new_pin)
-            )
+            if (isNewPinScreen) {
+                AppTopBar(
+                    prefixAction = onNavigateBack,
+                    title = stringResource(Strings.create_new_pin)
+                )
+            }
         }
     ) {
         Box(
@@ -79,8 +81,15 @@ fun CreateNewPinContent(
                     .verticalScroll(scrollState)
                     .padding(BaseTheme.dimens.dp6)
             ) {
+
+                if (!isNewPinScreen) {
+                    Text(
+                        text = state.error,
+                        style = BaseTheme.textStyle.t16Bold.copy(color = colorResource(Colors.secondary))
+                    )
+                }
                 Text(
-                    text = stringResource(Strings.new_pin_description),
+                    text = stringResource(if (isNewPinScreen) Strings.new_pin_description else Strings.enter_pin),
                     style = BaseTheme.textStyle.t18SemiBold
                 )
 
@@ -91,7 +100,7 @@ fun CreateNewPinContent(
                     otpValues = state.pin,
                     onValueChange = { index, pin ->
                         postIntent(
-                            CreateNewPinContract.Intent.SetPin(
+                            PinContract.Intent.SetPin(
                                 index,
                                 pin
                             )
@@ -106,7 +115,9 @@ fun CreateNewPinContent(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
                 action = {
-                    postIntent(CreateNewPinContract.Intent.Submit)
+                    if (isNewPinScreen) postIntent(PinContract.Intent.Submit) else postIntent(
+                        PinContract.Intent.EnterPin
+                    )
                 },
                 text = stringResource(Strings.btn_continue),
                 color = colorResource(Colors.secondary)
