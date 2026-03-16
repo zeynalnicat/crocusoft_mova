@@ -19,51 +19,52 @@ class ChooseInterestRepositoryImpl @Inject constructor(
 
     override suspend fun addTags(tags: List<String>): ContentState<Unit> =
         suspendCancellableCoroutine { continuation ->
-            try {
-
-
-                firebaseAuth.currentUser?.let { user ->
-
-                    firebaseCollection.whereEqualTo("userId", user.uid).get().addOnSuccessListener {
-                        if (!it.isEmpty) {
-                            continuation.resume(ContentState.Success(Unit))
-                            return@addOnSuccessListener
-                        }
-                    }
-
-                    firebaseCollection.add(
-                        hashMapOf(
-                            "userId" to user.uid,
-                            "tags" to tags,
-                            "email" to user.email,
-                            "fullName" to "",
-                            "gender" to "",
-                            "nickname" to "",
-                            "phoneNumber" to "",
-                            "pin" to "",
-                            "profileUri" to "",
-
-
-                            )
-                    ).addOnSuccessListener {
-                        continuation.resume(ContentState.Success(Unit))
-
-                    }
-                        .addOnFailureListener {
-                            continuation.resume(
-                                ContentState.Error(
-                                    it.message ?: AppErrors.unknownError
-                                )
-                            )
-                        }
-                }
-
-
-            } catch (e: Exception) {
+            val user = firebaseAuth.currentUser
+            if (user == null) {
                 if (continuation.isActive) {
-                    continuation.resume(ContentState.Error(e.message ?: AppErrors.unknownError))
+                    continuation.resume(ContentState.Error(AppErrors.userNotFound))
                 }
+                return@suspendCancellableCoroutine
             }
 
+            firebaseCollection.whereEqualTo("userId", user.uid).get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        if (continuation.isActive) {
+                            continuation.resume(ContentState.Success(Unit))
+                        }
+                    } else {
+                        firebaseCollection.add(
+                            hashMapOf(
+                                "userId" to user.uid,
+                                "tags" to tags,
+                                "email" to user.email,
+                                "fullName" to "",
+                                "gender" to "",
+                                "nickname" to "",
+                                "phoneNumber" to "",
+                                "pin" to "",
+                                "profileUri" to "",
+                            )
+                        ).addOnSuccessListener {
+                            if (continuation.isActive) {
+                                continuation.resume(ContentState.Success(Unit))
+                            }
+                        }.addOnFailureListener { e ->
+                            if (continuation.isActive) {
+                                continuation.resume(
+                                    ContentState.Error(e.message ?: AppErrors.unknownError)
+                                )
+                            }
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        continuation.resume(
+                            ContentState.Error(e.message ?: AppErrors.unknownError)
+                        )
+                    }
+                }
         }
 }
