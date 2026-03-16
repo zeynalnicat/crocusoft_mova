@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.crocusoft_mova.presentation.auth.choose_interest.ChooseInterestView
-import com.example.crocusoft_mova.presentation.auth.create_new_pin.PinView
+import com.example.crocusoft_mova.presentation.auth.pin.PinView
 import com.example.crocusoft_mova.presentation.auth.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.auth.signin.SignInView

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import jakarta.inject.Inject
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
 class PinRepositoryImpl @Inject constructor(
@@ -66,8 +67,26 @@ class PinRepositoryImpl @Inject constructor(
                 collection.whereEqualTo("userId", user.uid).get()
                     .addOnSuccessListener { querySnapshots ->
                         val snapshots = querySnapshots.documents[0]
+
+                        if (snapshots.get("pin") == "") {
+
+                            val ref = snapshots.reference.path
+                            firestore.document(ref).update("pin", pin).addOnSuccessListener {
+                                continuation.resume(ContentState.Success(Unit))
+
+                            }
+                                .addOnFailureListener {
+                                    continuation.resume(
+                                        ContentState.Error(
+                                            it.message ?: AppErrors.unknownError
+                                        )
+                                    )
+                                }
+                            return@addOnSuccessListener
+                        }
                         if (snapshots.get("pin") == pin) {
                             continuation.resume(ContentState.Success(Unit))
+
                         } else {
                             continuation.resume(ContentState.Error(AppErrors.wrongPin))
                         }

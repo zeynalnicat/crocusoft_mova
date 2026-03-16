@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.auth.create_new_pin
+package com.example.crocusoft_mova.presentation.auth.pin
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

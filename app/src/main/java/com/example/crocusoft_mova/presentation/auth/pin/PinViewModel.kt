@@ -1,9 +1,8 @@
-package com.example.crocusoft_mova.presentation.auth.create_new_pin
+package com.example.crocusoft_mova.presentation.auth.pin
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.CreatePinUseCase
 import com.example.crocusoft_mova.domain.usecases.EnterPinUseCase

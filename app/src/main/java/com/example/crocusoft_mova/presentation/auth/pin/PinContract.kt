@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.auth.create_new_pin
+package com.example.crocusoft_mova.presentation.auth.pin
 
 sealed interface PinContract {
 

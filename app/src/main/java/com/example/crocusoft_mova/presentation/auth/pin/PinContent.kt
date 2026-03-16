@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.auth.create_new_pin
+package com.example.crocusoft_mova.presentation.auth.pin
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,7 @@ import com.example.crocusoft_mova.common.components.AppTopBar
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Strings
-import com.example.crocusoft_mova.presentation.auth.create_new_pin.components.OtpInput
+import com.example.crocusoft_mova.presentation.auth.pin.components.OtpInput
 import kotlinx.coroutines.flow.SharedFlow
 
 

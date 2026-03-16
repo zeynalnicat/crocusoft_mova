@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.auth.create_new_pin.components
+package com.example.crocusoft_mova.presentation.auth.pin.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
