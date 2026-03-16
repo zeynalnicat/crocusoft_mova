@@ -18,11 +18,17 @@ import com.google.firebase.auth.FirebaseAuth
 fun AuthRoutes(
     innerPadding: PaddingValues,
     navController: NavHostController,
+    firebaseAuth: FirebaseAuth
 ) {
+
+    val currentUser = firebaseAuth.currentUser
+
+    val startDestination =
+        if (currentUser == null) AppRoutes.AuthRoute.SignChoice else AppRoutes.DashboardRoute.Pin
 
 
     NavHost(
-        startDestination = AppRoutes.AuthRoute.SignChoice,
+        startDestination = startDestination,
         navController = navController,
 
         ) {
@@ -64,6 +70,20 @@ fun AuthRoutes(
         composable<AppRoutes.DashboardRoute.Home> {
             HomeView(
                 navController = navController
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.Home> {
+            HomeView(
+
+                navController = navController
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.Pin> {
+            PinView(
+                navController = navController,
+                isNewPinScreen = false
             )
         }
     }

@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
+
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +27,6 @@ import com.example.crocusoft_mova.core.BottomSheetNavigations
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.ui.navigation.AppRoutes
 import com.example.crocusoft_mova.ui.navigation.AuthRoutes
-import com.example.crocusoft_mova.ui.navigation.DashboardRoutes
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -43,6 +40,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
     val currentRoute = currentBackStackEntry?.destination?.route
 
     val hiddenRoutes = listOf(
+        AppRoutes.AuthRoute.SignChoice::class.qualifiedName,
         AppRoutes.AuthRoute.NewPin::class.qualifiedName,
         AppRoutes.AuthRoute.SignUp::class.qualifiedName,
         AppRoutes.AuthRoute.SignIn::class.qualifiedName,
@@ -113,19 +111,11 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         containerColor = colorResource(Colors.primary),
         modifier = Modifier.padding(innerPaddingValues)
     ) {
-
-        if (firebaseAuth.currentUser == null
-        ) {
             AuthRoutes(
                 innerPadding = innerPaddingValues,
                 navController = navController,
-            )
-        } else {
-            DashboardRoutes(
-                navController = navController
+                firebaseAuth = firebaseAuth
             )
         }
 
     }
-
-}
