@@ -1,6 +1,7 @@
 package com.example.crocusoft_mova.presentation
 
 import android.annotation.SuppressLint
+import android.net.http.SslCertificate.saveState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,15 +10,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButtonDefaults.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.crocusoft_mova.core.BaseTheme
+import com.example.crocusoft_mova.core.BottomSheetNavigations
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.ui.navigation.AppRoutes
 import com.example.crocusoft_mova.ui.navigation.AuthRoutes
@@ -34,19 +42,71 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
-    val dashboardRoutes = listOf(
-        AppRoutes.DashboardRoute.Home
+    val hiddenRoutes = listOf(
+        AppRoutes.AuthRoute.NewPin::class.qualifiedName,
+        AppRoutes.AuthRoute.SignUp::class.qualifiedName,
+        AppRoutes.AuthRoute.SignIn::class.qualifiedName,
+        AppRoutes.AuthRoute.ChooseInterest::class.qualifiedName,
+        AppRoutes.AuthRoute.FillProfile::class.qualifiedName,
+        AppRoutes.DashboardRoute.Pin::class.qualifiedName
     )
 
     Scaffold(
         bottomBar = {
-            val hiddenRoutes = listOf(
-                AppRoutes.AuthRoute.NewPin.toString(),
-                AppRoutes.AuthRoute.SignUp.toString(),
-                AppRoutes.AuthRoute.SignIn.toString(),
-                AppRoutes.AuthRoute.ChooseInterest.toString(),
-                AppRoutes.AuthRoute.FillProfile.toString(),
-            )
+
+            if (currentRoute !in hiddenRoutes) {
+
+                Surface(
+                    color = Color.Transparent,
+                    tonalElevation = 0.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(BaseTheme.dimens.bottom_bar_height)
+                ) {
+
+                    NavigationBar(
+                        containerColor = colorResource(Colors.primary),
+                    ) {
+                        BottomSheetNavigations.navigations.forEach { route ->
+                            val isSelected =
+                                currentRoute == route.route::class.qualifiedName
+
+                            NavigationBarItem(
+                                selected = isSelected,
+                                onClick = {
+                                    if (!isSelected) {
+                                        navController.navigate(route.route)
+                                    }
+                                },
+                                icon = {
+                                    androidx.compose.material3.Icon(
+                                        contentDescription = route.title,
+                                        painter = painterResource(route.icon),
+                                        tint = if (isSelected)
+                                            colorResource(Colors.secondary)
+                                        else
+                                            colorResource(Colors.gray)
+                                    )
+                                },
+                                label = {
+                                    Text(
+                                        text = route.title,
+                                        style = BaseTheme.textStyle.t10Bold.copy(
+                                            color = if (isSelected) colorResource(
+                                                Colors.secondary
+                                            ) else colorResource(Colors.gray)
+                                        )
+                                    )
+                                },
+                                alwaysShowLabel = true,
+                                colors = NavigationBarItemDefaults.colors(
+                                    indicatorColor = Color.Transparent,
+                                )
+                            )
+                        }
+                    }
+                }
+            }
 
 
         },

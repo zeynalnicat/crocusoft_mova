@@ -19,6 +19,8 @@ object Dimens {
 
     val radius = 100.dp
 
+
+    val spMin = 10.sp
     val sp0 = 12.sp // formula : index -> x - 12 /2
 
     val sp1 = 14.sp
@@ -63,6 +65,7 @@ object Dimens {
     val dp15 = 60.dp
 
     val dp16 = 64.dp
+
 
 
 }

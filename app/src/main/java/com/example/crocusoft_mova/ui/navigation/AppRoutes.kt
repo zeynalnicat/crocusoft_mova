@@ -31,6 +31,17 @@ sealed interface AppRoutes {
     sealed interface DashboardRoute {
 
         @Serializable
+        data object Explore:DashboardRoute
+
+        @Serializable
+        data object MyList:DashboardRoute
+
+        @Serializable
+        data object Profile:DashboardRoute
+
+        @Serializable
+        data object Download: DashboardRoute
+        @Serializable
         data object Pin : DashboardRoute
 
         @Serializable
