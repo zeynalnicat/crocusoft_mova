@@ -1,9 +1,8 @@
-package com.example.crocusoft_mova.presentation.dashboard.my_list
+package com.example.crocusoft_mova.presentation.dashboard.download
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -21,9 +20,9 @@ import com.example.crocusoft_mova.core.Strings
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyListContent(
-    state: MyListContract.State,
-    postIntent: (MyListContract.Intent) -> Unit
+fun DownloadContent(
+    state: DownloadContract.State,
+    postIntent: (DownloadContract.Intent) -> Unit
 ) {
 
     Scaffold(
@@ -33,7 +32,7 @@ fun MyListContent(
                 modifier = Modifier.padding(top = BaseTheme.dimens.dp2),
                 prefixIcon = Drawables.logo,
                 prefixColor = Colors.secondary,
-                title = stringResource(Strings.my_list),
+                title = stringResource(Strings.download),
                 prefixAction = {},
                 isSuffixIconVisible = true,
                 suffixIcon = {
@@ -54,17 +53,15 @@ fun MyListContent(
     ) {
 
         if (state.movies.isEmpty()) {
-
             NotAnyComponent(
                 imageRes = Drawables.empty_list,
-                title = stringResource(Strings.empty_list),
-                description = stringResource(Strings.empty_list_description)
+                title = stringResource(Strings.empty_download),
+                description = stringResource(Strings.empty_download_description)
             )
 
         }
 
 
     }
-
 
 }

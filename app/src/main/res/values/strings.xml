@@ -41,4 +41,8 @@ more secure.</string>
     <string name="empty_list">Your List is Empty</string>
     <string name="empty_list_description">It seems that you haven\'t added
 any movies to the list</string>
+    <string name="download">Download</string>
+    <string name="empty_download">Download List is Empty</string>
+    <string name="empty_download_description">It seems that you haven\'t downloaded
+any movies yet</string>"
 </resources>

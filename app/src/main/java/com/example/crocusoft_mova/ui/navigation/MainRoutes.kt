@@ -11,6 +11,7 @@ import com.example.crocusoft_mova.presentation.auth.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.auth.signin.SignInView
 import com.example.crocusoft_mova.presentation.auth.signup.SignUpView
+import com.example.crocusoft_mova.presentation.dashboard.download.DownloadView
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
@@ -99,6 +100,12 @@ fun MainRoutes(
 
         composable<AppRoutes.DashboardRoute.MyList> {
             MyListView(
+                navController = navController,
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.Download> {
+            DownloadView(
                 navController = navController,
             )
         }
