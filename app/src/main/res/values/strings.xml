@@ -37,4 +37,8 @@ more secure.</string>
     <string name="search">Search</string>
     <string name="not_found">Not Found</string>
     <string name="not_found_description">Sorry, the keyword you entered could not be found. Try to check again or search with other keywords.</string>
+
+    <string name="empty_list">Your List is Empty</string>
+    <string name="empty_list_description">It seems that you haven\'t added
+any movies to the list</string>
 </resources>

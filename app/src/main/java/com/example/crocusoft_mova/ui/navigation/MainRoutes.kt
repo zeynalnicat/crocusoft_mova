@@ -13,6 +13,7 @@ import com.example.crocusoft_mova.presentation.auth.signin.SignInView
 import com.example.crocusoft_mova.presentation.auth.signup.SignUpView
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
+import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -94,6 +95,15 @@ fun MainRoutes(
                 navController = navController,
             )
         }
+
+
+        composable<AppRoutes.DashboardRoute.MyList> {
+            MyListView(
+                navController = navController,
+            )
+        }
+
+
     }
 
 

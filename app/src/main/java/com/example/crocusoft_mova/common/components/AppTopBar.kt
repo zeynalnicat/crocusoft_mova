@@ -56,7 +56,7 @@ fun AppTopBar(
             if (title != null) {
                 Text(
                     text = title,
-                    style = BaseTextStyle.t24Bold
+                    style = BaseTextStyle.t18SemiBold
                 )
             }
 
