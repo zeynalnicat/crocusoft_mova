@@ -17,6 +17,7 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
+import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileContract
 
 @Composable
 fun SettingsItem(item: SettingsItemModel) {
@@ -65,26 +66,6 @@ data class SettingsItemModel(
 
 ) {
 
-    companion object {
-        val items = listOf<SettingsItemModel>(
-            SettingsItemModel(
-                icon = Drawables.profile,
-                titleRes = Strings.edit_profile,
-                action = {}),
-            SettingsItemModel(
-                icon = Drawables.icon_notification,
-                titleRes = Strings.notification,
-                action = {}),
-            SettingsItemModel(
-                icon = Drawables.download,
-                titleRes = Strings.download,
-                action = {}),
-            SettingsItemModel(
-                icon = Drawables.icon_help,
-                titleRes = Strings.help_center,
-                action = {}),
 
-            )
-    }
 }
 

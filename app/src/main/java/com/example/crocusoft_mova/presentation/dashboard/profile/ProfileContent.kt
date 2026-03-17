@@ -10,8 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -27,15 +31,61 @@ import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
 import com.example.crocusoft_mova.presentation.dashboard.profile.components.SettingsItem
 import com.example.crocusoft_mova.presentation.dashboard.profile.components.SettingsItemModel
+import kotlinx.coroutines.flow.SharedFlow
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileContent(
     state: ProfileContract.State,
-    postIntent: (ProfileContract.Intent) -> Unit
+    effect: SharedFlow<ProfileContract.Effect>,
+    postIntent: (ProfileContract.Intent) -> Unit,
+    onNavigateSignChoice: () -> Unit,
 ) {
+
+    val snackBarHostState = remember { SnackbarHostState() }
+
+    val settingItems = listOf(
+        SettingsItemModel(
+            icon = Drawables.profile,
+            titleRes = Strings.edit_profile,
+            action = {}),
+        SettingsItemModel(
+            icon = Drawables.icon_notification,
+            titleRes = Strings.notification,
+            action = {}),
+        SettingsItemModel(
+            icon = Drawables.download,
+            titleRes = Strings.download,
+            action = {}),
+        SettingsItemModel(
+            icon = Drawables.icon_help,
+            titleRes = Strings.help_center,
+            action = {}),
+        SettingsItemModel(
+            icon = Drawables.icon_help,
+            titleRes = Strings.log_out,
+            action = {
+                postIntent(
+                    ProfileContract.Intent.LogOut
+                )
+            }),
+
+        )
+
+
+    LaunchedEffect(effect) {
+        effect.collect {
+            when (it) {
+                ProfileContract.Effect.NavigateSignChoice -> onNavigateSignChoice()
+                is ProfileContract.Effect.ShowError -> snackBarHostState.showSnackbar(it.message)
+            }
+        }
+
+    }
+
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         modifier = Modifier.fillMaxSize(),
         topBar = {
             AppTopBar(
@@ -78,17 +128,23 @@ fun ProfileContent(
             }
 
 
-            item{
+            item {
                 VerticalSpacer(BaseTheme.dimens.dp6)
             }
 
             items(
-                count = SettingsItemModel.items.size
+                count = settingItems.size
             ) {
                 SettingsItem(
-                    item = SettingsItemModel.items[it]
+                    item = settingItems[it]
                 )
             }
+
+            item {
+                VerticalSpacer(BaseTheme.dimens.dp6)
+
+            }
+
 
         }
 

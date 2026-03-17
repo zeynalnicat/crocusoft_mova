@@ -7,6 +7,16 @@ sealed interface ProfileContract {
     sealed interface Intent {
         data object LoadProfile : Intent
 
+        data object LogOut : Intent
+
+    }
+
+    sealed interface Effect {
+        data class ShowError(val message: String) : Effect
+
+        data object NavigateSignChoice : Effect
+
+
     }
 
     data class State(
