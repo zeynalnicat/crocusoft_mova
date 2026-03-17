@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.crocusoft_mova.common.components.AppTextField
+import com.example.crocusoft_mova.common.components.NotAnyComponent
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
@@ -33,5 +34,13 @@ fun ExploreContent(
             prefixIcon = Drawables.icon_search,
             placeholder = stringResource(Strings.search)
         )
+
+        if (state.movies.isEmpty()) {
+            NotAnyComponent(
+                imageRes = Drawables.not_found,
+                title = stringResource(Strings.not_found),
+                description = stringResource(Strings.not_found_description)
+            )
+        }
     }
 }

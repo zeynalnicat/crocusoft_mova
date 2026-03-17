@@ -35,4 +35,6 @@ more secure.</string>
     <string name="play">Play</string>
     <string name="my_list">My List</string>
     <string name="search">Search</string>
+    <string name="not_found">Not Found</string>
+    <string name="not_found_description">Sorry, the keyword you entered could not be found. Try to check again or search with other keywords.</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.example.crocusoft_mova.presentation.dashboard.explore
 
+import com.example.crocusoft_mova.domain.models.MovieUiModel
+
 sealed interface ExploreContract {
 
     sealed interface Intent {
@@ -7,6 +9,8 @@ sealed interface ExploreContract {
     }
 
     data class State(
-        val searchQuery: String = ""
+        val searchQuery: String = "",
+        val movies: List<MovieUiModel> = emptyList()
+
     )
 }
