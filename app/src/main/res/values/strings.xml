@@ -45,4 +45,9 @@ any movies to the list</string>
     <string name="empty_download">Download List is Empty</string>
     <string name="empty_download_description">It seems that you haven\'t downloaded
 any movies yet</string>"
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="security">Security</string>
+    <string name="help_center">Help Center</string>
+    <string name="notification">Notification</string>
 </resources>

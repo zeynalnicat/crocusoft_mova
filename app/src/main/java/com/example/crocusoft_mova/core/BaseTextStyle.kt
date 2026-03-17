@@ -21,6 +21,12 @@ object BaseTextStyle {
     )
 
 
+    val t20Bold = TextStyle(
+        color = White,
+        fontSize = BaseTheme.dimens.sp4,
+        fontWeight = FontWeight.W700
+    )
+
     val t36Bold = TextStyle(
         color = White,
         fontSize = BaseTheme.dimens.sp12,

@@ -30,7 +30,10 @@ object Dimens {
 
     val sp3 = 18.sp
 
+    val sp4 = 20.sp
+
     val sp6 = 24.sp
+
     val sp12 = 32.sp
 
     val sp18 = 48.sp

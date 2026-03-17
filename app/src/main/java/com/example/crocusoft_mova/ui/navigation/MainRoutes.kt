@@ -15,6 +15,7 @@ import com.example.crocusoft_mova.presentation.dashboard.download.DownloadView
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
+import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -106,6 +107,12 @@ fun MainRoutes(
 
         composable<AppRoutes.DashboardRoute.Download> {
             DownloadView(
+                navController = navController,
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.Profile> {
+            ProfileView(
                 navController = navController,
             )
         }
