@@ -31,4 +31,23 @@
     <string name="create_new_pin">Create New PIN</string>
     <string name="new_pin_description">Add a PIN number to make your account
 more secure.</string>
+    <string name="enter_pin">Enter your PIN number to continue</string>
+    <string name="play">Play</string>
+    <string name="my_list">My List</string>
+    <string name="search">Search</string>
+    <string name="not_found">Not Found</string>
+    <string name="not_found_description">Sorry, the keyword you entered could not be found. Try to check again or search with other keywords.</string>
+
+    <string name="empty_list">Your List is Empty</string>
+    <string name="empty_list_description">It seems that you haven\'t added
+any movies to the list</string>
+    <string name="download">Download</string>
+    <string name="empty_download">Download List is Empty</string>
+    <string name="empty_download_description">It seems that you haven\'t downloaded
+any movies yet</string>"
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="security">Security</string>
+    <string name="help_center">Help Center</string>
+    <string name="notification">Notification</string>
 </resources>

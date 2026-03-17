@@ -7,7 +7,6 @@ sealed interface FillProfileContract {
     sealed interface Intent {
         data class SetFullName(val fullName: String) : Intent
         data class SetNickName(val nickName: String) : Intent
-        data class SetEmail(val email: String) : Intent
         data class SetPhoneNumber(val phoneNumber:String):Intent
         data class SetGender(val gender:String):Intent
 
@@ -21,6 +20,8 @@ sealed interface FillProfileContract {
 
     sealed interface Effect {
         data object NavigatePin: Effect
+
+        data class ShowError(val message:String):Effect
     }
 
 
@@ -28,7 +29,6 @@ sealed interface FillProfileContract {
     data class State(
         val fullName: String = "",
         val nickName: String = "",
-        val email: String = "",
         val phoneNumber:String = "",
         val gender: String = "",
         val imgUri: Uri? = null

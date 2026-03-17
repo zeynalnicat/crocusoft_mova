@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,15 +23,18 @@ import com.example.crocusoft_mova.core.Drawables
 
 @Composable
 fun AppTopBar(
+    modifier: Modifier = Modifier,
     prefixAction: () -> Unit,
-    suffixIcon: Int? = null,
-    suffixAction: () -> Unit = {},
+    prefixIcon: Int = Drawables.back,
+    prefixColor: Int = Colors.white,
+    suffixIcon: @Composable () -> Unit = {},
+    isSuffixIconVisible: Boolean = false,
     title: String? = null,
 ) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(height = BaseTheme.dimens.dp7)
     ) {
@@ -43,27 +47,22 @@ fun AppTopBar(
                 onClick = prefixAction
             ) {
                 Icon(
-                    painter = painterResource(Drawables.back),
+                    painter = painterResource(prefixIcon),
                     contentDescription = null,
-                    tint = colorResource(Colors.white)
+                    tint = colorResource(prefixColor)
                 )
             }
 
             if (title != null) {
                 Text(
                     text = title,
-                    style = BaseTextStyle.t24Bold
+                    style = BaseTextStyle.t18SemiBold
                 )
             }
 
         }
-        if (suffixIcon != null) {
-            IconButton(
-                onClick = suffixAction
-            ) {
-                Icon(painter = painterResource(suffixIcon), contentDescription = null)
-            }
-
+        if (isSuffixIconVisible) {
+            suffixIcon()
         }
 
     }
@@ -74,6 +73,7 @@ fun AppTopBar(
 fun AppTopBarPreview() {
     AppTopBar(
         prefixAction = {},
+        suffixIcon = {}
     )
 }
 

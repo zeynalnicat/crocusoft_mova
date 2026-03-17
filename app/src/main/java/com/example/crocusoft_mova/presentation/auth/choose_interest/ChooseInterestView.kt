@@ -1,6 +1,5 @@
 package com.example.crocusoft_mova.presentation.auth.choose_interest
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -22,7 +21,8 @@ fun ChooseInterestView(
         state = state,
         postIntent = viewModel::onIntent,
         effect = viewModel.effect,
-        onNavigateFillProfile = {navController.navigate(AppRoutes.AuthRoute.FillProfile)}
+        onNavigateFillProfile = { navController.navigate(AppRoutes.AuthRoute.FillProfile) },
+        onNavigateHome = { navController.navigate(AppRoutes.DashboardRoute.Home) }
     )
 
 }

@@ -1,6 +1,6 @@
 package com.example.crocusoft_mova.data.repository
 
-import com.example.crocusoft_mova.core.AppErrors
+import com.example.crocusoft_mova.core.constants.AppErrors
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.repository.SignUpRepository
 import com.google.firebase.auth.FirebaseAuth

@@ -18,6 +18,8 @@ sealed interface SignInContract {
 
     sealed interface UiEffect {
         data object NavigateToChoose : UiEffect
+
+        data object NavigateHome : UiEffect
         data class ShowError(val message: String) : UiEffect
     }
 

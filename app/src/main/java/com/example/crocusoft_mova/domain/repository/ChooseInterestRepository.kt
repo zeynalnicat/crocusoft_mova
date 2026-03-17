@@ -4,5 +4,7 @@ import com.example.crocusoft_mova.core.ContentState
 
 interface ChooseInterestRepository {
 
-    suspend fun checkWhetherExist(): ContentState<Boolean>
+
+
+    suspend fun addTags(tags: List<String>): ContentState<Unit>
 }
