@@ -8,5 +8,7 @@ fun MovieModel.toUiModel(): MovieUiModel = MovieUiModel(
     id = id,
     title = title,
     vote_average = vote_average,
-    release_date = release_date
+    release_date = release_date,
+    description = original_title,
+    image = poster_path
 )

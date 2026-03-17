@@ -29,7 +29,6 @@ import com.example.crocusoft_mova.common.components.GenderSelector
 import com.example.crocusoft_mova.common.components.ProfileAvatar
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
-import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
 import kotlinx.coroutines.flow.SharedFlow
 import java.security.Key
@@ -61,7 +60,7 @@ fun FillProfileContent(
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         containerColor = colorResource(Colors.primary),
         topBar = {
-            AppTopBar({
+            AppTopBar(prefixAction = {
                 onNavigateBack()
             }, title = stringResource(Strings.fill_profile))
         }

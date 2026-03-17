@@ -32,4 +32,6 @@
     <string name="new_pin_description">Add a PIN number to make your account
 more secure.</string>
     <string name="enter_pin">Enter your PIN number to continue</string>
+    <string name="play">Play</string>
+    <string name="my_list">My List</string>
 </resources>

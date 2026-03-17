@@ -108,13 +108,17 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
 
         },
         containerColor = colorResource(Colors.primary),
-        modifier = Modifier.padding(innerPaddingValues)
+        modifier = Modifier.padding(
+            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName) PaddingValues(
+                0.dp
+            ) else innerPaddingValues
+        )
     ) {
-            AuthRoutes(
-                innerPadding = innerPaddingValues,
-                navController = navController,
-                firebaseAuth = firebaseAuth
-            )
-        }
-
+        AuthRoutes(
+            innerPadding = innerPaddingValues,
+            navController = navController,
+            firebaseAuth = firebaseAuth
+        )
     }
+
+}

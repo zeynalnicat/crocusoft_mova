@@ -2,7 +2,6 @@ package com.example.crocusoft_mova.data.service.remote
 
 import com.example.crocusoft_mova.core.constants.ApiConstants
 import com.example.crocusoft_mova.data.service.remote.model.ResponseModel
-import io.github.cdimascio.dotenv.dotenv
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get

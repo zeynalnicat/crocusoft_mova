@@ -25,6 +25,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import com.example.crocusoft_mova.core.BaseTextStyle
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
@@ -34,26 +35,35 @@ import com.example.crocusoft_mova.core.Strings
 
 @Composable
 fun AppIconButton(
-    icon:Int,
+    icon: Int,
     modifier: Modifier = Modifier,
-    textRes:Int? = null,
-    onClick: ()->Unit ,
-){
+    borderColor: Int = Colors.dark2,
+    color: Int = Colors.primary,
+    textRes: Int? = null,
+    radius: Dp = BaseTheme.dimens.dp4,
+    horizontalPadding: Dp = BaseTheme.dimens.dp8,
+    verticalPadding: Dp = BaseTheme.dimens.dp4Half,
+    iconSize: Dp = BaseTheme.dimens.dp6,
+    onClick: () -> Unit,
+) {
 
     Box(
-         modifier = modifier
-             .clip(RoundedCornerShape(BaseTheme.dimens.dp4))
-             .border(
-                 border = BorderStroke(width = BaseTheme.dimens.dp01, color = colorResource(Colors.dark2)),
-                 shape = RoundedCornerShape(BaseTheme.dimens.dp4)
-             )
-             .background(color = colorResource(Colors.primary))
-             .padding(horizontal = BaseTheme.dimens.dp8, vertical = BaseTheme.dimens.dp4Half)
-             .clickable(
-                 onClick = onClick
+        modifier = modifier
+            .clip(RoundedCornerShape(radius))
+            .border(
+                border = BorderStroke(
+                    width = BaseTheme.dimens.dp01,
+                    color = colorResource(borderColor)
+                ),
+                shape = RoundedCornerShape(radius)
+            )
+            .background(color = colorResource(color))
+            .padding(horizontal = horizontalPadding, vertical = verticalPadding)
+            .clickable(
+                onClick = onClick
 
-             )
-    ){
+            )
+    ) {
 
         Row(
             modifier = modifier,
@@ -61,12 +71,12 @@ fun AppIconButton(
             horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2)
         ) {
             Image(
-                modifier = Modifier.size(BaseTheme.dimens.dp6),
+                modifier = Modifier.size(iconSize),
                 painter = painterResource(icon),
                 contentDescription = null
             )
 
-            if(textRes!=null){
+            if (textRes != null) {
                 Text(
                     text = stringResource(textRes),
                     style = BaseTextStyle.t14SemiBold
@@ -80,7 +90,7 @@ fun AppIconButton(
 
 @Composable
 @Preview
-fun AppIconButtonPreview(){
+fun AppIconButtonPreview() {
     AppIconButton(
         modifier = Modifier.fillMaxWidth(),
         icon = Drawables.facebook,
