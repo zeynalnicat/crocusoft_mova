@@ -8,4 +8,6 @@ interface ApiService {
     suspend fun fetchDiscoverMovies(): ResponseModel
 
     suspend fun fetchDiscoverTv(): ResponseModel
+
+    suspend fun searchMovie(query:String): ResponseModel
 }

@@ -5,8 +5,9 @@ import com.example.crocusoft_mova.data.service.remote.model.ResponseModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.parameter
 import io.ktor.http.HttpHeaders
-import io.ktor.http.headers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -18,10 +19,9 @@ class KtorService @Inject constructor(
     override suspend fun fetchDiscoverMovies(): ResponseModel {
         return httpClient
             .get(ApiConstants.DISCOVER) {
-                headers {
-                    append(HttpHeaders.Accept, "application/json")
-                    append(HttpHeaders.Authorization, "Bearer $api_key")
-                }
+                header(HttpHeaders.Authorization, "Bearer $api_key")
+                header(HttpHeaders.Accept, "application/json")
+                parameter("page", 1)
             }
             .body()
     }
@@ -29,11 +29,19 @@ class KtorService @Inject constructor(
     override suspend fun fetchDiscoverTv(): ResponseModel {
         return httpClient
             .get(ApiConstants.DISCOVER_TV) {
-                headers {
-                    append(HttpHeaders.Accept, "application/json")
-                    append(HttpHeaders.Authorization, "Bearer $api_key")
-                }
+                header(HttpHeaders.Authorization, "Bearer $api_key")
+                header(HttpHeaders.Accept, "application/json")
+                parameter("page", 1)
             }
             .body()
+    }
+
+    override suspend fun searchMovie(query: String): ResponseModel {
+        return httpClient.get(ApiConstants.SEARCH) {
+            header(HttpHeaders.Authorization, "Bearer $api_key")
+            header(HttpHeaders.Accept, "application/json")
+            parameter("query", query)
+            parameter("page", 1)
+        }.body()
     }
 }

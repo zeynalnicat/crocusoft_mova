@@ -6,9 +6,9 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 
 fun MovieModel.toUiModel(): MovieUiModel = MovieUiModel(
     id = id,
-    title = title,
-    vote_average = vote_average,
-    release_date = release_date,
-    description = original_title,
-    image = poster_path
+    title = title ?:"",
+    vote_average = vote_average?: 0.0,
+    release_date = release_date ?: "",
+    description = original_title?:"",
+    image = poster_path ?: ""
 )

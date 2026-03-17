@@ -23,13 +23,19 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttp(): HttpClient = HttpClient(CIO) {
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+        encodeDefaults = true
+        isLenient = true
+        prettyPrint = true
+    }
+
+    @Singleton
+    @Provides
+    fun provideHttp(json: Json): HttpClient = HttpClient(CIO) {
         install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                coerceInputValues = true
-                encodeDefaults = true
-            })
+            json(json)
         }
         install(Logging) {
             level = LogLevel.ALL

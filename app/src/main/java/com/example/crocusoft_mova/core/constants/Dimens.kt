@@ -7,6 +7,7 @@ object Dimens {
 
 
 
+    val searched_item_height = 110.dp
     val bottom_bar_height = 90.dp
     val avatar_size = 140.dp
     val image_height = 200.dp
