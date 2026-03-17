@@ -11,11 +11,12 @@ import com.example.crocusoft_mova.presentation.auth.fill_profile.FillProfileView
 import com.example.crocusoft_mova.presentation.auth.login_choice.LoginChoiceView
 import com.example.crocusoft_mova.presentation.auth.signin.SignInView
 import com.example.crocusoft_mova.presentation.auth.signup.SignUpView
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AuthRoutes(
+fun MainRoutes(
     innerPadding: PaddingValues,
     navController: NavHostController,
     firebaseAuth: FirebaseAuth
@@ -84,6 +85,13 @@ fun AuthRoutes(
             PinView(
                 navController = navController,
                 isNewPinScreen = false
+            )
+        }
+
+
+        composable<AppRoutes.DashboardRoute.Explore> {
+            ExploreView(
+                navController = navController,
             )
         }
     }
