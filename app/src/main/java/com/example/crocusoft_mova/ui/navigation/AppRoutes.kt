@@ -6,6 +6,10 @@ sealed interface AppRoutes {
 
 
     sealed interface AuthRoute {
+
+        @Serializable
+        data object Splash: AuthRoute
+
         @Serializable
         data object NewPin : AuthRoute
 

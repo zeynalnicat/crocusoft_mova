@@ -20,6 +20,13 @@ object BaseTextStyle {
     val t10Bold = TextStyle(
         fontFamily = urbanistFont,
         fontSize = BaseTheme.dimens.spMin,
+        fontWeight = FontWeight.W700,
+
+        )
+    val t10 = TextStyle(
+        fontSize = BaseTheme.dimens.spMin,
+        fontWeight = FontWeight.W600,
+        color = White
     )
 
     val t12 = TextStyle(
@@ -27,6 +34,12 @@ object BaseTextStyle {
         fontSize = BaseTheme.dimens.sp0,
         fontWeight = FontWeight.W500,
         color = White
+    )
+
+    val t14 = TextStyle(
+        fontSize = BaseTheme.dimens.sp1,
+        fontWeight = FontWeight.W600,
+        color = Red
     )
 
 
