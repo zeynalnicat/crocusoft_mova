@@ -8,10 +8,29 @@ import com.example.crocusoft_mova.ui.theme.White
 object BaseTextStyle {
 
 
+    val t10Bold = TextStyle(
+        fontSize = BaseTheme.dimens.spMin,
+        fontWeight = FontWeight.W700,
+
+        )
+
+    val t12 = TextStyle(
+        fontSize = BaseTheme.dimens.sp0,
+        fontWeight = FontWeight.W500,
+        color = White
+    )
+
+
+    val t20Bold = TextStyle(
+        color = White,
+        fontSize = BaseTheme.dimens.sp4,
+        fontWeight = FontWeight.W700
+    )
+
     val t36Bold = TextStyle(
-         color = White,
-         fontSize = BaseTheme.dimens.sp12,
-         fontWeight = FontWeight.W700,
+        color = White,
+        fontSize = BaseTheme.dimens.sp12,
+        fontWeight = FontWeight.W700,
     )
 
     val t48Bold = TextStyle(
@@ -38,7 +57,7 @@ object BaseTextStyle {
         fontWeight = FontWeight.W500
     )
 
-    val t18SemiBold =  TextStyle(
+    val t18SemiBold = TextStyle(
         color = White,
         fontSize = BaseTheme.dimens.sp3,
         fontWeight = FontWeight.W600

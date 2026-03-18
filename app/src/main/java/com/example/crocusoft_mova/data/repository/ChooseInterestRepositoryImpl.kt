@@ -1,8 +1,8 @@
 package com.example.crocusoft_mova.data.repository
 
-import com.example.crocusoft_mova.core.AppErrors
+import com.example.crocusoft_mova.core.constants.AppErrors
 import com.example.crocusoft_mova.core.ContentState
-import com.example.crocusoft_mova.core.FirebaseConstants
+import com.example.crocusoft_mova.core.constants.FirebaseConstants
 import com.example.crocusoft_mova.domain.repository.ChooseInterestRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,35 +17,68 @@ class ChooseInterestRepositoryImpl @Inject constructor(
 
     val firebaseCollection = firestore.collection(FirebaseConstants.userCollection)
 
-    override suspend fun checkWhetherExist(): ContentState<Boolean> =
+    override suspend fun addTags(tags: List<String>): ContentState<Unit> =
         suspendCancellableCoroutine { continuation ->
-
-            try {
-                firebaseAuth.currentUser?.let { userId ->
-                    firebaseCollection.whereEqualTo("userId", userId).get()
-                        .addOnSuccessListener { snapshots ->
-                            if (snapshots.isEmpty) {
-                                continuation.resume(ContentState.Success(false))
-                            } else {
-                                continuation.resume(ContentState.Success(true))
-                            }
-
-                        }
-                        .addOnFailureListener {
-                            continuation.resume(
-                                ContentState.Error(
-                                    it.message ?: AppErrors.unknownError
-                                )
-                            )
-                        }
-
-                }
-
-            } catch (e: Exception) {
+            val user = firebaseAuth.currentUser
+            if (user == null) {
                 if (continuation.isActive) {
-                    continuation.resume(ContentState.Error(e.message ?: AppErrors.unknownError))
+                    continuation.resume(ContentState.Error(AppErrors.userNotFound))
                 }
+                return@suspendCancellableCoroutine
             }
 
+            firebaseCollection.whereEqualTo("userId", user.uid).get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val ref = querySnapshot.documents[0].reference.path
+
+                        firestore.document(ref).update(
+                            "tags", tags
+                        ).addOnSuccessListener {
+                            if (continuation.isActive) {
+                                continuation.resume(ContentState.Success(Unit))
+                            }
+                        }
+                            .addOnFailureListener {
+                                if (continuation.isActive) {
+                                    continuation.resume(
+                                        ContentState.Error(it.message ?: AppErrors.unknownError)
+                                    )
+                                }
+                            }
+
+                    } else {
+                        firebaseCollection.add(
+                            hashMapOf(
+                                "userId" to user.uid,
+                                "tags" to tags,
+                                "email" to user.email,
+                                "fullName" to "",
+                                "gender" to "",
+                                "nickname" to "",
+                                "phoneNumber" to "",
+                                "pin" to "",
+                                "profileUri" to "",
+                            )
+                        ).addOnSuccessListener {
+                            if (continuation.isActive) {
+                                continuation.resume(ContentState.Success(Unit))
+                            }
+                        }.addOnFailureListener { e ->
+                            if (continuation.isActive) {
+                                continuation.resume(
+                                    ContentState.Error(e.message ?: AppErrors.unknownError)
+                                )
+                            }
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (continuation.isActive) {
+                        continuation.resume(
+                            ContentState.Error(e.message ?: AppErrors.unknownError)
+                        )
+                    }
+                }
         }
 }
