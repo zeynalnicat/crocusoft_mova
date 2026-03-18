@@ -45,13 +45,16 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         AppRoutes.AuthRoute.SignIn::class.qualifiedName,
         AppRoutes.AuthRoute.ChooseInterest::class.qualifiedName,
         AppRoutes.AuthRoute.FillProfile::class.qualifiedName,
-        AppRoutes.DashboardRoute.Pin::class.qualifiedName
+        AppRoutes.DashboardRoute.Pin::class.qualifiedName,
+        AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: ""
     )
 
     Scaffold(
         bottomBar = {
 
-            if (currentRoute !in hiddenRoutes) {
+            val isMovieDetail = currentRoute?.startsWith(AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: "") == true
+
+            if (currentRoute !in hiddenRoutes || !isMovieDetail) {
 
                 Surface(
                     color = Color.Transparent,
@@ -109,7 +112,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         },
         containerColor = colorResource(Colors.primary),
         modifier = Modifier.padding(
-            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName || currentRoute == AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName) PaddingValues(
+            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName || (currentRoute?.startsWith(AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: "") == true)) PaddingValues(
                 0.dp
             ) else innerPaddingValues
         )

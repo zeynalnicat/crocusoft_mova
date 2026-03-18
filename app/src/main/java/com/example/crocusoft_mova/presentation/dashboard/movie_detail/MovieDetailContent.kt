@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -38,6 +39,9 @@ fun MovieDetailContent(
         containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar(
+                modifier = Modifier
+                    .padding(horizontal = BaseTheme.dimens.dp3)
+                    .statusBarsPadding(),
                 prefixAction = onNavigateBack,
                 suffixIcon = {
                     Icon(
@@ -45,14 +49,15 @@ fun MovieDetailContent(
                         contentDescription = null,
                         tint = colorResource(Colors.white)
                     )
-                }
+                },
+                isSuffixIconVisible = true
             )
         },
 
         ) {
 
         LazyColumn(
-            modifier = Modifier.padding(BaseTheme.dimens.dp6)
+            modifier = Modifier.fillMaxSize()
         ) {
 
             item {
