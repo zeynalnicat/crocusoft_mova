@@ -45,7 +45,8 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         AppRoutes.AuthRoute.SignIn::class.qualifiedName,
         AppRoutes.AuthRoute.ChooseInterest::class.qualifiedName,
         AppRoutes.AuthRoute.FillProfile::class.qualifiedName,
-        AppRoutes.DashboardRoute.Pin::class.qualifiedName
+        AppRoutes.DashboardRoute.Pin::class.qualifiedName,
+        AppRoutes.AuthRoute.Splash::class.qualifiedName
     )
 
     Scaffold(

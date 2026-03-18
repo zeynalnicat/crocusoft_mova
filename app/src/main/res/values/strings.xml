@@ -20,7 +20,7 @@
     <string name="sign_password">Sign in with password</string>
     <string name="choose_interest">Choose Your Interest</string>
     <string name="choose_interest_description">Choose your interests and get the best movie recommendations. Don\'t worry, you can always change it later.</string>
-
+    <string name="top_movies">Top 10 Movies This Week</string>
     <string name="skip">Skip</string>
     <string name="btn_continue">Continue</string>
     <string name="fill_profile">Fill Your Profile</string>

@@ -16,7 +16,7 @@ import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
 import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileView
-import com.example.crocusoft_mova.presentation.splash.OnboardingScreen
+import com.example.crocusoft_mova.presentation.auth.splash.OnboardingView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -119,8 +119,8 @@ fun MainRoutes(
         }
 
         composable<AppRoutes.AuthRoute.Splash> {
-            OnboardingScreen(
-
+            OnboardingView(
+                navController = navController,
             )
         }
 

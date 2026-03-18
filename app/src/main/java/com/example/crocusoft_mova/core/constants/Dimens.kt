@@ -16,7 +16,8 @@ object Dimens {
 
     val movie_cover_width = 150.dp
     val movie_cover_height = 200.dp
-
+    val rate_box_width = 34.dp
+    val rate_box_height =24.dp
     val min_width = 90.dp
 
     val radius = 100.dp

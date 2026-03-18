@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.splash
+package com.example.crocusoft_mova.presentation.auth.splash.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,9 +55,4 @@ fun OnBoardingPage(
 
         }
     }
-}
-@Composable
-@Preview
-fun AppIconButtonPreview(){
-    OnBoardingPage("","")
 }

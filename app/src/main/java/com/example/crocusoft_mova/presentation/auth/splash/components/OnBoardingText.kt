@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.splash
+package com.example.crocusoft_mova.presentation.auth.splash.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
