@@ -31,4 +31,6 @@
     <string name="create_new_pin">Create New PIN</string>
     <string name="new_pin_description">Add a PIN number to make your account
 more secure.</string>
+    <string name="splash_first_title">Welcome to Mova</string>
+    <string name ="splash_first_description">The best movie streaming app of the century to make your days great!</string>
 </resources>

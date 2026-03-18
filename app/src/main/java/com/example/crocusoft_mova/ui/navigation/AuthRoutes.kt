@@ -26,7 +26,7 @@ fun AuthRoutes(
         if (currentUser == null) AppRoutes.AuthRoute.SignChoice else AppRoutes.DashboardRoute.Home
 
     NavHost(
-        startDestination = AppRoutes.AuthRoute.SignChoice,
+        startDestination = startDest,
         navController = navController,
 
         ) {
