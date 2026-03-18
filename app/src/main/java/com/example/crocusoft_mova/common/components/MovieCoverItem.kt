@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,7 @@ import coil3.compose.AsyncImage
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
+import com.example.crocusoft_mova.core.constants.ApiConstants
 import com.example.crocusoft_mova.data.mappers.toUiModel
 import com.example.crocusoft_mova.data.service.remote.model.MovieModel
 import com.example.crocusoft_mova.domain.models.MovieUiModel
@@ -39,8 +41,8 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 
 @Composable
 fun MovieCoverItem(
-   movieModel: MovieUiModel,
-   onClickMovie : ()->Unit
+    movieModel: MovieUiModel,
+    onClickMovie: (Int) -> Unit
 ) {
 
     Box(
@@ -48,29 +50,43 @@ fun MovieCoverItem(
             .width(width = BaseTheme.dimens.movie_cover_width)
             .height(BaseTheme.dimens.movie_cover_height)
             .clip(RoundedCornerShape(12.dp))
+            .clickable(
+                onClick = {
+                    onClickMovie(movieModel.id)
+                }
+            )
     ) {
         AsyncImage(
-            model = movieModel.image,
+            model = ApiConstants.getPosterUrl(movieModel.image),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
 
-        Box(modifier = Modifier.align(Alignment.TopStart).padding(BaseTheme.dimens.dp3),
-            contentAlignment = Alignment.Center){
-            Box(modifier = Modifier
-                .width(BaseTheme.dimens.rate_box_width)
-                .height(BaseTheme.dimens.rate_box_height)
-                .clip(RoundedCornerShape(BaseTheme.dimens.dp06))
-                .background(colorResource(Colors.secondary)))
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(BaseTheme.dimens.dp3),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .width(BaseTheme.dimens.rate_box_width)
+                    .height(BaseTheme.dimens.rate_box_height)
+                    .clip(RoundedCornerShape(BaseTheme.dimens.dp06))
+                    .background(colorResource(Colors.secondary))
+            )
 
-            Text(text = "${movieModel.vote_average}", style = BaseTheme.textStyle.t10,
+            Text(
+                text = "${movieModel.vote_average}", style = BaseTheme.textStyle.t10,
                 color = colorResource(Colors.white),
-                textAlign = TextAlign.Center)
+                textAlign = TextAlign.Center
+            )
         }
     }
 
 }
+
 @Preview
 @Composable
 fun AppCoverItemPreview() {

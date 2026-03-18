@@ -33,8 +33,12 @@ import com.example.crocusoft_mova.presentation.dashboard.home.components.Section
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeContent() {
-     val movies = listOf(MovieUiModel.mock, MovieUiModel.mock,MovieUiModel.mock,MovieUiModel.mock,MovieUiModel.mock)
+fun HomeContent(
+    state: HomeContract.State = HomeContract.State(),
+    postIntent: (HomeContract.Intent) -> Unit = {},
+    onNavigateDetail: (Int) -> Unit
+) {
+
     Scaffold(
         topBar = {
             AppTopBar(
@@ -73,7 +77,8 @@ fun HomeContent() {
 
     ) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .background(colorResource(Colors.primary)),
 
             ) {
@@ -95,26 +100,20 @@ fun HomeContent() {
                     horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2)
                 ) {
 
-                    items(movies) { movie->
-                            MovieCoverItem(
-                                movieModel = movie,
-                                onClickMovie = {}
-                            )
-                        }
-
-
-
+                    items(state.discoverMovies.take(10)) { movie ->
+                        MovieCoverItem(
+                            movieModel = movie,
+                            onClickMovie = {
+                                onNavigateDetail(movie.id)
+                            }
+                        )
                     }
+
+
                 }
             }
         }
+    }
 
 
-        }
-
-
-@Preview
-@Composable
-fun AppCoverItemPreview() {
-    HomeContent()
 }

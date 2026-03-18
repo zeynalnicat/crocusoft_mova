@@ -15,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -63,6 +65,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(BaseTheme.dimens.bottom_bar_height)
+
                 ) {
 
                     NavigationBar(

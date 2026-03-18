@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.crocusoft_mova.common.components.AppTextField
+import com.example.crocusoft_mova.common.components.MovieCoverItem
 import com.example.crocusoft_mova.common.components.NotAnyComponent
 import com.example.crocusoft_mova.common.components.VerticalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
@@ -59,7 +61,9 @@ fun ExploreContent(
                 title = stringResource(Strings.not_found),
                 description = stringResource(Strings.not_found_description)
             )
-        } else {
+        }
+
+        else if(state.searchQuery.isEmpty()) {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3)
             ) {
@@ -89,6 +93,24 @@ fun ExploreContent(
                     if (it == state.movies.size - 1) {
                         VerticalSpacer(BaseTheme.dimens.dp15)
                     }
+                }
+            }
+        }else{
+            LazyVerticalGrid(
+                verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2),
+                horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2),
+                modifier = Modifier.fillMaxWidth(),
+                columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(2),
+
+            ) {
+                items(
+                    count = state.movies.size,
+                    key = { state.movies[it].id }
+                ) {
+                    MovieCoverItem(
+                        movieModel = state.movies[it],
+                        onClickMovie = onNavigateDetail
+                    )
                 }
             }
         }

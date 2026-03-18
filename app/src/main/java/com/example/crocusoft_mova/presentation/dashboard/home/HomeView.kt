@@ -1,8 +1,11 @@
 package com.example.crocusoft_mova.presentation.dashboard.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 
 @Composable
@@ -11,5 +14,12 @@ fun HomeView(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
-   HomeContent()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+   HomeContent(
+       state = state,
+       postIntent = viewModel::onIntent,
+       onNavigateDetail = { navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it)) }
+
+   )
 }
