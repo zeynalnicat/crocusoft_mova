@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
+import com.example.crocusoft_mova.domain.usecases.FetchTrendingMoviesUseCase
 import com.example.crocusoft_mova.domain.usecases.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,10 @@ import kotlinx.coroutines.launch
 
 
 @HiltViewModel
-class ExploreViewModel @Inject constructor(private val searchUseCase: SearchUseCase) : ViewModel() {
+class ExploreViewModel @Inject constructor(
+    private val searchUseCase: SearchUseCase,
+    private val fetchTrendingMoviesUseCase: FetchTrendingMoviesUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ExploreContract.State())
     val state = _state.asStateFlow()
@@ -27,6 +30,13 @@ class ExploreViewModel @Inject constructor(private val searchUseCase: SearchUseC
     private val _effect = MutableSharedFlow<ExploreContract.Effect>()
     val effect = _effect.asSharedFlow()
 
+    private val cachedMovies = MutableStateFlow<List<MovieUiModel>>(emptyList())
+
+
+    init {
+
+        fetchTrendingUseCase()
+    }
 
     fun onIntent(intent: ExploreContract.Intent) {
         when (intent) {
@@ -37,7 +47,7 @@ class ExploreViewModel @Inject constructor(private val searchUseCase: SearchUseC
                         delay(500L)
                         searchMovie(intent.query)
                     } else {
-                        _state.update { it.copy(movies = emptyList()) }
+                        _state.update { it.copy(movies = cachedMovies.value) }
                     }
                 }
             }
@@ -48,13 +58,30 @@ class ExploreViewModel @Inject constructor(private val searchUseCase: SearchUseC
         }
     }
 
+
+    private fun fetchTrendingUseCase(){
+        viewModelScope.launch {
+            when(val res = fetchTrendingMoviesUseCase()){
+                is ContentState.Error<*> -> {
+                    _effect.emit(ExploreContract.Effect.ShowError(res.message))
+                }
+                is ContentState.Success<List<MovieUiModel>> -> {
+                    cachedMovies.update { res.data }
+                    _state.update {
+                        it.copy(movies = res.data)
+                    }
+                }
+            }
+        }
+    }
+
     private fun searchMovie(query: String) {
         if (query.isBlank()) return
 
-         viewModelScope.launch {
+        viewModelScope.launch {
             when (val res = searchUseCase(query)) {
                 is ContentState.Error<*> -> {
-                    Log.i("movies", res.message )
+                    Log.i("movies", res.message)
                     _effect.emit(ExploreContract.Effect.ShowError(res.message ?: "Unknown Error"))
                     _state.update { it.copy(movies = emptyList()) }
                 }

@@ -9,11 +9,12 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.repository.ExploreRepository
 import javax.inject.Inject
 
-class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiService) : ExploreRepository {
+class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiService) :
+    ExploreRepository {
     override suspend fun search(query: String): ContentState<List<MovieUiModel>> =
         try {
             val res = apiService.searchMovie(query)
-            Log.i("movies",res.page.toString())
+            Log.i("movies", res.page.toString())
             val results = res.results
             if (results.isNullOrEmpty()) {
                 ContentState.Error(AppErrors.noMovies)
@@ -23,4 +24,20 @@ class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiServi
         } catch (e: Exception) {
             ContentState.Error(e.message ?: AppErrors.unknownError)
         }
+
+    override suspend fun fetchTrending(): ContentState<List<MovieUiModel>> =
+        try {
+            val res = apiService.fetchTrending()
+            val results = res.results
+            if (results.isNullOrEmpty()) {
+                ContentState.Error(AppErrors.noMovies)
+            } else {
+                ContentState.Success(results.map { it.toUiModel() })
+            }
+
+        } catch (e: Exception) {
+            ContentState.Error(e.message ?: AppErrors.unknownError)
+        }
+
+
 }

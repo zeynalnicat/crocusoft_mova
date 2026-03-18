@@ -51,27 +51,46 @@ fun ExploreContent(
 
         VerticalSpacer(BaseTheme.dimens.dp6)
 
-        if (state.movies.isEmpty()) {
+        if (state.movies.isEmpty() && state.searchQuery.isNotEmpty()) {
             NotAnyComponent(
                 imageRes = Drawables.not_found,
                 title = stringResource(Strings.not_found),
                 description = stringResource(Strings.not_found_description)
             )
-        }else{
+        } else {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3)
             ) {
+
+                if (state.searchQuery.isEmpty()) {
+                    item {
+                        Text(
+                            text = stringResource(Strings.trending),
+                            style = BaseTheme.textStyle.t16Bold
+                        )
+                    }
+
+                    item {
+                        VerticalSpacer(BaseTheme.dimens.dp1)
+                    }
+                }
+
                 items(
                     count = state.movies.size,
-                    key = {state.movies[it].id}
-                ){
+                    key = { state.movies[it].id }
+                ) {
                     ExploreMovieItem(
                         movieUiModel = state.movies[it]
                     )
+
+                    if (it == state.movies.size - 1) {
+                        VerticalSpacer(BaseTheme.dimens.dp15)
+                    }
                 }
             }
-
-
         }
+
+
     }
+
 }

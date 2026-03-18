@@ -8,6 +8,8 @@ object ApiConstants {
 
     const val DISCOVER_TV = "$BASE_URL/discover/tv"
 
+    const val TRENDING = "$BASE_URL/trending/movie/day"
+
     const val SEARCH = "$BASE_URL/search/movie"
 
     const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"

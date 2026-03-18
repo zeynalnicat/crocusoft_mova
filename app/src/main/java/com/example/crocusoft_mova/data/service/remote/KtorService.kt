@@ -44,4 +44,13 @@ class KtorService @Inject constructor(
             parameter("page", 1)
         }.body()
     }
+
+    override suspend fun fetchTrending(): ResponseModel {
+        return httpClient.get(ApiConstants.TRENDING) {
+            header(HttpHeaders.Authorization, "Bearer $api_key")
+            header(HttpHeaders.Accept, "application/json")
+            parameter("page", 1)
+        }.body()
+
+    }
 }

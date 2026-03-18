@@ -6,4 +6,7 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 interface ExploreRepository {
 
     suspend fun search(query: String): ContentState<List<MovieUiModel>>
+
+    suspend fun fetchTrending(): ContentState<List<MovieUiModel>>
+
 }
