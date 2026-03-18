@@ -18,7 +18,7 @@ fun ProfileView(navController: NavController, viewModel: ProfileViewModel = hilt
         effect = viewModel.effect,
         postIntent = viewModel::onIntent,
         onNavigateSignChoice = {
-            navController.navigate(AppRoutes.AuthRoute.SignChoice) {
+            navController.navigate(AppRoutes.AuthRoute.Splash) {
                 popUpTo(
                     0
                 ) {

@@ -57,7 +57,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
 
             val isMovieDetail = currentRoute?.startsWith(AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: "") == true
 
-            if (currentRoute !in hiddenRoutes || !isMovieDetail) {
+            if (currentRoute !in hiddenRoutes ) {
 
                 Surface(
                     color = Color.Transparent,

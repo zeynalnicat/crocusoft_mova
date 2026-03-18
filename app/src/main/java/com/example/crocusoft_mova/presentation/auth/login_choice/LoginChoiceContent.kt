@@ -42,7 +42,8 @@ import com.example.crocusoft_mova.presentation.auth.login_choice.components.Logi
 @Composable
 fun LoginChoiceContent(
     onNavigateSignIn: () -> Unit,
-    onNavigateSignUp: () -> Unit
+    onNavigateSignUp: () -> Unit,
+    onNavigateBack: ()->Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -51,7 +52,7 @@ fun LoginChoiceContent(
 
         topBar = {
             AppTopBar(
-                prefixAction = {}
+                prefixAction = onNavigateBack
             )
         }
     ) {
