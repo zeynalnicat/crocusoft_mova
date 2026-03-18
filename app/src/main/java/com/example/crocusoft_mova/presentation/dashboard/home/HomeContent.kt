@@ -3,9 +3,11 @@ package com.example.crocusoft_mova.presentation.dashboard.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -39,7 +41,10 @@ fun HomeContent(
     onNavigateDetail: (Int) -> Unit
 ) {
 
+
     Scaffold(
+        modifier = Modifier.navigationBarsPadding(),
+        containerColor = colorResource(Colors.primary),
         topBar = {
             AppTopBar(
                 modifier = Modifier.padding(BaseTheme.dimens.dp6),
@@ -76,12 +81,8 @@ fun HomeContent(
         }
 
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colorResource(Colors.primary)),
 
-            ) {
+        LazyColumn {
             item {
                 HomeHeader(
                     movieUiModel = MovieUiModel.mock,
@@ -113,6 +114,7 @@ fun HomeContent(
                 }
             }
         }
+
     }
 
 

@@ -3,6 +3,7 @@ package com.example.crocusoft_mova.presentation.dashboard.my_list
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,7 +31,9 @@ fun MyListContent(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             AppTopBar(
-                modifier = Modifier.padding(top = BaseTheme.dimens.dp2),
+                modifier = Modifier
+                    .padding(top = BaseTheme.dimens.dp2)
+                    .statusBarsPadding(),
                 prefixIcon = Drawables.logo,
                 prefixColor = Colors.secondary,
                 title = stringResource(Strings.my_list),
