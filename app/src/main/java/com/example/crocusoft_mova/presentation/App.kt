@@ -46,8 +46,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         AppRoutes.AuthRoute.ChooseInterest::class.qualifiedName,
         AppRoutes.AuthRoute.FillProfile::class.qualifiedName,
         AppRoutes.DashboardRoute.Pin::class.qualifiedName,
-        AppRoutes.AuthRoute.Splash::class.qualifiedName
-        AppRoutes.DashboardRoute.Pin::class.qualifiedName,
+        AppRoutes.AuthRoute.Splash::class.qualifiedName,
         AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: ""
     )
 
