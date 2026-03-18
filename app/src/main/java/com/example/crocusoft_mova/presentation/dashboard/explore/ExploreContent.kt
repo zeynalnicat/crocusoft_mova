@@ -24,8 +24,10 @@ import kotlinx.coroutines.delay
 @Composable
 fun ExploreContent(
     state: ExploreContract.State,
-    postIntent: (ExploreContract.Intent) -> Unit
-) {
+    postIntent: (ExploreContract.Intent) -> Unit,
+    onNavigateDetail: (Int) -> Unit,
+
+    ) {
 
 
     LaunchedEffect(state.searchQuery) {
@@ -80,7 +82,8 @@ fun ExploreContent(
                     key = { state.movies[it].id }
                 ) {
                     ExploreMovieItem(
-                        movieUiModel = state.movies[it]
+                        movieUiModel = state.movies[it],
+                        onClick = onNavigateDetail
                     )
 
                     if (it == state.movies.size - 1) {

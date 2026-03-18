@@ -44,6 +44,7 @@ fun AppIconButton(
     horizontalPadding: Dp = BaseTheme.dimens.dp8,
     verticalPadding: Dp = BaseTheme.dimens.dp4Half,
     iconSize: Dp = BaseTheme.dimens.dp6,
+    textColor: Int = Colors.white,
     onClick: () -> Unit,
 ) {
 
@@ -79,7 +80,7 @@ fun AppIconButton(
             if (textRes != null) {
                 Text(
                     text = stringResource(textRes),
-                    style = BaseTextStyle.t14SemiBold
+                    style = BaseTextStyle.t14SemiBold.copy(color = colorResource(textColor))
                 )
             }
         }

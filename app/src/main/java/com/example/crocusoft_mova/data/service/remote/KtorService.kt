@@ -1,6 +1,7 @@
 package com.example.crocusoft_mova.data.service.remote
 
 import com.example.crocusoft_mova.core.constants.ApiConstants
+import com.example.crocusoft_mova.data.service.remote.model.MovieDetailModel
 import com.example.crocusoft_mova.data.service.remote.model.ResponseModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -52,5 +53,12 @@ class KtorService @Inject constructor(
             parameter("page", 1)
         }.body()
 
+    }
+
+    override suspend fun fetchMovieDetail(movieId: Int): MovieDetailModel {
+         return httpClient.get(ApiConstants.MOVIE_DETAIL.replace("{movie_id}", movieId.toString())){
+             header(HttpHeaders.Authorization, "Bearer $api_key")
+             header(HttpHeaders.Accept, "application/json")
+         }.body()
     }
 }

@@ -15,6 +15,9 @@ data class MovieModel(
     @SerialName("backdrop_path")
     val backdrop_path: String? = null,
 
+    @SerialName("parts")
+    val parts: List<Episode>? = null,
+
     @SerialName("original_language")
     val original_language: String? = null,
     @SerialName("original_title")

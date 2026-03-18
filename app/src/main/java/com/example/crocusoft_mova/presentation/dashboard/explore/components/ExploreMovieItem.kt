@@ -1,6 +1,7 @@
 package com.example.crocusoft_mova.presentation.dashboard.explore.components
 
 import android.view.RoundedCorner
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,8 +24,8 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 @Composable
 fun ExploreMovieItem(
     movieUiModel: MovieUiModel,
-
-    ) {
+    onClick: (Int) -> Unit
+) {
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -32,6 +33,9 @@ fun ExploreMovieItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(BaseTheme.dimens.searched_item_height)
+            .clickable(
+                onClick = { onClick(movieUiModel.id) }
+            )
     ) {
 
         AsyncImage(

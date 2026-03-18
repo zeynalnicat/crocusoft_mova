@@ -109,7 +109,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         },
         containerColor = colorResource(Colors.primary),
         modifier = Modifier.padding(
-            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName) PaddingValues(
+            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName || currentRoute == AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName) PaddingValues(
                 0.dp
             ) else innerPaddingValues
         )
