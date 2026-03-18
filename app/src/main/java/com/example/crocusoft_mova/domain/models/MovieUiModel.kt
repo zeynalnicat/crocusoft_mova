@@ -8,3 +8,18 @@ data class MovieUiModel(
     val vote_average: Double,
     val image:String,
 )
+
+{
+
+    companion object{
+        val mock = MovieUiModel(
+            0,
+            "Doctor Strange 2",
+            "",
+            "Action, Superhero, Science Fiction, ...",
+            0.0,
+            image = "https://tr.web.img2.acsta.net/pictures/22/05/05/14/02/4321698.jpg"
+        )
+    }
+}
+

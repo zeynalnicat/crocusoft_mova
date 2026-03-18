@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.AsyncImage
 import com.example.crocusoft_mova.common.components.AppIconButton
+import com.example.crocusoft_mova.common.components.MovieCoverItem
 import com.example.crocusoft_mova.core.BaseTextStyle
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
@@ -107,4 +109,9 @@ fun HomeHeader(
 
         }
     }
+}
+@Preview
+@Composable
+fun AppCoverItemPreview() {
+
 }

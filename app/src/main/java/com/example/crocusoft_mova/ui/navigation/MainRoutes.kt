@@ -16,6 +16,7 @@ import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreView
 import com.example.crocusoft_mova.presentation.dashboard.home.HomeView
 import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
 import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileView
+import com.example.crocusoft_mova.presentation.auth.splash.OnboardingView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -28,7 +29,7 @@ fun MainRoutes(
     val currentUser = firebaseAuth.currentUser
 
     val startDestination =
-        if (currentUser == null) AppRoutes.AuthRoute.SignChoice else AppRoutes.DashboardRoute.Pin
+        if (currentUser == null) AppRoutes.AuthRoute.Splash else AppRoutes.DashboardRoute.Pin
 
 
     NavHost(
@@ -116,6 +117,14 @@ fun MainRoutes(
                 navController = navController,
             )
         }
+
+        composable<AppRoutes.AuthRoute.Splash> {
+            OnboardingView(
+                navController = navController,
+            )
+        }
+
+
 
 
     }
