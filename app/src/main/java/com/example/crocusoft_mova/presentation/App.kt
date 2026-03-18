@@ -15,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -46,13 +48,16 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         AppRoutes.AuthRoute.ChooseInterest::class.qualifiedName,
         AppRoutes.AuthRoute.FillProfile::class.qualifiedName,
         AppRoutes.DashboardRoute.Pin::class.qualifiedName,
-        AppRoutes.AuthRoute.Splash::class.qualifiedName
+        AppRoutes.AuthRoute.Splash::class.qualifiedName,
+        AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: ""
     )
 
     Scaffold(
         bottomBar = {
 
-            if (currentRoute !in hiddenRoutes) {
+            val isMovieDetail = currentRoute?.startsWith(AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: "") == true
+
+            if (currentRoute !in hiddenRoutes ) {
 
                 Surface(
                     color = Color.Transparent,
@@ -60,6 +65,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(BaseTheme.dimens.bottom_bar_height)
+
                 ) {
 
                     NavigationBar(
@@ -110,7 +116,7 @@ fun App(innerPaddingValues: PaddingValues, firebaseAuth: FirebaseAuth) {
         },
         containerColor = colorResource(Colors.primary),
         modifier = Modifier.padding(
-            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName) PaddingValues(
+            if (currentRoute == AppRoutes.DashboardRoute.Home::class.qualifiedName || (currentRoute?.startsWith(AppRoutes.DashboardRoute.MovieDetail::class.qualifiedName?.substringBeforeLast(".") ?: "") == true)) PaddingValues(
                 0.dp
             ) else innerPaddingValues
         )

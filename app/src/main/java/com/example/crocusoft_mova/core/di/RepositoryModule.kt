@@ -1,16 +1,22 @@
 package com.example.crocusoft_mova.core.di
 
 import com.example.crocusoft_mova.data.repository.ChooseInterestRepositoryImpl
+import com.example.crocusoft_mova.data.repository.ExploreRepositoryImpl
 import com.example.crocusoft_mova.data.repository.FillProfileRepositoryImpl
 import com.example.crocusoft_mova.data.repository.HomeRepositoryImpl
+import com.example.crocusoft_mova.data.repository.MovieDetailRepositoryImpl
 import com.example.crocusoft_mova.data.repository.PinRepositoryImpl
+import com.example.crocusoft_mova.data.repository.ProfileRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignInRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignUpRepositoryImpl
 import com.example.crocusoft_mova.data.service.remote.ApiService
 import com.example.crocusoft_mova.domain.repository.ChooseInterestRepository
+import com.example.crocusoft_mova.domain.repository.ExploreRepository
 import com.example.crocusoft_mova.domain.repository.FillProfileRepository
 import com.example.crocusoft_mova.domain.repository.HomeRepository
+import com.example.crocusoft_mova.domain.repository.MovieDetailRepository
 import com.example.crocusoft_mova.domain.repository.PinRepository
+import com.example.crocusoft_mova.domain.repository.ProfileRepository
 import com.example.crocusoft_mova.domain.repository.SignInRepository
 import com.example.crocusoft_mova.domain.repository.SignUpRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -68,5 +74,22 @@ object RepositoryModule {
     @Provides
     fun provideHomeRepository(apiService: ApiService): HomeRepository =
         HomeRepositoryImpl(apiService)
+
+    @Singleton
+    @Provides
+    fun provideProfileRepository(firebaseAuth: FirebaseAuth): ProfileRepository =
+        ProfileRepositoryImpl(firebaseAuth)
+
+
+    @Singleton
+    @Provides
+    fun provideExploreRepository(apiService: ApiService): ExploreRepository =
+        ExploreRepositoryImpl(apiService)
+
+    @Singleton
+    @Provides
+    fun provideMovieDetailRepository(apiService: ApiService): MovieDetailRepository =
+        MovieDetailRepositoryImpl(apiService)
+
 
 }

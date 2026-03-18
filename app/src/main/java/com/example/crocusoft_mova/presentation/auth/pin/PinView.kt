@@ -9,7 +9,11 @@ import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 
 @Composable
-fun PinView(navController: NavController, isNewPinScreen: Boolean = true, viewModel: PinViewModel= hiltViewModel()){
+fun PinView(
+    navController: NavController,
+    isNewPinScreen: Boolean = true,
+    viewModel: PinViewModel = hiltViewModel()
+) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -17,9 +21,17 @@ fun PinView(navController: NavController, isNewPinScreen: Boolean = true, viewMo
         state = state,
         postIntent = viewModel::onIntent,
         effect = viewModel.effect,
-        onNavigateHome = {navController.navigate(AppRoutes.DashboardRoute.Home)},
+        isNewPinScreen = isNewPinScreen,
+        onNavigateHome = {
+            navController.navigate(AppRoutes.DashboardRoute.Home) {
+                popUpTo(0) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        },
         onNavigateBack = navController::popBackStack,
-        isNewPinScreen = isNewPinScreen
-    )
+
+        )
 
 }

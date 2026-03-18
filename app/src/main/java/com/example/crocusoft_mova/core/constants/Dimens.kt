@@ -7,6 +7,8 @@ object Dimens {
 
 
 
+
+    val searched_item_height = 110.dp
     val bottom_bar_height = 90.dp
     val avatar_size = 140.dp
     val image_height = 200.dp
@@ -18,6 +20,9 @@ object Dimens {
     val movie_cover_height = 200.dp
     val rate_box_width = 34.dp
     val rate_box_height =24.dp
+
+    val detail_header_height = 320.dp
+
     val min_width = 90.dp
 
     val radius = 100.dp

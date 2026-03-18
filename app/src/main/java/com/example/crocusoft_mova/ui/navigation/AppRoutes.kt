@@ -34,6 +34,10 @@ sealed interface AppRoutes {
 
     sealed interface DashboardRoute {
 
+
+        @Serializable
+        data class MovieDetail(val movieId: Int)
+
         @Serializable
         data object Explore:DashboardRoute
 

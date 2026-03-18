@@ -6,6 +6,14 @@ sealed interface ExploreContract {
 
     sealed interface Intent {
         data class SetQuery(val query: String) : Intent
+
+        data object Search : Intent
+
+    }
+
+    sealed interface Effect {
+        data class ShowError(val message:String): Effect
+
     }
 
     data class State(

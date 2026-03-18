@@ -64,11 +64,12 @@ fun AppTextField(
 
     BasicTextField(
         value = value,
-        modifier = modifier.onFocusChanged{
+        modifier = modifier.onFocusChanged {
             isFocused.value = it.isFocused
         },
         onValueChange = onValueChange,
         textStyle = BaseTheme.textStyle.t14SemiBold,
+
         visualTransformation =
             if (isPasswordField && !showPassword.value)
                 PasswordVisualTransformation()
@@ -96,7 +97,8 @@ fun AppTextField(
                     )
                     .border(
                         border = BorderStroke(
-                            width = BaseTheme.dimens.dp02, color = if (isFocused.value) colorResource(
+                            width = BaseTheme.dimens.dp02,
+                            color = if (isFocused.value) colorResource(
                                 Colors.secondary
                             ) else Color.Transparent
                         ),
@@ -113,7 +115,8 @@ fun AppTextField(
                         painter = painterResource(prefixIcon),
                         contentDescription = null,
                         tint = if (isFocused.value) colorResource(Colors.secondary) else colorResource(
-                            Colors.gray)
+                            Colors.gray
+                        )
                     )
                     Spacer(modifier = Modifier.width(BaseTheme.dimens.dp3))
                 }
@@ -130,11 +133,11 @@ fun AppTextField(
                     innerTextField()
                 }
 
-                if ((isPasswordField || requiredSuffixIcon) && !isPin ) {
+                if ((isPasswordField || requiredSuffixIcon) && !isPin) {
                     Spacer(modifier = Modifier.width(BaseTheme.dimens.dp3))
 
                     IconButton(
-                        onClick = { if(isPasswordField) showPassword.value = !showPassword.value }
+                        onClick = { if (isPasswordField) showPassword.value = !showPassword.value }
                     ) {
                         Icon(
                             painter = painterResource(suffixIcon),
