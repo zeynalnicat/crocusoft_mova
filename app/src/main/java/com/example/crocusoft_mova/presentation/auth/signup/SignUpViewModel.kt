@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.auth.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,11 +17,11 @@ import kotlinx.coroutines.launch
 
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCase) : ViewModel() {
+class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCase) : BaseViewModel<SignUpContract.Intent,SignUpContract.State>() {
 
     private val _state = MutableStateFlow(SignUpContract.State())
 
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
 
     private val _effect = MutableSharedFlow<SignUpContract.UiEffect>()
@@ -28,7 +29,7 @@ class SignUpViewModel @Inject constructor(private val signUpUseCase: SignUpUseCa
     val effect = _effect.asSharedFlow()
 
 
-    fun onIntent(intent: SignUpContract.Intent) {
+    override fun onIntent(intent: SignUpContract.Intent) {
         when (intent) {
             is SignUpContract.Intent.SetEmail ->
                 _state.update { it.copy(email = intent.email) }

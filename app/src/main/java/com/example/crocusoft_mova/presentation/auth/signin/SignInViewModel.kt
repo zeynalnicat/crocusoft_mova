@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.auth.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.CheckIfUserExistUseCase
 import com.example.crocusoft_mova.domain.usecases.SignInUseCase
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
     private val checkIfTagsExistUseCase: CheckIfUserExistUseCase,
-) : ViewModel() {
+) : BaseViewModel<SignInContract.Intent, SignInContract.State>() {
 
     private val _state = MutableStateFlow(SignInContract.State())
 
@@ -29,10 +30,10 @@ class SignInViewModel @Inject constructor(
 
     val effect = _effect.asSharedFlow()
 
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
 
-    fun onIntent(intent: SignInContract.Intent) {
+    override fun onIntent(intent: SignInContract.Intent) {
         when (intent) {
             is SignInContract.Intent.SetEmail -> _state.update { it.copy(email = intent.email) }
 

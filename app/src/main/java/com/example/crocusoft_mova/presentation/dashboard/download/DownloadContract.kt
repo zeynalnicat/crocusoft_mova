@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.presentation.dashboard.download
 
+import com.example.crocusoft_mova.core.CoreState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 
 sealed interface DownloadContract {
@@ -12,5 +13,5 @@ sealed interface DownloadContract {
 
     data class State(
         val movies: List<MovieUiModel> = emptyList()
-    )
+    ): CoreState()
 }

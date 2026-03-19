@@ -4,6 +4,7 @@ package com.example.crocusoft_mova.presentation.dashboard.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverMovieUseCase
@@ -23,11 +24,11 @@ class HomeViewModel @Inject constructor(
     private val fetchDiscoverMovieUseCase: FetchDiscoverMovieUseCase,
     private val fetchDiscoverTVUseCase: FetchDiscoverTVUseCase
 ) :
-    ViewModel() {
+    BaseViewModel<HomeContract.Intent, HomeContract.State>() {
 
 
     private val _state = MutableStateFlow(HomeContract.State())
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<HomeContract.Effect>()
 
@@ -41,7 +42,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun onIntent(intent: HomeContract.Intent) {
+    override fun onIntent(intent: HomeContract.Intent) {
         when (intent) {
             HomeContract.Intent.FetchDiscoverMovies -> {}
         }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.common.utils.ImageUtils
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase
 import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase.Params
@@ -22,17 +23,17 @@ import kotlinx.coroutines.launch
 class FillProfileViewModel @Inject constructor(
     private val fillProfileUseCase: FillProfileUseCase,
     @ApplicationContext private val context: Context
-) : ViewModel() {
+) : BaseViewModel<FillProfileContract.Intent, FillProfileContract.State>() {
 
     private val _state = MutableStateFlow(FillProfileContract.State())
 
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<FillProfileContract.Effect>()
 
     val effect = _effect.asSharedFlow()
 
-    fun onIntent(intent: FillProfileContract.Intent) {
+    override fun onIntent(intent: FillProfileContract.Intent) {
         when (intent) {
 
             is FillProfileContract.Intent.SetFullName -> {

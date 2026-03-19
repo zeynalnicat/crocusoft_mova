@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.auth.choose_interest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.tag.TagEntity
 import com.example.crocusoft_mova.domain.usecases.AddTagUseCase
@@ -17,11 +18,11 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ChooseInterestViewModel @Inject constructor(
     private val addTagUseCase: AddTagUseCase,
-) : ViewModel() {
+) : BaseViewModel<ChooseInterestContract.Intent, ChooseInterestContract.State>() {
 
     private val _state = MutableStateFlow(ChooseInterestContract.State())
 
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<ChooseInterestContract.Effect>()
 
@@ -33,7 +34,7 @@ class ChooseInterestViewModel @Inject constructor(
     }
 
 
-    fun onIntent(intent: ChooseInterestContract.Intent) {
+    override fun onIntent(intent: ChooseInterestContract.Intent) {
         when (intent) {
             is ChooseInterestContract.Intent.ToggleTag -> toggleTag(intent.tagEntity)
 

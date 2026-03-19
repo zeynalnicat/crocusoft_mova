@@ -1,6 +1,7 @@
 package com.example.crocusoft_mova.presentation.auth.fill_profile
 
 import android.net.Uri
+import com.example.crocusoft_mova.core.CoreState
 
 sealed interface FillProfileContract {
 
@@ -32,5 +33,5 @@ sealed interface FillProfileContract {
         val phoneNumber:String = "",
         val gender: String = "",
         val imgUri: Uri? = null
-    )
+    ): CoreState()
 }

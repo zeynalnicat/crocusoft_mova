@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.presentation.auth.choose_interest
 
+import com.example.crocusoft_mova.core.CoreState
 import com.example.crocusoft_mova.domain.tag.TagEntity
 
 sealed class ChooseInterestContract {
@@ -20,5 +21,5 @@ sealed class ChooseInterestContract {
     data class State(
         val tags: List<TagEntity> = emptyList(),
         val selectedTags: Set<TagEntity> = emptySet()
-    )
+    ): CoreState()
 }

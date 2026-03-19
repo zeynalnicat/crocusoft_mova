@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.usecases.FetchMyListUseCase
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MyListViewModel @Inject constructor(
     private val fetchMyListUseCase: FetchMyListUseCase
-) : ViewModel() {
+) : BaseViewModel<MyListContract.Intent, MyListContract.State>() {
 
 
     init {
@@ -25,9 +26,9 @@ class MyListViewModel @Inject constructor(
     }
 
     private val _state = MutableStateFlow(MyListContract.State())
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
-    fun onIntent(intent: MyListContract.Intent) {
+    override fun onIntent(intent: MyListContract.Intent) {
 
     }
 

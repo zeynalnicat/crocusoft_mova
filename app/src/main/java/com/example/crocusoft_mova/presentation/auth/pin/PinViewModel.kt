@@ -3,6 +3,7 @@ package com.example.crocusoft_mova.presentation.auth.pin
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.CreatePinUseCase
 import com.example.crocusoft_mova.domain.usecases.EnterPinUseCase
@@ -21,17 +22,17 @@ class PinViewModel @Inject constructor(
     private val createPinUseCase: CreatePinUseCase,
     private val enterPinUseCase: EnterPinUseCase
 ) :
-    ViewModel() {
+    BaseViewModel<PinContract.Intent, PinContract.State>() {
 
     private val _state = MutableStateFlow(PinContract.State())
 
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<PinContract.Effect>()
 
     val effect = _effect.asSharedFlow()
 
-    fun onIntent(intent: PinContract.Intent) {
+    override fun onIntent(intent: PinContract.Intent) {
         when (intent) {
             is PinContract.Intent.SetPin -> {
                 _state.update { it.copy(error = "") }

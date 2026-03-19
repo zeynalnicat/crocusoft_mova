@@ -3,6 +3,7 @@ package com.example.crocusoft_mova.presentation.dashboard.explore
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.usecases.FetchTrendingMoviesUseCase
@@ -22,10 +23,10 @@ import kotlinx.coroutines.launch
 class ExploreViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val fetchTrendingMoviesUseCase: FetchTrendingMoviesUseCase
-) : ViewModel() {
+) : BaseViewModel<ExploreContract.Intent, ExploreContract.State>() {
 
     private val _state = MutableStateFlow(ExploreContract.State())
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<ExploreContract.Effect>()
     val effect = _effect.asSharedFlow()
@@ -38,7 +39,7 @@ class ExploreViewModel @Inject constructor(
         fetchTrendingUseCase()
     }
 
-    fun onIntent(intent: ExploreContract.Intent) {
+    override fun onIntent(intent: ExploreContract.Intent) {
         when (intent) {
             is ExploreContract.Intent.SetQuery -> {
                 _state.update { it.copy(searchQuery = intent.query) }

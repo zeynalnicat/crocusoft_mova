@@ -1,5 +1,7 @@
 package com.example.crocusoft_mova.presentation.auth.pin
 
+import com.example.crocusoft_mova.core.CoreState
+
 sealed interface PinContract {
 
     sealed interface Intent {
@@ -21,5 +23,5 @@ sealed interface PinContract {
     data class State(
         val pin: List<String> = List(4) { "" },
         val error : String = "",
-    )
+    ): CoreState()
 }

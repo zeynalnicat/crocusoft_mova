@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.dashboard.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.ProfileUiModel
 import com.example.crocusoft_mova.domain.usecases.LogOutUseCase
@@ -18,10 +19,10 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val logOutUseCase: LogOutUseCase
-) : ViewModel() {
+) : BaseViewModel<ProfileContract.Intent, ProfileContract.State>() {
 
     private val _state = MutableStateFlow(ProfileContract.State())
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<ProfileContract.Effect>()
     val effect = _effect.asSharedFlow()
@@ -31,7 +32,7 @@ class ProfileViewModel @Inject constructor(
         loadProfile()
     }
 
-    fun onIntent(intent: ProfileContract.Intent) {
+    override fun onIntent(intent: ProfileContract.Intent) {
         when (intent) {
             ProfileContract.Intent.LoadProfile -> {
                 loadProfile()

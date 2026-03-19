@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.presentation.dashboard.movie_detail
 
+import com.example.crocusoft_mova.core.CoreState
 import com.example.crocusoft_mova.domain.models.MovieDetailUiModel
 
 sealed interface MovieDetailContract {
@@ -18,5 +19,5 @@ sealed interface MovieDetailContract {
 
     data class State(
         val movieDetail: MovieDetailUiModel = MovieDetailUiModel.empty,
-    )
+    ): CoreState()
 }

@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.presentation.dashboard.explore
 
+import com.example.crocusoft_mova.core.CoreState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 
 sealed interface ExploreContract {
@@ -20,5 +21,5 @@ sealed interface ExploreContract {
         val searchQuery: String = "",
         val movies: List<MovieUiModel> = emptyList()
 
-    )
+    ): CoreState()
 }

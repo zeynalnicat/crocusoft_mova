@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.presentation.dashboard.movie_detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.crocusoft_mova.core.BaseViewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieDetailUiModel
 import com.example.crocusoft_mova.domain.models.MovieUiModel
@@ -20,15 +21,15 @@ import kotlinx.coroutines.launch
 class MovieDetailViewModel @Inject constructor(
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase,
     private val addToMyListUseCase: AddToMyListUseCase,
-) : ViewModel() {
+) : BaseViewModel<MovieDetailContract.Intent, MovieDetailContract.State>() {
 
     private val _state = MutableStateFlow(MovieDetailContract.State())
 
     private val _effect = MutableSharedFlow<MovieDetailContract.Effect>()
 
-    val state = _state.asStateFlow()
+    override val state = _state.asStateFlow()
 
-    fun onIntent(intent: MovieDetailContract.Intent) {
+    override fun onIntent(intent: MovieDetailContract.Intent) {
         when (intent) {
             is MovieDetailContract.Intent.FetchMovieDetail -> fetchMovieDetail(intent.movieId)
             MovieDetailContract.Intent.AddToMyList -> addToMyList()

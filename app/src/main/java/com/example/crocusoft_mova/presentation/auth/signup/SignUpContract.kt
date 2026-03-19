@@ -1,5 +1,7 @@
 package com.example.crocusoft_mova.presentation.auth.signup
 
+import com.example.crocusoft_mova.core.CoreState
+
 sealed interface SignUpContract {
 
     sealed interface Intent {
@@ -26,5 +28,5 @@ sealed interface SignUpContract {
         val checked: Boolean = false,
         val isLoading: Boolean = false,
 
-        )
+        ): CoreState()
 }

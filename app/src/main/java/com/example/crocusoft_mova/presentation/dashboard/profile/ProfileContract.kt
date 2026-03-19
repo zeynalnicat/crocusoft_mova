@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.presentation.dashboard.profile
 
+import com.example.crocusoft_mova.core.CoreState
 import com.example.crocusoft_mova.domain.models.ProfileUiModel
 
 sealed interface ProfileContract {
@@ -21,5 +22,5 @@ sealed interface ProfileContract {
 
     data class State(
         val profile: ProfileUiModel = ProfileUiModel.empty
-    )
+    ): CoreState()
 }
