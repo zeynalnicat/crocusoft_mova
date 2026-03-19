@@ -16,5 +16,7 @@ interface ApiService {
 
     suspend fun fetchMovieDetail(movieId: Int): MovieDetailModel
 
+    suspend fun fetchUpcomingMovies() : ResponseModel
+
 
 }

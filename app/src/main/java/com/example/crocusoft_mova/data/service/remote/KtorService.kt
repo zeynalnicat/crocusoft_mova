@@ -61,4 +61,12 @@ class KtorService @Inject constructor(
              header(HttpHeaders.Accept, "application/json")
          }.body()
     }
+
+    override suspend fun fetchUpcomingMovies(): ResponseModel {
+        return httpClient.get(ApiConstants.UPCOMING) {
+            header(HttpHeaders.Authorization, "Bearer $api_key")
+            header(HttpHeaders.Accept, "application/json")
+            parameter("page", 1)
+        }.body()
+    }
 }

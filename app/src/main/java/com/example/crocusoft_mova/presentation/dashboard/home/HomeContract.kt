@@ -7,6 +7,7 @@ sealed interface HomeContract {
 
     sealed interface Intent {
         object FetchDiscoverMovies : Intent
+        object FetchUpcomingMovies : Intent
     }
 
     sealed interface Effect{
@@ -15,7 +16,8 @@ sealed interface HomeContract {
 
 
     data class State(
-        val discoverMovies: List<MovieUiModel> = emptyList()
+        val discoverMovies: List<MovieUiModel> = emptyList(),
+        val upcomingMovies : List<MovieUiModel> = emptyList()
     )
 
 }

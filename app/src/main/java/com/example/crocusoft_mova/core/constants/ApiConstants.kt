@@ -12,6 +12,8 @@ object ApiConstants {
 
     const val MOVIE_DETAIL = "$BASE_URL/movie/{movie_id}"
 
+    const val UPCOMING  = "$BASE_URL/movie/upcoming"
+
 
     const val SEARCH = "$BASE_URL/search/movie"
 
