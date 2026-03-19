@@ -1,17 +1,15 @@
 package com.example.crocusoft_mova.domain.models
 
 data class MovieUiModel(
-    val id:Int,
-    val title:String,
+    val id: Int,
+    val title: String,
     val release_date: String,
     val description: String,
     val vote_average: Double,
-    val image:String,
-)
+    val image: String,
+) {
 
-{
-
-    companion object{
+    companion object {
         val mock = MovieUiModel(
             0,
             "Doctor Strange 2",

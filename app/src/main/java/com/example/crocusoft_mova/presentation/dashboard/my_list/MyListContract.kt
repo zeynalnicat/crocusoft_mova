@@ -8,6 +8,8 @@ sealed interface MyListContract {
 
     }
 
+    sealed interface Effect
+
     data class State(
         val movies:List<MovieUiModel> = emptyList()
 

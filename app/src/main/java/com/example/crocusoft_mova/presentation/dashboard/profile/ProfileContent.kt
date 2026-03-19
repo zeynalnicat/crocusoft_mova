@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -20,10 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.crocusoft_mova.common.components.AppTopBar
-import com.example.crocusoft_mova.common.components.NotAnyComponent
 import com.example.crocusoft_mova.common.components.ProfileAvatar
 import com.example.crocusoft_mova.common.components.VerticalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
@@ -116,7 +112,7 @@ fun ProfileContent(
                         .padding(vertical = BaseTheme.dimens.dp8),
                 ) {
                     ProfileAvatar(
-                        avatar = null,
+                        avatar = state.profile.profileId,
                     )
                     Text(
                         text = state.profile.fullName,

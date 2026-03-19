@@ -10,6 +10,7 @@ data class MovieDetailUiModel(
     val genres: List<String>,
     val production_companies: List<ProductionCompany>,
     val language: String,
+    val isAdded: Boolean = false,
 
 
     ) {

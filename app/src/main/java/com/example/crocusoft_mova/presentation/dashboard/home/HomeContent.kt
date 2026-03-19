@@ -1,6 +1,7 @@
 package com.example.crocusoft_mova.presentation.dashboard.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -102,6 +103,7 @@ fun HomeContent(
                 ) {
 
                     items(state.discoverMovies.take(10)) { movie ->
+                        Log.i("HomeContent", "HomeContent: $movie")
                         MovieCoverItem(
                             movieModel = movie,
                             onClickMovie = {

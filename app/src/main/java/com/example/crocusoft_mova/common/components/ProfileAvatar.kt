@@ -28,7 +28,7 @@ import com.example.crocusoft_mova.core.Drawables
 @Composable
 fun ProfileAvatar(
     onClick: (Uri) -> Unit = {},
-    avatar: Uri?,
+    avatar: String,
 ) {
 
 

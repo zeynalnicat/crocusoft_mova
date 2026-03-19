@@ -1,10 +1,10 @@
 package com.example.crocusoft_mova.presentation.auth.fill_profile
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,7 +31,6 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Strings
 import kotlinx.coroutines.flow.SharedFlow
-import java.security.Key
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -79,7 +78,7 @@ fun FillProfileContent(
             ) {
 
                 ProfileAvatar(
-                    avatar = state.imgUri,
+                    avatar = state.imgUri?.path ?: "",
                     onClick = { postIntent(FillProfileContract.Intent.SetProfile(it)) }
                 )
 

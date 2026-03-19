@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -61,10 +62,12 @@ fun MovieDetailHeader(
                 horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2)
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = {
+                        postIntent(MovieDetailContract.Intent.AddToMyList)
+                    }
                 ) {
                     Icon(
-                        painter = painterResource(Drawables.my_list),
+                        painter = painterResource(if (state.movieDetail.isAdded) Drawables.download else Drawables.my_list),
                         contentDescription = null,
                         tint = colorResource(Colors.white)
                     )
@@ -179,7 +182,7 @@ fun MovieDetailHeader(
             Text(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                text = "Genre: ${state.movieDetail.genres.joinToString { "," }}",
+                text = "Genre: ${state.movieDetail.genres.joinToString()}",
                 style = BaseTheme.textStyle.t12
             )
 
@@ -198,10 +201,7 @@ fun MovieDetailHeader(
                 horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp5)
             ) {
 
-                items(
-                    count = state.movieDetail.genres.size,
-                ) {
-                    val company = state.movieDetail.production_companies[it]
+                items(state.movieDetail.production_companies) { company ->
                     ProductionCompanyItem(
                         model = ApiConstants.getPosterUrl(company.logo_path),
                         title = company.name

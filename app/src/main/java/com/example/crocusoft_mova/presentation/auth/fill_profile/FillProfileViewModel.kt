@@ -1,14 +1,15 @@
 package com.example.crocusoft_mova.presentation.auth.fill_profile
 
-import androidx.compose.runtime.MutableState
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.crocusoft_mova.common.utils.ImageUtils
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase
-import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase.*
+import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase.Params
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class FillProfileViewModel @Inject constructor(
     private val fillProfileUseCase: FillProfileUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(FillProfileContract.State())
@@ -74,21 +76,25 @@ class FillProfileViewModel @Inject constructor(
 
     private fun submit() {
         viewModelScope.launch {
+            val base64Image = state.value.imgUri?.let { uri ->
+                ImageUtils.uriToBitmap(context, uri)?.let { bitmap ->
+                    ImageUtils.bitmapToBase64(bitmap)
+                }
+            } ?: ""
+
             when (val res = fillProfileUseCase.invoke(
                 Params(
                     fullName = state.value.fullName,
                     gender = state.value.gender,
                     nickname = state.value.nickName,
                     phoneNumber = state.value.phoneNumber,
-                    profileUri = ""
+                    profileUri = base64Image
                 )
             )) {
                 is ContentState.Error<*> -> _effect.emit(
-
                     FillProfileContract.Effect.ShowError(
                         res.message
                     )
-
                 )
 
                 is ContentState.Success<*> -> {

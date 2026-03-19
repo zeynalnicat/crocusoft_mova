@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,7 +42,8 @@ fun MovieDetailContent(
             AppTopBar(
                 modifier = Modifier
                     .padding(horizontal = BaseTheme.dimens.dp3)
-                    .statusBarsPadding(),
+                    .statusBarsPadding()
+                    .navigationBarsPadding(),
                 prefixAction = onNavigateBack,
                 suffixIcon = {
                     Icon(

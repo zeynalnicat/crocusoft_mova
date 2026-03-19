@@ -5,6 +5,7 @@ import com.example.crocusoft_mova.data.repository.ExploreRepositoryImpl
 import com.example.crocusoft_mova.data.repository.FillProfileRepositoryImpl
 import com.example.crocusoft_mova.data.repository.HomeRepositoryImpl
 import com.example.crocusoft_mova.data.repository.MovieDetailRepositoryImpl
+import com.example.crocusoft_mova.data.repository.MyListRepositoryImpl
 import com.example.crocusoft_mova.data.repository.PinRepositoryImpl
 import com.example.crocusoft_mova.data.repository.ProfileRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignInRepositoryImpl
@@ -15,6 +16,7 @@ import com.example.crocusoft_mova.domain.repository.ExploreRepository
 import com.example.crocusoft_mova.domain.repository.FillProfileRepository
 import com.example.crocusoft_mova.domain.repository.HomeRepository
 import com.example.crocusoft_mova.domain.repository.MovieDetailRepository
+import com.example.crocusoft_mova.domain.repository.MyListRepository
 import com.example.crocusoft_mova.domain.repository.PinRepository
 import com.example.crocusoft_mova.domain.repository.ProfileRepository
 import com.example.crocusoft_mova.domain.repository.SignInRepository
@@ -88,8 +90,20 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMovieDetailRepository(apiService: ApiService): MovieDetailRepository =
-        MovieDetailRepositoryImpl(apiService)
+    fun provideMovieDetailRepository(
+        apiService: ApiService,
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): MovieDetailRepository =
+        MovieDetailRepositoryImpl(apiService, firebaseAuth, firestore)
+
+
+    @Singleton
+    @Provides
+    fun provideMyListRepository(
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): MyListRepository = MyListRepositoryImpl(firebaseAuth, firestore)
 
 
 }
