@@ -8,6 +8,7 @@ import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverMovieUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverTVUseCase
+import com.example.crocusoft_mova.domain.usecases.FetchUpcomingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,7 +22,8 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val fetchDiscoverMovieUseCase: FetchDiscoverMovieUseCase,
-    private val fetchDiscoverTVUseCase: FetchDiscoverTVUseCase
+    private val fetchDiscoverTVUseCase: FetchDiscoverTVUseCase,
+    private val fetchUpcomingMoviesUseCase: FetchUpcomingMoviesUseCase
 ) :
     ViewModel() {
 
@@ -37,6 +39,7 @@ class HomeViewModel @Inject constructor(
     init {
         fetchDiscoverMovies()
         fetchDiscoverTv()
+        fetchUpcomingMovies()
 
     }
 
@@ -44,6 +47,7 @@ class HomeViewModel @Inject constructor(
     fun onIntent(intent: HomeContract.Intent) {
         when (intent) {
             HomeContract.Intent.FetchDiscoverMovies -> {}
+            HomeContract.Intent.FetchUpcomingMovies -> {}
         }
     }
 
@@ -80,6 +84,19 @@ class HomeViewModel @Inject constructor(
                 }
             }
 
+        }
+    }
+    private fun fetchUpcomingMovies() {
+        viewModelScope.launch {
+            when (val res = fetchUpcomingMoviesUseCase()) {
+                is ContentState.Error<*> -> {
+                    _effect.emit(HomeContract.Effect.ShowError(res.message))
+                }
+
+                is ContentState.Success<List<MovieUiModel>> -> {
+                    _state.update { it.copy(upcomingMovies = res.data) }
+                }
+            }
         }
     }
 

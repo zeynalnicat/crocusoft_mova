@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import com.example.crocusoft_mova.core.Strings
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.crocusoft_mova.common.components.AppTopBar
 import com.example.crocusoft_mova.common.components.MovieCoverItem
 import com.example.crocusoft_mova.core.BaseTheme
@@ -112,6 +115,33 @@ fun HomeContent(
 
 
                 }
+            }
+            item {
+                SectionHeader(
+                    title = stringResource(Strings.new_releases),
+                    seeAllClick = {}
+                )
+            }
+            item {
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = BaseTheme.dimens.dp6),
+                    horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2)
+                ) {
+
+                    items(state.upcomingMovies.take(10)) { movie ->
+                        MovieCoverItem(
+                            movieModel = movie,
+                            onClickMovie = {
+                                onNavigateDetail(movie.id)
+                            }
+                        )
+                    }
+
+
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(BaseTheme.dimens.bottom_padding))
             }
         }
 

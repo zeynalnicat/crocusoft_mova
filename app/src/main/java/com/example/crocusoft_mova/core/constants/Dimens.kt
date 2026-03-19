@@ -26,6 +26,7 @@ object Dimens {
     val min_width = 90.dp
 
     val radius = 100.dp
+    val bottom_padding = 80.dp
 
 
     val spMin = 10.sp
