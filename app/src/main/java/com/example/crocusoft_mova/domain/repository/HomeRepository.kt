@@ -9,5 +9,7 @@ interface HomeRepository {
 
     suspend fun fetchDiscoverTv(): ContentState<List<MovieUiModel>>
 
+    suspend fun fetchTopRatedMovies(): ContentState<List<MovieUiModel>>
+
     suspend fun fetchUpcomingMovies() : ContentState<List<MovieUiModel>>
 }

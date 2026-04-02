@@ -11,4 +11,6 @@ object AppErrors {
     val wrongPin = "Wrong Pin"
 
     val noMovies = "No movies found"
+
+    val noVideos = "No suitable videos found"
 }

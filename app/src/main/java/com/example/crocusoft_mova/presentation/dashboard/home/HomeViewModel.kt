@@ -8,6 +8,7 @@ import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverMovieUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverTVUseCase
+import com.example.crocusoft_mova.domain.usecases.FetchTopRatedUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchUpcomingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -22,82 +23,86 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val fetchDiscoverMovieUseCase: FetchDiscoverMovieUseCase,
-    private val fetchDiscoverTVUseCase: FetchDiscoverTVUseCase,
-    private val fetchUpcomingMoviesUseCase: FetchUpcomingMoviesUseCase
-) :
-    ViewModel() {
-
+    private val fetchUpcomingMoviesUseCase: FetchUpcomingMoviesUseCase,
+    private val fetchTopRatedUseCase: FetchTopRatedUseCase
+) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeContract.State())
     val state = _state.asStateFlow()
 
     private val _effect = MutableSharedFlow<HomeContract.Effect>()
-
     val effect = _effect.asSharedFlow()
 
-
     init {
-        fetchDiscoverMovies()
-        fetchDiscoverTv()
-        fetchUpcomingMovies()
-
+        onIntent(HomeContract.Intent.FetchDiscoverMovies)
+        onIntent(HomeContract.Intent.FetchUpcomingMovies)
+        onIntent(HomeContract.Intent.FetchTopRatedMovies)
     }
-
 
     fun onIntent(intent: HomeContract.Intent) {
         when (intent) {
-            HomeContract.Intent.FetchDiscoverMovies -> {}
-            HomeContract.Intent.FetchUpcomingMovies -> {}
+            HomeContract.Intent.FetchDiscoverMovies -> fetchDiscoverMovies()
+            HomeContract.Intent.FetchUpcomingMovies -> fetchUpcomingMovies()
+            HomeContract.Intent.FetchTopRatedMovies -> fetchTopRatedMovies()
         }
     }
 
     private fun fetchDiscoverMovies() {
         viewModelScope.launch {
+            _state.update { it.copy(isDiscoverLoading = true) }
+
             when (val res = fetchDiscoverMovieUseCase()) {
                 is ContentState.Error<*> -> {
-                    Log.i("discoveries", res.message)
+                    _state.update { it.copy(isDiscoverLoading = false) }
                     _effect.emit(HomeContract.Effect.ShowError(res.message))
                 }
 
                 is ContentState.Success<List<MovieUiModel>> -> {
-
-                    _state.update { it.copy(discoverMovies = res.data) }
-                    Log.i("discoveries", _state.value.discoverMovies.toString())
+                    _state.update {
+                        it.copy(discoverMovies = res.data, isDiscoverLoading = false)
+                    }
                 }
             }
-
         }
     }
 
-    private fun fetchDiscoverTv() {
-        viewModelScope.launch {
-            when (val res = fetchDiscoverTVUseCase()) {
-                is ContentState.Error<*> -> {
-                    Log.i("discoveries", res.message)
-                    _effect.emit(HomeContract.Effect.ShowError(res.message))
-                }
-
-                is ContentState.Success<List<MovieUiModel>> -> {
-
-                    _state.update { it.copy(discoverMovies = res.data) }
-                    Log.i("discoveries", _state.value.discoverMovies.toString())
-                }
-            }
-
-        }
-    }
     private fun fetchUpcomingMovies() {
         viewModelScope.launch {
+            _state.update { it.copy(isUpcomingLoading = true) }
+
             when (val res = fetchUpcomingMoviesUseCase()) {
                 is ContentState.Error<*> -> {
+                    _state.update { it.copy(isUpcomingLoading = false) }
                     _effect.emit(HomeContract.Effect.ShowError(res.message))
                 }
 
                 is ContentState.Success<List<MovieUiModel>> -> {
-                    _state.update { it.copy(upcomingMovies = res.data) }
+                    _state.update {
+                        it.copy(upcomingMovies = res.data, isUpcomingLoading = false
+                        )
+                    }
                 }
             }
         }
     }
 
+    private fun fetchTopRatedMovies() {
+        viewModelScope.launch {
+            _state.update { it.copy(isTopRatedLoading = true) }
+
+            when (val res = fetchTopRatedUseCase()) {
+                is ContentState.Error<*> -> {
+                    _state.update { it.copy(isTopRatedLoading = false) }
+                    _effect.emit(HomeContract.Effect.ShowError(res.message))
+                }
+
+                is ContentState.Success<List<MovieUiModel>> -> {
+                    _state.update {
+                        it.copy(topRatedMovies = res.data, isTopRatedLoading = false
+                        )
+                    }
+                }
+            }
+        }
+    }
 }

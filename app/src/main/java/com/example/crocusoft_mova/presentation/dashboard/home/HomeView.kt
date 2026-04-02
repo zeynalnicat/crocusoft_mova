@@ -18,8 +18,9 @@ fun HomeView(
 
    HomeContent(
        state = state,
-       postIntent = viewModel::onIntent,
-       onNavigateDetail = { navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it)) }
+       onNavigateDetail = { navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it),)
+       },
+       effect = viewModel.effect
 
    )
 }
