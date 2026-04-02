@@ -22,7 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.crocusoft_mova.common.components.AppIconButton
+import com.example.crocusoft_mova.common.components.AppTopBar
 import com.example.crocusoft_mova.common.components.HorizontalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
@@ -33,118 +36,74 @@ import com.example.crocusoft_mova.presentation.dashboard.movie_detail.MovieDetai
 
 
 @Composable
-
 fun MovieDetailHeader(
     state: MovieDetailContract.State,
-    postIntent: (MovieDetailContract.Intent) -> Unit
 ) {
+    val movie = state.movieDetail
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(BaseTheme.dimens.dp2)
+            .padding(BaseTheme.dimens.dp6),
+        verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp5)
     ) {
-
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = state.movieDetail.title,
-                style = BaseTheme.textStyle.t16Bold
-
+                modifier = Modifier.weight(1f),
+                text = movie.title,
+                style = BaseTheme.textStyle.t24Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2)
-            ) {
-                IconButton(
-                    onClick = { /*TODO*/ }
-                ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3)) {
+                IconButton(onClick = {  }) {
                     Icon(
                         painter = painterResource(Drawables.my_list),
                         contentDescription = null,
-                        tint = colorResource(Colors.white)
+                        tint = Color.White
                     )
                 }
-                IconButton(
-                    onClick = { /*TODO*/ }
-                ) {
+                IconButton(onClick = {  }) {
                     Icon(
                         painter = painterResource(Drawables.icon_send),
                         contentDescription = null,
-                        tint = colorResource(Colors.white)
+                        tint = Color.White
                     )
                 }
             }
-
-
         }
 
         Row(
-            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3)
         ) {
             Icon(
                 painter = painterResource(Drawables.icon_star),
                 contentDescription = null,
-                tint = colorResource(Colors.secondary)
+                tint = colorResource(Colors.secondary),
+                modifier = Modifier.size(BaseTheme.dimens.dp4)
             )
-
-            HorizontalSpacer(BaseTheme.dimens.dp2)
-
             Text(
-                text = state.movieDetail.vote_average.toString(),
-                style = BaseTheme.textStyle.t12.copy(color = colorResource(Colors.secondary))
+                text = String.format("%.1f", movie.vote_average),
+                style = BaseTheme.textStyle.t14.copy(color = colorResource(Colors.secondary))
             )
-
-            HorizontalSpacer(BaseTheme.dimens.dp2)
-
             Icon(
-                modifier = Modifier.size(
-                    width = BaseTheme.dimens.dp2,
-                    height = BaseTheme.dimens.dp1
-                ),
                 painter = painterResource(Drawables.icon_right),
                 contentDescription = null,
-                tint = colorResource(Colors.secondary)
+                tint = colorResource(Colors.secondary),
+                modifier = Modifier.size(BaseTheme.dimens.dp3)
             )
 
-            HorizontalSpacer(BaseTheme.dimens.dp2)
+            Text(text = movie.release_date.take(4), style = BaseTheme.textStyle.t14)
 
-            Text(
-                text = state.movieDetail.release_date.take(4),
-                style = BaseTheme.textStyle.t14SemiBold
-            )
-
-            HorizontalSpacer(BaseTheme.dimens.dp2)
-
-            Box(
-                modifier = Modifier
-                    .clip(
-                        RoundedCornerShape(BaseTheme.dimens.dp06)
-                    )
-                    .border(
-                        width = BaseTheme.dimens.dp01,
-                        color = colorResource(Colors.secondary),
-                        shape = RoundedCornerShape(BaseTheme.dimens.dp06)
-
-                    )
-                    .background(
-                        color = Color.Transparent,
-                        shape = RoundedCornerShape(BaseTheme.dimens.dp06)
-                    )
-            ) {
-                Text(
-                    modifier = Modifier.padding(BaseTheme.dimens.dp2),
-                    text = state.movieDetail.language,
-                    style = BaseTheme.textStyle.t12.copy(color = colorResource(Colors.secondary)),
-
-                    )
-            }
-
+            MovieInfoBadge(text = "13+")
+            MovieInfoBadge(text = movie.language.uppercase())
+            MovieInfoBadge(text = "Subtitle")
         }
 
         Row(
@@ -153,68 +112,38 @@ fun MovieDetailHeader(
         ) {
             AppIconButton(
                 modifier = Modifier.weight(1f),
-                onClick = {},
-                icon = Drawables.icon_play,
-                iconSize = BaseTheme.dimens.dp4,
                 textRes = Strings.play,
+                icon = Drawables.icon_play,
                 color = Colors.secondary,
-                borderColor = Colors.secondary,
+                onClick = {  }
             )
-
             AppIconButton(
                 modifier = Modifier.weight(1f),
-                onClick = {},
-                icon = Drawables.download,
                 textRes = Strings.download,
-                iconSize = BaseTheme.dimens.dp4,
-                borderColor = Colors.secondary,
+                icon = Drawables.download,
                 color = Colors.transparent,
-                textColor = Colors.secondary
+                borderColor = Colors.secondary,
+                textColor = Colors.secondary,
+                onClick = {  }
             )
-
-
         }
 
-        if (state.movieDetail.genres.isNotEmpty()) {
+        Column(verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2)) {
             Text(
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                text = "Genre: ${state.movieDetail.genres.joinToString { "," }}",
-                style = BaseTheme.textStyle.t12
+                text = "Genre: ${movie.genres.joinToString(" ") }",
+                style = BaseTheme.textStyle.t12,
+                color = Color.White.copy(alpha = 0.9f)
             )
 
+
+            Text(
+                text = movie.description,
+                style = BaseTheme.textStyle.t14,
+                lineHeight = 20.sp,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
+                color = Color.White.copy(alpha = 0.8f)
+            )
         }
-
-        Text(
-            maxLines = 3,
-            overflow = TextOverflow.Ellipsis,
-            text = state.movieDetail.description,
-            style = BaseTheme.textStyle.t12
-        )
-
-        if (state.movieDetail.production_companies.isNotEmpty()) {
-
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp5)
-            ) {
-
-                items(
-                    count = state.movieDetail.genres.size,
-                ) {
-                    val company = state.movieDetail.production_companies[it]
-                    ProductionCompanyItem(
-                        model = ApiConstants.getPosterUrl(company.logo_path),
-                        title = company.name
-                    )
-                }
-
-
-            }
-
-        }
-
-
     }
-
-
 }

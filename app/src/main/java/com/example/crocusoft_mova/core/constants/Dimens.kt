@@ -14,9 +14,11 @@ object Dimens {
     val image_height = 200.dp
     val image_width = 380.dp
 
-    val home_header_cover_height = 400.dp
+    val home_header_cover_height = 500.dp
 
-    val movie_cover_width = 150.dp
+    val video_height = 112.5.dp
+
+    val movie_cover_width = 186.dp
     val movie_cover_height = 200.dp
     val rate_box_width = 34.dp
     val rate_box_height =24.dp
@@ -51,7 +53,7 @@ object Dimens {
     val dp03 = 3.dp
 
     val dp06 = 6.dp
-
+    val dp010 = 10.dp
     val dp1 = 4.dp   // index -> x/4
 
 

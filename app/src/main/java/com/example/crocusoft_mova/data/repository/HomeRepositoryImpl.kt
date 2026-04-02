@@ -35,6 +35,20 @@ class HomeRepositoryImpl @Inject constructor(private val apiService: ApiService)
             ContentState.Error(e.message ?: AppErrors.unknownError)
         }
 
+    override suspend fun fetchTopRatedMovies(): ContentState<List<MovieUiModel>> =
+        try {
+            val res = apiService.fetchTopRatedMovies()
+            val results = res.results
+            if (results.isNullOrEmpty()) {
+                ContentState.Error(AppErrors.noMovies)
+            } else {
+                ContentState.Success(results.map { it.toUiModel() })
+            }
+        } catch (e: Exception) {
+            ContentState.Error(e.message ?: AppErrors.unknownError)
+        }
+
+
     override suspend fun fetchUpcomingMovies(): ContentState<List<MovieUiModel>>  =
         try {
             val res = apiService.fetchUpcomingMovies()

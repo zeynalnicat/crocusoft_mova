@@ -6,7 +6,6 @@ sealed interface ExploreContract {
 
     sealed interface Intent {
         data class SetQuery(val query: String) : Intent
-
         data object Search : Intent
 
     }
