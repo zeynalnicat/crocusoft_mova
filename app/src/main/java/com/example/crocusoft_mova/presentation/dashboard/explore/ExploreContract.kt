@@ -6,7 +6,8 @@ sealed interface ExploreContract {
 
     sealed interface Intent {
         data class SetQuery(val query: String) : Intent
-        data object Search : Intent
+        data class ToggleFilterSheet(val visibility : Boolean) : Intent
+        //data object Search : Intent
 
     }
 
@@ -17,7 +18,8 @@ sealed interface ExploreContract {
 
     data class State(
         val searchQuery: String = "",
-        val movies: List<MovieUiModel> = emptyList()
+        val movies: List<MovieUiModel> = emptyList(),
+        val isVisible : Boolean = false
 
     )
 }

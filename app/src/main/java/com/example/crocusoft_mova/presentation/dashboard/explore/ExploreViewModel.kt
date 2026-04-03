@@ -51,10 +51,13 @@ class ExploreViewModel @Inject constructor(
                     }
                 }
             }
-
-            ExploreContract.Intent.Search -> {
-                searchMovie(state.value.searchQuery)
+            is ExploreContract.Intent.ToggleFilterSheet -> {
+                _state.update { it.copy(isVisible = intent.visibility) }
             }
+
+            /*ExploreContract.Intent.Search -> {
+                searchMovie(state.value.searchQuery)
+            }*/
         }
     }
 

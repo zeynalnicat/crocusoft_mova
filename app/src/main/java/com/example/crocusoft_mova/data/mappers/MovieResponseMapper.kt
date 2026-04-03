@@ -44,7 +44,8 @@ fun MovieDetailModel.toUiModel(): MovieDetailUiModel = MovieDetailUiModel(
 fun VideoModel.toUiModel() : TrailerUiModel = TrailerUiModel(
     id = 0,
     title = name ?: "Unknown Trailer",
-    key = "https://img.youtube.com/vi/${this.key}/0.jpg",
+    site = site ?: "",
+    key = key ?: "",
     duration = "1m 45s"
 )
 

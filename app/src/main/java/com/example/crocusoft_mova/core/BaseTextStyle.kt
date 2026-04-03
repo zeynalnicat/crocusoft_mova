@@ -105,6 +105,7 @@ object BaseTextStyle {
         fontWeight = FontWeight.W600
     )
 
+
     val t24Bold = TextStyle(
         fontFamily = urbanistFont,
         color = White,

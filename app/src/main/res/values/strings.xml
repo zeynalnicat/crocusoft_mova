@@ -54,5 +54,11 @@ any movies yet</string>"
     <string name="splash_first_title">Welcome to Mova</string>
     <string name ="splash_first_description">The best movie streaming app of the century to make your days great!</string>
     <string name="log_out">Log out</string>
-    <string name="trending">Trending</string>
+    <string name="top_searches">Top Searches</string>
+    <string name="sort_filter">Sort &amp; Filter</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+
+
+
 </resources>
