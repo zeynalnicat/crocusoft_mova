@@ -27,7 +27,7 @@ fun ExploreHeader(
     onValueChange : (String) -> Unit,
     onFilterClick : () -> Unit
     ){
-    Row(modifier = modifier.fillMaxWidth(),
+    Row(modifier = modifier.fillMaxWidth().padding(horizontal = BaseTheme.dimens.dp6).padding(vertical = BaseTheme.dimens.dp6),
         horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3),
         verticalAlignment = Alignment.CenterVertically) {
 

@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.core.di
 
+import com.example.crocusoft_mova.data.repository.BookmarkRepositoryImpl
 import com.example.crocusoft_mova.data.repository.ChooseInterestRepositoryImpl
 import com.example.crocusoft_mova.data.repository.ExploreRepositoryImpl
 import com.example.crocusoft_mova.data.repository.FillProfileRepositoryImpl
@@ -10,6 +11,7 @@ import com.example.crocusoft_mova.data.repository.ProfileRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignInRepositoryImpl
 import com.example.crocusoft_mova.data.repository.SignUpRepositoryImpl
 import com.example.crocusoft_mova.data.service.remote.ApiService
+import com.example.crocusoft_mova.domain.repository.BookmarkRepository
 import com.example.crocusoft_mova.domain.repository.ChooseInterestRepository
 import com.example.crocusoft_mova.domain.repository.ExploreRepository
 import com.example.crocusoft_mova.domain.repository.FillProfileRepository
@@ -68,6 +70,13 @@ object RepositoryModule {
         firebaseAuth: FirebaseAuth,
         firestore: FirebaseFirestore
     ): PinRepository = PinRepositoryImpl(firebaseAuth, firestore)
+
+    @Singleton
+    @Provides
+    fun provideBookmarkRepository(
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore
+    ) : BookmarkRepository = BookmarkRepositoryImpl(firebaseAuth,firebaseFirestore)
 
 
     @Singleton

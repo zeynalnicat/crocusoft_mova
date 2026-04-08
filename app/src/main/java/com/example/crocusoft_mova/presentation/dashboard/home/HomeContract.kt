@@ -6,7 +6,7 @@ sealed interface HomeContract {
 
 
     sealed interface Intent {
-        object FetchDiscoverMovies : Intent
+        object FetchNowPlayingMovies : Intent
         object FetchUpcomingMovies : Intent
         object FetchTopRatedMovies : Intent
     }
@@ -17,10 +17,10 @@ sealed interface HomeContract {
 
 
     data class State(
-        val discoverMovies: List<MovieUiModel> = emptyList(),
+        val nowPlayingMovies: List<MovieUiModel> = emptyList(),
         val upcomingMovies : List<MovieUiModel> = emptyList(),
         val topRatedMovies : List<MovieUiModel> = emptyList(),
-        val isDiscoverLoading: Boolean = false,
+        val isNowPlayingLoading: Boolean = false,
         val isUpcomingLoading: Boolean = false,
         val isTopRatedLoading: Boolean = false
     )

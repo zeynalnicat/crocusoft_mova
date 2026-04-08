@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.example.crocusoft_mova.ui.navigation.AppRoutes
 
 
 @Composable
@@ -14,7 +15,9 @@ fun MyListView(navController: NavController, viewModel: MyListViewModel = hiltVi
 
     MyListContent(
         state = state,
-        postIntent = viewModel::onIntent
+        postIntent = viewModel::onIntent,
+        effect = viewModel.effect,
+        onNavigateToDetail = {navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it))}
     )
 
 }

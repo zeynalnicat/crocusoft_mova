@@ -5,9 +5,7 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 
 interface HomeRepository {
 
-    suspend fun fetchDiscoverMovies(): ContentState<List<MovieUiModel>>
-
-    suspend fun fetchDiscoverTv(): ContentState<List<MovieUiModel>>
+    suspend fun fetchNowPlayingMovies(): ContentState<List<MovieUiModel>>
 
     suspend fun fetchTopRatedMovies(): ContentState<List<MovieUiModel>>
 

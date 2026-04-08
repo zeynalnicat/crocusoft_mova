@@ -90,6 +90,12 @@ object BaseTextStyle {
         fontSize = BaseTheme.dimens.sp2,
         fontWeight = FontWeight.W500
     )
+    val t16SemiBoldWhite = TextStyle(
+        fontFamily = urbanistFont,
+        color = White,
+        fontSize = BaseTheme.dimens.sp2,
+        fontWeight = FontWeight.W600
+    )
 
     val t18SemiBold = TextStyle(
         fontFamily = urbanistFont,

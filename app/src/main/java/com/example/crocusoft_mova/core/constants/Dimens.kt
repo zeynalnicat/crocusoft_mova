@@ -22,6 +22,7 @@ object Dimens {
     val movie_cover_height = 200.dp
     val rate_box_width = 34.dp
     val rate_box_height =24.dp
+    val tag_item_height = 38.dp
 
     val detail_header_height = 320.dp
 

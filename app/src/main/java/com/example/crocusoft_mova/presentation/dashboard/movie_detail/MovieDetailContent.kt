@@ -88,7 +88,7 @@ fun MovieDetailContent(
             }
 
             item {
-                MovieDetailHeader(state = state)
+                MovieDetailHeader(state = state, postIntent = postIntent)
             }
 
             if (state.movieDetail.production_companies.isNotEmpty()) {

@@ -64,6 +64,14 @@ fun ProfileContent(
             titleRes = Strings.help_center,
             action = {}),
         SettingsItemModel(
+            icon = Drawables.language_icon,
+            titleRes = Strings.change_language,
+            action = {}),
+        SettingsItemModel(
+            icon = Drawables.mode,
+            titleRes = Strings.mode,
+            action = {}),
+        SettingsItemModel(
             icon = Drawables.icon_help,
             titleRes = Strings.log_out,
             action = {

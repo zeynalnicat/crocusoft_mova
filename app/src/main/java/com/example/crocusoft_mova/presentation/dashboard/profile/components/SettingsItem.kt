@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,6 +43,7 @@ fun SettingsItem(item: SettingsItemModel) {
             Icon(
                 painter = painterResource(item.icon),
                 contentDescription = null,
+                modifier = Modifier.size(BaseTheme.dimens.dp7),
                 tint = colorResource(Colors.white)
             )
 
@@ -49,11 +53,33 @@ fun SettingsItem(item: SettingsItemModel) {
             )
         }
 
-        Icon(
-            painter = painterResource(Drawables.icon_right),
-            contentDescription = null,
-            tint = colorResource(Colors.white)
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp5)
+        ){
+            if(item.trailingText!=null){
+                Text(text = item.trailingText, style = BaseTheme.textStyle.t16SemiBoldWhite)
+            }
+            if(item.isSwitch){
+                Switch(
+                    checked = item.switchChecked,
+                    onCheckedChange = {item.action()},
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = colorResource(Colors.white),
+                        checkedTrackColor = colorResource(Colors.secondary)
+                    )
+                )
+            } else{
+                Icon(
+                    painter = painterResource(Drawables.icon_right),
+                    contentDescription = null,
+                    modifier = Modifier.size(BaseTheme.dimens.dp5),
+                    tint = colorResource(Colors.white)
+                )
+            }
+        }
+
+
     }
 
 }
@@ -62,9 +88,11 @@ fun SettingsItem(item: SettingsItemModel) {
 data class SettingsItemModel(
     val icon: Int,
     val titleRes: Int,
+    val trailingText : String?=null,
+    val isSwitch : Boolean = false,
+    val switchChecked : Boolean = false,
     val action: () -> Unit
-
-) {
+    ) {
 
 
 }

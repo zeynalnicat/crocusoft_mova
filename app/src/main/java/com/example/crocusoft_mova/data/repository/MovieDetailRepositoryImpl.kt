@@ -15,7 +15,7 @@ class MovieDetailRepositoryImpl @Inject constructor(private val apiService: ApiS
     MovieDetailRepository {
     override suspend fun getMovieDetail(movieId: Int): ContentState<MovieDetailUiModel> = try {
         val res = apiService.fetchMovieDetail(movieId)
-        ContentState.Success(res.toUiModel())
+        ContentState.Success(res.toUiModel(type = "Movie"))
 
 
     } catch (e: Exception) {

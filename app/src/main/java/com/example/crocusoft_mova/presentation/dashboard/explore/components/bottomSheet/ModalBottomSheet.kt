@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.dashboard.explore.components
+package com.example.crocusoft_mova.presentation.dashboard.explore.components.bottomSheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,14 +20,14 @@ import com.example.crocusoft_mova.common.components.VerticalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Strings
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract
 
 @Composable
 fun FilterDesignContent(
-
+  state : ExploreContract.State,
+  onIntent : (ExploreContract.Intent) -> Unit
 ) {
-    val categories = listOf("Movie", "TV Shows", "K-Drama", "Anime")
-    val regions = listOf("All Regions", "US", "South Korea", "China")
-    val genres = listOf("Action", "Comedy", "Romance", "Thriller")
+    val categories = listOf("Movie", "Tv", "K-Drama", "Anime")
     val periods = listOf("All Periods", "2022", "2021", "2020")
     val sortOptions = listOf("Popularity", "Latest Release")
     Column(
@@ -52,41 +52,41 @@ fun FilterDesignContent(
         FilterRow(
             title = "Categories",
             items = categories,
-            selectedItem = "TV Shows",
-            onItemSelected = { }
+            selectedItem = state.selectedCategory,
+            onItemSelected = { onIntent(ExploreContract.Intent.SelectCategory(it)) }
         )
         VerticalSpacer(BaseTheme.dimens.dp5)
 
         FilterRow(
             title = "Regions",
-            items = regions,
-            selectedItem = "All Regions",
-            onItemSelected = { }
+            items = state.regions.map { it.englishName },
+            selectedItem = state.selectedRegion,
+            onItemSelected = { onIntent(ExploreContract.Intent.SelectRegion(it)) }
         )
 
         VerticalSpacer(BaseTheme.dimens.dp5)
 
         FilterRow(
             title = "Genre",
-            items = genres,
-            selectedItem = "TV Shows",
-            onItemSelected = { }
+            items = state.currentGenresToDisplay.map { it.name },
+            selectedItem = state.selectedGenre,
+            onItemSelected = { onIntent(ExploreContract.Intent.SelectGenre(it)) }
         )
         VerticalSpacer(BaseTheme.dimens.dp5)
 
         FilterRow(
             title = "Time/Periods",
             items = periods,
-            selectedItem = "2022",
-            onItemSelected = { }
+            selectedItem = state.selectedPeriod,
+            onItemSelected = { onIntent(ExploreContract.Intent.SelectPeriod(it)) }
         )
         VerticalSpacer(BaseTheme.dimens.dp5)
 
         FilterRow(
             title = "Sorts",
             items = sortOptions,
-            selectedItem = "Popularity",
-            onItemSelected = { }
+            selectedItem = state.selectedSort,
+            onItemSelected = { onIntent(ExploreContract.Intent.SelectSort(it)) }
         )
 
 
@@ -104,12 +104,12 @@ fun FilterDesignContent(
                 modifier = Modifier.weight(1f),
                 color = Color.Gray,
                 text = stringResource(Strings.reset),
-                action = { }
+                action = {onIntent(ExploreContract.Intent.ResetFilters)}
             )
             AppButton(
                 modifier = Modifier.weight(1f),
                 text = stringResource(Strings.apply),
-                action = { }
+                action = {onIntent(ExploreContract.Intent.ApplyFilters) }
             )
         }
 

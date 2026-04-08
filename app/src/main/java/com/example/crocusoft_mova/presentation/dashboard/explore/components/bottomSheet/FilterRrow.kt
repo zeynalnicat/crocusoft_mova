@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.dashboard.explore.components
+package com.example.crocusoft_mova.presentation.dashboard.explore.components.bottomSheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

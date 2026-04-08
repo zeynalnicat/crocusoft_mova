@@ -10,6 +10,7 @@ data class MovieDetailUiModel(
     val genres: List<String>,
     val production_companies: List<ProductionCompany>,
     val language: String,
+    val mediaType : String
 
 
     ) {
@@ -24,7 +25,8 @@ data class MovieDetailUiModel(
             image = "",
             genres = emptyList(),
             production_companies = emptyList(),
-            language = ""
+            language = "",
+            mediaType = ""
         )
 
 

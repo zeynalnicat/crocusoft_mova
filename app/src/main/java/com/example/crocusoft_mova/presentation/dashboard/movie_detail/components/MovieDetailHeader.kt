@@ -1,43 +1,36 @@
 package com.example.crocusoft_mova.presentation.dashboard.movie_detail.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.crocusoft_mova.common.components.AppIconButton
-import com.example.crocusoft_mova.common.components.AppTopBar
-import com.example.crocusoft_mova.common.components.HorizontalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
-import com.example.crocusoft_mova.core.constants.ApiConstants
 import com.example.crocusoft_mova.presentation.dashboard.movie_detail.MovieDetailContract
 
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun MovieDetailHeader(
     state: MovieDetailContract.State,
+    postIntent : (MovieDetailContract.Intent) -> Unit
 ) {
     val movie = state.movieDetail
 
@@ -60,9 +53,12 @@ fun MovieDetailHeader(
                 overflow = TextOverflow.Ellipsis
             )
             Row(horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3)) {
-                IconButton(onClick = {  }) {
+                IconButton(onClick = {
+                    postIntent(MovieDetailContract.Intent.OnBookMarkClick)
+                }) {
                     Icon(
-                        painter = painterResource(Drawables.my_list),
+                        painter = painterResource(if(state.isBookMarked)Drawables.bookmark_filled
+                        else Drawables.bookmark),
                         contentDescription = null,
                         tint = Color.White
                     )

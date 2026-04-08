@@ -4,11 +4,21 @@ object ApiConstants {
 
     const val BASE_URL = "https://api.themoviedb.org/3"
 
-    const val DISCOVER = "$BASE_URL/discover/movie"
+    const val DISCOVER_MOVIE = "$BASE_URL/discover/movie"
+
+    const val DISCOVER = "$BASE_URL/discover/{category}"
 
     const val DISCOVER_TV = "$BASE_URL/discover/tv"
 
+    const val NOW_PLAYING = "$BASE_URL/movie/now_playing"
+
     const val TRENDING = "$BASE_URL/trending/movie/day"
+
+    const val REGIONS = "$BASE_URL/configuration/countries"
+
+    const val GENRES_MOVIE = "$BASE_URL/genre/movie/list"
+
+    const val GENRES_TV = "$BASE_URL/genre/tv/list"
 
     const val MOVIE_DETAIL = "$BASE_URL/movie/{movie_id}"
 

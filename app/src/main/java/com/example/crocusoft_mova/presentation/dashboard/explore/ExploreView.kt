@@ -17,6 +17,7 @@ fun ExploreView(navController: NavController, viewModel: ExploreViewModel = hilt
     ExploreContent(
         state = state,
         postIntent = viewModel::onIntent,
-        onNavigateDetail = { navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it)) }
+        onNavigateDetail = { navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it)) },
+        effect = viewModel.effect
     )
 }
