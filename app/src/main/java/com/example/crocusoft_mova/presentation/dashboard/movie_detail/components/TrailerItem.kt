@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.AsyncImagePainter
@@ -43,7 +44,7 @@ fun TrailerItem(
     ) {
         Box(
             modifier = Modifier
-                .size(width = BaseTheme.dimens.movie_cover_width, height = BaseTheme.dimens.movie_cover_width)
+                .size(width = BaseTheme.dimens.video_width, height = BaseTheme.dimens.video_height)
                 .clip(RoundedCornerShape(BaseTheme.dimens.dp010)),
             contentAlignment = Alignment.Center
         ) {
@@ -70,6 +71,8 @@ fun TrailerItem(
 
         Column(verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp3)) {
             Text(text = title,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 style = BaseTheme.textStyle.t18Bold,
                 color = colorResource(Colors.white))
             Text(

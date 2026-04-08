@@ -4,11 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseModel(
+data class ResponseModel<T>(
     @SerialName("page")
     val page: Int? = 0,
     @SerialName("results")
-    val results: List<MovieModel>? = emptyList(),
+    val results: List<T>? = emptyList(),
     @SerialName("total_pages")
     val totalPages: Int? = 0,
     @SerialName("total_results")

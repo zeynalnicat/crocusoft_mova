@@ -6,6 +6,7 @@ data class TrailerUiModel(
     val id: Int,
     val title: String,
     val key : String,
+    val site : String,
     val duration: String = "1m 45s"
 ){
 
@@ -14,6 +15,7 @@ data class TrailerUiModel(
             id = 0,
             title = "",
             key = "",
+            site = "",
             duration = "1m 45s"
         )
     }

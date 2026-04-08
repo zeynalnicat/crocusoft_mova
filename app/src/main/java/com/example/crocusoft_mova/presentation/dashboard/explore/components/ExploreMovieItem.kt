@@ -25,7 +25,6 @@ fun ExploreMovieItem(
     movieUiModel: MovieUiModel,
     onClick: (Int) -> Unit
 ) {
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp5),
@@ -42,9 +41,9 @@ fun ExploreMovieItem(
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .height(BaseTheme.dimens.image_height)
-                .width(BaseTheme.dimens.movie_cover_width)
-                .clip(RoundedCornerShape(BaseTheme.dimens.dp3))
+                .height(BaseTheme.dimens.video_height)
+                .width(BaseTheme.dimens.video_width)
+                .clip(RoundedCornerShape(BaseTheme.dimens.dp010))
 
         )
 

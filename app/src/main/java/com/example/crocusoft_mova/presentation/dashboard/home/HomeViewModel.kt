@@ -8,6 +8,7 @@ import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverMovieUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoverTVUseCase
+import com.example.crocusoft_mova.domain.usecases.FetchNowPlayingMoviesUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchTopRatedUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchUpcomingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val fetchDiscoverMovieUseCase: FetchDiscoverMovieUseCase,
+    private val fetchNowPlayingMoviesUseCase: FetchNowPlayingMoviesUseCase,
     private val fetchUpcomingMoviesUseCase: FetchUpcomingMoviesUseCase,
     private val fetchTopRatedUseCase: FetchTopRatedUseCase
 ) : ViewModel() {
@@ -34,32 +35,32 @@ class HomeViewModel @Inject constructor(
     val effect = _effect.asSharedFlow()
 
     init {
-        onIntent(HomeContract.Intent.FetchDiscoverMovies)
+        onIntent(HomeContract.Intent.FetchNowPlayingMovies)
         onIntent(HomeContract.Intent.FetchUpcomingMovies)
         onIntent(HomeContract.Intent.FetchTopRatedMovies)
     }
 
     fun onIntent(intent: HomeContract.Intent) {
         when (intent) {
-            HomeContract.Intent.FetchDiscoverMovies -> fetchDiscoverMovies()
+            HomeContract.Intent.FetchNowPlayingMovies -> fetchNowPlayingMovies()
             HomeContract.Intent.FetchUpcomingMovies -> fetchUpcomingMovies()
             HomeContract.Intent.FetchTopRatedMovies -> fetchTopRatedMovies()
         }
     }
 
-    private fun fetchDiscoverMovies() {
+    private fun fetchNowPlayingMovies() {
         viewModelScope.launch {
-            _state.update { it.copy(isDiscoverLoading = true) }
+            _state.update { it.copy(isNowPlayingLoading = true) }
 
-            when (val res = fetchDiscoverMovieUseCase()) {
+            when (val res = fetchNowPlayingMoviesUseCase()) {
                 is ContentState.Error<*> -> {
-                    _state.update { it.copy(isDiscoverLoading = false) }
+                    _state.update { it.copy(isNowPlayingLoading = false) }
                     _effect.emit(HomeContract.Effect.ShowError(res.message))
                 }
 
                 is ContentState.Success<List<MovieUiModel>> -> {
                     _state.update {
-                        it.copy(discoverMovies = res.data, isDiscoverLoading = false)
+                        it.copy(nowPlayingMovies = res.data, isNowPlayingLoading = false)
                     }
                 }
             }

@@ -3,9 +3,11 @@ package com.example.crocusoft_mova.presentation.dashboard.movie_detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.ContentState
+import com.example.crocusoft_mova.domain.usecases.CheckBookmarkStatusUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchMovieDetailUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchSimilarUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchVideosUseCase
+import com.example.crocusoft_mova.domain.usecases.ToggleBookmarkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +21,9 @@ import kotlinx.coroutines.launch
 class MovieDetailViewModel @Inject constructor(
     private val fetchMovieDetailUseCase: FetchMovieDetailUseCase,
     private val fetchSimilarUseCase: FetchSimilarUseCase,
-    private val fetchVideosUseCase: FetchVideosUseCase
+    private val fetchVideosUseCase: FetchVideosUseCase,
+    private val toggleBookmarkUseCase: ToggleBookmarkUseCase,
+    private val checkBookmarkStatusUseCase: CheckBookmarkStatusUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MovieDetailContract.State())
@@ -32,13 +36,37 @@ class MovieDetailViewModel @Inject constructor(
         when (intent) {
             is MovieDetailContract.Intent.FetchMovieDetail -> {
                 fetchAllData(intent.movieId)
+                checkBookmarkStatus(intent.movieId)
             }
             is MovieDetailContract.Intent.OnTabSelected -> {
                 _state.update { it.copy(selectedTab = intent.index) }
             }
+            is MovieDetailContract.Intent.OnBookMarkClick -> {
+                toggleBookmark()
+            }
+
         }
     }
 
+    private fun checkBookmarkStatus(movieId : Int){
+        viewModelScope.launch {
+            checkBookmarkStatusUseCase(movieId).collect { isBookmarked->
+                _state.update { it.copy(isBookMarked = isBookmarked) }
+            }
+        }
+    }
+
+    private fun toggleBookmark() {
+        val currentMovie = _state.value.movieDetail
+        if (currentMovie.id == 0) return
+        viewModelScope.launch {
+            val result = toggleBookmarkUseCase(currentMovie)
+            if (result is ContentState.Error) {
+                _effect.emit(MovieDetailContract.Effect.ShowError(result.message))
+            }
+
+        }
+    }
     private fun fetchAllData(movieId: Int) {
         fetchMovieDetail(movieId)
         fetchSimilarMovies(movieId)

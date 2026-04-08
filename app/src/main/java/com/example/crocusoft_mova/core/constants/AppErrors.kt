@@ -13,4 +13,9 @@ object AppErrors {
     val noMovies = "No movies found"
 
     val noVideos = "No suitable videos found"
+
+    val noCountries = "Couldn't fetch the countries"
+
+    val noGenres = "Couldn't fetch the genres"
+
 }

@@ -88,7 +88,7 @@ fun MovieDetailContent(
             }
 
             item {
-                MovieDetailHeader(state = state)
+                MovieDetailHeader(state = state, postIntent = postIntent)
             }
 
             if (state.movieDetail.production_companies.isNotEmpty()) {
@@ -131,9 +131,10 @@ fun MovieDetailContent(
                         }
                     } else {
                         items(state.trailers) { trailer ->
-                            println("DEBUG_LOG: Trailer Key is -> ${trailer.key}")
+                            println("DEBUG_LOG: Trailer Key -> ${trailer.key}")
+                            println("VIDEO_DEBUG: Trailer Site -> ${trailer.site} ")
                             TrailerItem(
-                                model = "https://img.youtube.com/vi/${trailer.key}/0.jpg",
+                                model = "https://img.youtube.com/vi/${trailer.key}/hqdefault.jpg",
                                 title = trailer.title,
                                 duration = trailer.duration
                             )

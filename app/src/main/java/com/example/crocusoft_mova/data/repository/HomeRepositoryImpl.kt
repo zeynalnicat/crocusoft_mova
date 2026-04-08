@@ -9,9 +9,9 @@ import com.example.crocusoft_mova.domain.repository.HomeRepository
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(private val apiService: ApiService) : HomeRepository {
-    override suspend fun fetchDiscoverMovies(): ContentState<List<MovieUiModel>> =
+    override suspend fun fetchNowPlayingMovies(): ContentState<List<MovieUiModel>> =
         try {
-            val res = apiService.fetchDiscoverMovies()
+            val res = apiService.fetchNowPlaying()
             val results = res.results
             if (results.isNullOrEmpty()) {
                 ContentState.Error(AppErrors.noMovies)
@@ -20,20 +20,8 @@ class HomeRepositoryImpl @Inject constructor(private val apiService: ApiService)
             }
         } catch (e: Exception) {
             ContentState.Error(e.message ?: AppErrors.unknownError)
-        }
 
-    override suspend fun fetchDiscoverTv(): ContentState<List<MovieUiModel>> =
-        try {
-            val res = apiService.fetchDiscoverTv()
-            val results = res.results
-            if (results.isNullOrEmpty()) {
-                ContentState.Error(AppErrors.noMovies)
-            } else {
-                ContentState.Success(results.map { it.toUiModel() })
-            }
-        } catch (e: Exception) {
-            ContentState.Error(e.message ?: AppErrors.unknownError)
-        }
+    }
 
     override suspend fun fetchTopRatedMovies(): ContentState<List<MovieUiModel>> =
         try {

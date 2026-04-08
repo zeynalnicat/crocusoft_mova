@@ -9,6 +9,7 @@ sealed interface MovieDetailContract {
     sealed interface Intent {
         data class FetchMovieDetail(val movieId: Int) : Intent
         data class OnTabSelected(val index: Int) : Intent
+        data object OnBookMarkClick : Intent
     }
 
     sealed interface Effect {
@@ -22,6 +23,7 @@ sealed interface MovieDetailContract {
         val similarMovies: List<MovieUiModel> = emptyList(),
         val comments : List<String> = emptyList(),
         val selectedTab: Int = 0,
+        val isBookMarked : Boolean = false
         //val isLoading: Boolean = false
     )
 }

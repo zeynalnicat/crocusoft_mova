@@ -8,7 +8,7 @@ object Dimens {
 
 
 
-    val searched_item_height = 110.dp
+    val searched_item_height = 112.5.dp
     val bottom_bar_height = 90.dp
     val avatar_size = 140.dp
     val image_height = 200.dp
@@ -17,11 +17,12 @@ object Dimens {
     val home_header_cover_height = 500.dp
 
     val video_height = 112.5.dp
-
+    val video_width = 150.dp
     val movie_cover_width = 186.dp
     val movie_cover_height = 200.dp
     val rate_box_width = 34.dp
     val rate_box_height =24.dp
+    val tag_item_height = 38.dp
 
     val detail_header_height = 320.dp
 
@@ -56,6 +57,7 @@ object Dimens {
     val dp010 = 10.dp
     val dp1 = 4.dp   // index -> x/4
 
+    val dp056 = 56.dp
 
     val dp2 = 8.dp
 

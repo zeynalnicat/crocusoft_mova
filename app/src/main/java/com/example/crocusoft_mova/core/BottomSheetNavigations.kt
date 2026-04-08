@@ -23,7 +23,7 @@ data class BottomSheetNavigations(
             BottomSheetNavigations(
                 route = AppRoutes.DashboardRoute.MyList,
                 title = "My List",
-                icon = Drawables.my_list
+                icon = Drawables.bookmark
             ),
             BottomSheetNavigations(
                 route = AppRoutes.DashboardRoute.Download,

@@ -81,8 +81,8 @@ fun HomeContent(
 
             item {
                 HomeHeader(
-                    movies = state.discoverMovies,
-                    isLoading = state.isDiscoverLoading
+                    movies = state.nowPlayingMovies,
+                    isLoading = state.isNowPlayingLoading
                 )
             }
 
