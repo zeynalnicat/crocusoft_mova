@@ -2,6 +2,7 @@ package com.example.crocusoft_mova.ui.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,6 +20,8 @@ import com.example.crocusoft_mova.presentation.dashboard.movie_detail.MovieDetai
 import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
 import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileView
 import com.example.crocusoft_mova.presentation.auth.splash.OnboardingView
+import com.example.crocusoft_mova.presentation.dashboard.movie_list.MovieListView
+import com.example.crocusoft_mova.presentation.dashboard.profile.language.LanguageView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -62,9 +65,13 @@ fun MainRoutes(
             )
         }
 
-        composable<AppRoutes.AuthRoute.FillProfile> {
+
+        composable<AppRoutes.AuthRoute.FillProfile> { backStackEntry ->
+            val editable = backStackEntry.toRoute<AppRoutes.AuthRoute.FillProfile>()
             FillProfileView(
-                navController = navController
+                navController = navController,
+                isEdit = editable.isEdit
+
             )
         }
 
@@ -80,12 +87,6 @@ fun MainRoutes(
             )
         }
 
-        composable<AppRoutes.DashboardRoute.Home> {
-            HomeView(
-
-                navController = navController
-            )
-        }
 
         composable<AppRoutes.DashboardRoute.Pin> {
             PinView(
@@ -119,6 +120,11 @@ fun MainRoutes(
                 navController = navController,
             )
         }
+        composable<AppRoutes.DashboardRoute.Language>{
+            LanguageView(
+                navController = navController
+            )
+        }
 
         composable<AppRoutes.AuthRoute.Splash> {
             OnboardingView(
@@ -133,6 +139,15 @@ fun MainRoutes(
             MovieDetailView(
                 navController = navController,
                 movieId = detail.movieId
+            )
+        }
+
+        composable<AppRoutes.DashboardRoute.MovieList> { backStackEntry ->
+            val data = backStackEntry.toRoute<AppRoutes.DashboardRoute.MovieList>()
+            MovieListView(
+                navController = navController,
+                categoryType = data.categoryType
+
             )
         }
 

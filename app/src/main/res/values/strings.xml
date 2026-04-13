@@ -60,10 +60,13 @@ any movies yet</string>"
     <string name="sort_filter">Sort &amp; Filter</string>
     <string name="reset">Reset</string>
     <string name="apply">Apply</string>
+    <string name="language">Language</string>
+    <string name="suggested">Suggested</string>
     <string name="language_english">English</string>
     <string name="language_azerbaijani">Azerbaijani</string>
     <string name="language_turkish">Turkish</string>
     <string name="language_russian">Russian</string>
+
 
 
 

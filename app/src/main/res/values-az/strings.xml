@@ -55,8 +55,10 @@
         <string name="sort_filter">Çeşidlə və süzgəcdən keçir</string>
         <string name="reset">Sıfırla</string>
         <string name="change_language">Dil</string>
-        <string name="mode">Rejim</string>
-        <string name="apply">Tətbiq et</string>
+    <string name="language">Dil</string>
+    <string name="mode">Rejim</string>
+    <string name="suggested">Təklif edilən</string>
+    <string name="apply">Tətbiq et</string>
         <string name="language_english">İngilis dili</string>
         <string name="language_azerbaijani">Azərbaycan dili</string>
         <string name="language_turkish">Türk dili</string>

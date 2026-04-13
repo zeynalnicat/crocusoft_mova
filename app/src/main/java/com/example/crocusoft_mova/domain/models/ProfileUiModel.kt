@@ -4,7 +4,10 @@ data class ProfileUiModel(
     val profileId: String,
     val email: String,
     val fullName: String,
-    val imageUri:String
+    val imageUri:String,
+    val nickName : String = "",
+    val phoneNumber : String = "",
+    val gender : String = ""
 ) {
     companion object {
         val empty = ProfileUiModel(

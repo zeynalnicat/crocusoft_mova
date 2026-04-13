@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.SharedFlow
 fun ExploreContent(
     state: ExploreContract.State,
     postIntent: (ExploreContract.Intent) -> Unit,
-    onNavigateDetail: (Int) -> Unit,
+    onNavigateDetail: (Int, String) -> Unit,
     effect : SharedFlow<ExploreContract.Effect>
 ) {
     val context = LocalContext.current

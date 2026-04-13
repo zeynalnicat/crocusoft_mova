@@ -25,7 +25,8 @@ import kotlinx.coroutines.flow.SharedFlow
 fun HomeContent(
     state: HomeContract.State,
     effect: SharedFlow<HomeContract.Effect>,
-    onNavigateDetail: (Int) -> Unit
+    onNavigateDetail: (Int) -> Unit,
+    onNavigateMovieList : (MovieCategoryType) -> Unit
 ) {
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -82,14 +83,19 @@ fun HomeContent(
             item {
                 HomeHeader(
                     movies = state.nowPlayingMovies,
-                    isLoading = state.isNowPlayingLoading
+                    isLoading = state.isNowPlayingLoading,
+                    onClick = {id->
+                        onNavigateDetail(id)
+                    }
                 )
             }
 
             item {
                 SectionHeader(
                     title = stringResource(Strings.top_movies),
-                    seeAllClick = {}
+                    seeAllClick = {
+                     onNavigateMovieList(MovieCategoryType.TOP_RATED)
+                    }
                 )
             }
 
@@ -123,7 +129,9 @@ fun HomeContent(
             item {
                 SectionHeader(
                     title = stringResource(Strings.new_releases),
-                    seeAllClick = {}
+                    seeAllClick = {
+                        onNavigateMovieList(MovieCategoryType.NEW_RELEASES)
+                    }
                 )
             }
 

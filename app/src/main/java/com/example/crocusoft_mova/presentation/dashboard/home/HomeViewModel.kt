@@ -15,8 +15,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,16 +32,26 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeContract.State())
-    val state = _state.asStateFlow()
+    val state = _state
+        .onStart {
+            fetchTopRatedMovies()
+            fetchNowPlayingMovies()
+            fetchUpcomingMovies()
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = _state.value
+        )
 
     private val _effect = MutableSharedFlow<HomeContract.Effect>()
     val effect = _effect.asSharedFlow()
 
-    init {
+    /*init {
         onIntent(HomeContract.Intent.FetchNowPlayingMovies)
         onIntent(HomeContract.Intent.FetchUpcomingMovies)
         onIntent(HomeContract.Intent.FetchTopRatedMovies)
-    }
+    }*/
 
     fun onIntent(intent: HomeContract.Intent) {
         when (intent) {

@@ -7,7 +7,7 @@ data class MovieUiModel(
     val description: String,
     val vote_average: Double,
     val image:String,
-    //val type : String
+    val type : String
 )
 
 {
@@ -20,7 +20,7 @@ data class MovieUiModel(
             "Action, Superhero, Science Fiction, ...",
             0.0,
             image = "https://tr.web.img2.acsta.net/pictures/22/05/05/14/02/4321698.jpg",
-            //type = "movie"
+            type = "movie"
         )
     }
 }

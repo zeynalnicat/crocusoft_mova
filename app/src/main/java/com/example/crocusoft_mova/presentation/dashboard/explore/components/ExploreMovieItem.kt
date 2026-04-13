@@ -23,7 +23,7 @@ import com.example.crocusoft_mova.domain.models.MovieUiModel
 @Composable
 fun ExploreMovieItem(
     movieUiModel: MovieUiModel,
-    onClick: (Int) -> Unit
+    onClick: (Int, String) -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -32,7 +32,7 @@ fun ExploreMovieItem(
             .fillMaxWidth()
             .height(BaseTheme.dimens.searched_item_height)
             .clickable(
-                onClick = { onClick(movieUiModel.id) }
+                onClick = { onClick(movieUiModel.id,movieUiModel.type) }
             )
     ) {
 

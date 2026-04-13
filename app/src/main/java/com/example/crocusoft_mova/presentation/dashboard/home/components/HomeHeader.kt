@@ -17,7 +17,8 @@ import androidx.compose.material3.CircularProgressIndicator
 @Composable
 fun HomeHeader(
     movies: List<MovieUiModel>,
-    isLoading: Boolean
+    isLoading: Boolean,
+    onClick : (Int) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -43,7 +44,7 @@ fun HomeHeader(
                     modifier = Modifier.fillMaxSize()
                 ) { page ->
                     val movie = movies[page]
-                    HeaderItem(movie)
+                    HeaderItem(movie,onClick)
                 }
 
                 HeaderButtons(modifier = Modifier.align(Alignment.BottomStart))

@@ -1,6 +1,7 @@
 package com.example.crocusoft_mova.presentation.dashboard.profile
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,7 +13,9 @@ import com.example.crocusoft_mova.ui.navigation.AppRoutes
 fun ProfileView(navController: NavController, viewModel: ProfileViewModel = hiltViewModel()) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-
+    LaunchedEffect(Unit) {
+        viewModel.onIntent(ProfileContract.Intent.LoadProfile)
+    }
     ProfileContent(
         state = state,
         effect = viewModel.effect,
@@ -27,6 +30,8 @@ fun ProfileView(navController: NavController, viewModel: ProfileViewModel = hilt
                 }
                 launchSingleTop = true
             }
-        }
+        },
+        onNavigateToLanguage = {navController.navigate(AppRoutes.DashboardRoute.Language)},
+        onNavigateFillProfile = {navController.navigate(AppRoutes.AuthRoute.FillProfile(it))}
     )
 }

@@ -25,17 +25,17 @@ fun MovieModel.toUiModel(): MovieUiModel = MovieUiModel(
     vote_average = vote_average ?: 0.0,
     release_date = release_date ?: "",
     description = original_title ?: "",
-    image = poster_path ?: ""
-    //type = mediaType
+    image = poster_path ?: "",
+    type = "movie"
 )
-fun DiscoverModel.toUiModel() : MovieUiModel = MovieUiModel(
+fun DiscoverModel.toUiModel(mediaType: String) : MovieUiModel = MovieUiModel(
     id = id,
     title = title ?: name ?: "",
     vote_average = voteAverage ?: 0.0,
     release_date = releaseDate ?: firstAirDate ?: "",
     description = overview ?: "",
-    image = posterPath ?: ""
-   // type = mediaType
+    image = posterPath ?: "",
+    type = mediaType
 )
 
 /*fun TvModel.toUiModel(): MovieUiModel {
@@ -55,7 +55,7 @@ fun MovieDetailUiModel.toMovieUiModel(): MovieUiModel = MovieUiModel(
     image = image,
     release_date = release_date,
     description = description,
-   // type = "movie"
+    type = "movie"
 )
 
 fun MovieDetailModel.toUiModel(type: String): MovieDetailUiModel = MovieDetailUiModel(

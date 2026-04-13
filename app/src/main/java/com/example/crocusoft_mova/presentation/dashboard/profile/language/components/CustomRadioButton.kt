@@ -14,7 +14,7 @@ fun CustomRadioButton(
         selected = isSelected,
         onClick = null,
         colors = RadioButtonDefaults.colors(
-            selectedColor = colorResource(Colors.dark),
+            selectedColor = colorResource(Colors.secondary),
             unselectedColor = colorResource(Colors.secondary)
         )
     )

@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Crocusoft_movaTheme {
+            Crocusoft_movaTheme(darkTheme = false) {
                 Scaffold(
                     containerColor = colorResource(Colors.primary),
                     modifier = Modifier

@@ -14,7 +14,6 @@ sealed interface MovieDetailContract {
 
     sealed interface Effect {
         data class ShowError(val message: String) : Effect
-       // data object navigateToList : Effect
     }
 
     data class State(
@@ -24,6 +23,5 @@ sealed interface MovieDetailContract {
         val comments : List<String> = emptyList(),
         val selectedTab: Int = 0,
         val isBookMarked : Boolean = false
-        //val isLoading: Boolean = false
     )
 }
