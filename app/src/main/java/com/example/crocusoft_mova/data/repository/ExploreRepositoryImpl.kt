@@ -133,7 +133,7 @@ class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiServi
             if (results.isNullOrEmpty()) {
                 ContentState.Error(AppErrors.noMovies)
             } else {
-                ContentState.Success(results.map { it.toUiModel() })
+                ContentState.Success(results.map { it.toUiModel(category) })
             }
         } catch (e: Exception) {
             ContentState.Error(e.message ?: AppErrors.unknownError)

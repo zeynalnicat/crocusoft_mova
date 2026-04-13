@@ -9,6 +9,7 @@ sealed interface ProfileContract {
 
         data object LogOut : Intent
 
+        //data class ToggleTheme(val isDark : Boolean) : Intent
     }
 
     sealed interface Effect {
@@ -17,9 +18,12 @@ sealed interface ProfileContract {
         data object NavigateSignChoice : Effect
 
 
+
     }
 
     data class State(
-        val profile: ProfileUiModel = ProfileUiModel.empty
+        val profile: ProfileUiModel = ProfileUiModel.empty,
+        val isDarkMode : Boolean = false,
+        val isLoading : Boolean = false
     )
 }

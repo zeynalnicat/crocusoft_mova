@@ -56,7 +56,9 @@
     <string name="reset">Сбросить</string>
     <string name="apply">Применить</string>
     <string name="change_language">Режим</string>
-    <string name="mode">Mod</string>
+    <string name="language">Язык</string>
+    <string name="mode">Режим</string>
+    <string name="suggested">Предложенный</string>
     <string name="language_english">Английский</string>
     <string name="language_azerbaijani">Азербайджанский</string>
     <string name="language_turkish">Турецкий</string>

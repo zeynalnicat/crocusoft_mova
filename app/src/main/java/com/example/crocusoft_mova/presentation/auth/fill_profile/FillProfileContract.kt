@@ -21,6 +21,8 @@ sealed interface FillProfileContract {
     sealed interface Effect {
         data object NavigatePin: Effect
 
+        data object NavigateProfile: Effect
+
         data class ShowError(val message:String):Effect
     }
 
@@ -31,6 +33,7 @@ sealed interface FillProfileContract {
         val nickName: String = "",
         val phoneNumber:String = "",
         val gender: String = "",
-        val imgUri: Uri? = null
+        val imgUri: Uri? = null,
+        val isEditMode: Boolean = false
     )
 }

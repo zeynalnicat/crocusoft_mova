@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.ProfileUiModel
+import com.example.crocusoft_mova.domain.usecases.GetProfileInfoUseCase
 import com.example.crocusoft_mova.domain.usecases.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val logOutUseCase: LogOutUseCase
+    private val logOutUseCase: LogOutUseCase,
+    private val getProfileInfoUseCase: GetProfileInfoUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileContract.State())
@@ -56,6 +58,14 @@ class ProfileViewModel @Inject constructor(
 
 
     private fun loadProfile() {
-        _state.update { it.copy(profile = ProfileUiModel.mock) }
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            val userProfile = getProfileInfoUseCase()
+
+            if (userProfile != null) {
+                _state.update { it.copy(profile = userProfile) }
+                _state.update { it.copy(isLoading = false) }
+            }
+        }
     }
 }

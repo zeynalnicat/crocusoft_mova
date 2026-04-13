@@ -57,7 +57,9 @@
     <string name="apply">Uygula</string>
     <string name="change_language">Dil</string>
     <string name="mode">Mod</string>
+    <string name="language">Dil</string>
     <string name="language_english">İngilizce</string>
+    <string name="suggested">Önerilen</string>
     <string name="language_azerbaijani">Azerbaycanca</string>
     <string name="language_turkish">Türkce</string>
     <string name="language_russian">Rusca</string>

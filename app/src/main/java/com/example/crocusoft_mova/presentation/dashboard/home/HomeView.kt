@@ -20,7 +20,8 @@ fun HomeView(
        state = state,
        onNavigateDetail = { navController.navigate(AppRoutes.DashboardRoute.MovieDetail(it),)
        },
-       effect = viewModel.effect
+       effect = viewModel.effect,
+       onNavigateMovieList = {navController.navigate(AppRoutes.DashboardRoute.MovieList(it))}
 
    )
 }

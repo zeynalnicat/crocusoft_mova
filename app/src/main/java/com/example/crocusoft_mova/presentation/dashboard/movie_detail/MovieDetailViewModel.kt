@@ -82,7 +82,7 @@ class MovieDetailViewModel @Inject constructor(
                 is ContentState.Error -> {
                     _effect.emit(MovieDetailContract.Effect.ShowError(res.message))
                 }
-                //else -> Unit
+
             }
         }
     }
@@ -96,7 +96,7 @@ class MovieDetailViewModel @Inject constructor(
                 is ContentState.Error -> {
                     _effect.emit(MovieDetailContract.Effect.ShowError(res.message))
                 }
-                //else -> Unit
+
             }
         }
     }
@@ -110,7 +110,7 @@ class MovieDetailViewModel @Inject constructor(
                 is ContentState.Error -> {
                     _effect.emit(MovieDetailContract.Effect.ShowError(res.message))
                 }
-                //else -> Unit
+
             }
         }
     }

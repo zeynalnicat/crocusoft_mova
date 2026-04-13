@@ -4,11 +4,11 @@ object ApiConstants {
 
     const val BASE_URL = "https://api.themoviedb.org/3"
 
-    const val DISCOVER_MOVIE = "$BASE_URL/discover/movie"
+   // const val DISCOVER_MOVIE = "$BASE_URL/discover/movie"
 
     const val DISCOVER = "$BASE_URL/discover/{category}"
 
-    const val DISCOVER_TV = "$BASE_URL/discover/tv"
+    // const val DISCOVER_TV = "$BASE_URL/discover/tv"
 
     const val NOW_PLAYING = "$BASE_URL/movie/now_playing"
 

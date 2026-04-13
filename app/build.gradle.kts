@@ -74,9 +74,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose.v280)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    //dataStore
+    implementation(libs.androidx.datastore.preferences)
+
+
     // Navigation
-
-
     implementation(libs.androidx.navigation.compose)
 
 

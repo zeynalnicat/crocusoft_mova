@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.presentation.auth.fill_profile
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase
 import com.example.crocusoft_mova.domain.usecases.FillProfileUseCase.*
+import com.example.crocusoft_mova.domain.usecases.GetProfileInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,11 +17,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 
 @HiltViewModel
 class FillProfileViewModel @Inject constructor(
     private val fillProfileUseCase: FillProfileUseCase,
+    private val getProfileInfoUseCase: GetProfileInfoUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(FillProfileContract.State())
@@ -71,6 +75,28 @@ class FillProfileViewModel @Inject constructor(
             }
         }
     }
+    fun setEditMode(isEdit: Boolean) {
+        _state.update { it.copy(isEditMode = isEdit) }
+        loadExistingUserData()
+    }
+
+    private fun loadExistingUserData() {
+        viewModelScope.launch {
+            val user = getProfileInfoUseCase()
+            user?.let { data ->
+                Log.e("GELEN DATALAR","${data.fullName},${data.nickName}")
+                _state.update {
+                    it.copy(
+                        fullName = data.fullName,
+                        nickName = data.nickName,
+                        phoneNumber = data.phoneNumber,
+                        gender = data.gender,
+                        imgUri = if (data.imageUri.isNotEmpty()) data.imageUri.toUri() else null
+                    )
+                }
+            }
+        }
+    }
 
     private fun submit() {
         viewModelScope.launch {
@@ -92,7 +118,12 @@ class FillProfileViewModel @Inject constructor(
                 )
 
                 is ContentState.Success<*> -> {
-                    _effect.emit(FillProfileContract.Effect.NavigatePin)
+                    if (state.value.isEditMode) {
+                        _effect.emit(FillProfileContract.Effect.NavigateProfile)
+                    }
+                    else{
+                        _effect.emit(FillProfileContract.Effect.NavigatePin)
+                    }
                 }
             }
 

@@ -51,6 +51,7 @@ fun FillProfileContent(
         effect.collect {
             when (it) {
                 FillProfileContract.Effect.NavigatePin -> onNavigatePin()
+                FillProfileContract.Effect.NavigateProfile -> onNavigateBack()
                 is FillProfileContract.Effect.ShowError -> snackBarHostState.showSnackbar(it.message)
             }
         }
@@ -62,12 +63,44 @@ fun FillProfileContent(
         topBar = {
             AppTopBar(prefixAction = {
                 onNavigateBack()
-            }, title = stringResource(Strings.fill_profile))
+            },
+                title = if(!state.isEditMode) stringResource(Strings.fill_profile) else "Edit Profile")
+        },
+        bottomBar = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(BaseTheme.dimens.dp4)
+            ) {
+                if (state.isEditMode) {
+                    AppButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        action = { postIntent(FillProfileContract.Intent.Submit) },
+                        text = "Update",
+                        color = colorResource(Colors.secondary)
+                    )
+                } else {
+                    AppButton(
+                        modifier = Modifier.weight(1f),
+                        action = { postIntent(FillProfileContract.Intent.Skip) },
+                        text = stringResource(Strings.skip),
+                        color = colorResource(Colors.dark2)
+                    )
+                    AppButton(
+                        modifier = Modifier.weight(1f),
+                        action = { postIntent(FillProfileContract.Intent.Submit) },
+                        text = stringResource(Strings.btn_continue),
+                        color = colorResource(Colors.secondary)
+                    )
+                }
+            }
         }
-    ) {
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
                 .padding(BaseTheme.dimens.dp4)
         ) {
             Column(
@@ -111,23 +144,33 @@ fun FillProfileContent(
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter),
             ) {
-                AppButton(
-                    modifier = Modifier.weight(1f),
-                    action = {
-                        postIntent(FillProfileContract.Intent.Skip)
-                    },
-                    text = stringResource(Strings.skip),
-                    color = colorResource(Colors.dark2)
-                )
+                if (state.isEditMode) {
 
-                AppButton(
-                    modifier = Modifier.weight(1f),
-                    action = {
-                        postIntent(FillProfileContract.Intent.Submit)
-                    },
-                    text = stringResource(Strings.btn_continue),
-                    color = colorResource(Colors.secondary)
-                )
+                    AppButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        action = { postIntent(FillProfileContract.Intent.Submit) },
+                        text = "Update",
+                        color = colorResource(Colors.secondary)
+                    )
+                } else {
+                    AppButton(
+                        modifier = Modifier.weight(1f),
+                        action = {
+                            postIntent(FillProfileContract.Intent.Skip)
+                        },
+                        text = stringResource(Strings.skip),
+                        color = colorResource(Colors.dark2)
+                    )
+
+                    AppButton(
+                        modifier = Modifier.weight(1f),
+                        action = {
+                            postIntent(FillProfileContract.Intent.Submit)
+                        },
+                        text = stringResource(Strings.btn_continue),
+                        color = colorResource(Colors.secondary)
+                    )
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.crocusoft_mova.ui.navigation
 
+import com.example.crocusoft_mova.core.MovieCategoryType
 import kotlinx.serialization.Serializable
 
 sealed interface AppRoutes {
@@ -29,7 +30,7 @@ sealed interface AppRoutes {
 
 
         @Serializable
-        data object FillProfile : AuthRoute
+        data class FillProfile(val isEdit : Boolean ) : AuthRoute
     }
 
     sealed interface DashboardRoute {
@@ -54,6 +55,10 @@ sealed interface AppRoutes {
 
         @Serializable
         data object Home : DashboardRoute
+        @Serializable
+        data object Language : DashboardRoute
+        @Serializable
+        data class MovieList(val categoryType: MovieCategoryType) : DashboardRoute
     }
 
 

@@ -21,7 +21,7 @@ fun ChooseInterestView(
         state = state,
         postIntent = viewModel::onIntent,
         effect = viewModel.effect,
-        onNavigateFillProfile = { navController.navigate(AppRoutes.AuthRoute.FillProfile) },
+        onNavigateFillProfile = { navController.navigate(AppRoutes.AuthRoute.FillProfile(false)) },
         onNavigateHome = { navController.navigate(AppRoutes.DashboardRoute.Home) }
     )
 

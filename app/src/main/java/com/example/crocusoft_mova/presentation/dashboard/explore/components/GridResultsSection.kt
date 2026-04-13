@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.crocusoft_mova.common.components.MovieCoverItem
+import com.example.crocusoft_mova.common.components.MovieGrid
 import com.example.crocusoft_mova.common.components.VerticalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Strings
@@ -23,7 +24,7 @@ import com.example.crocusoft_mova.presentation.dashboard.explore.isAnyFilteredAp
 @Composable
 fun GridResultsSection(
     state: ExploreContract.State,
-    onNavigateDetail: (Int) -> Unit
+    onNavigateDetail: (Int, String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         if (state.isAnyFilteredApplied()) {
@@ -38,16 +39,11 @@ fun GridResultsSection(
 
         VerticalSpacer(BaseTheme.dimens.dp6)
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2),
-            horizontalArrangement = Arrangement.spacedBy(BaseTheme.dimens.dp2),
-            contentPadding = PaddingValues(bottom = BaseTheme.dimens.dp12),
-            modifier = Modifier.fillMaxWidth().padding(horizontal = BaseTheme.dimens.dp6)
-        ) {
-            items(items = state.movies, key = {it.id}) { movie ->
-                MovieCoverItem(movieModel = movie, onClickMovie = onNavigateDetail)
-            }
-        }
+        MovieGrid(
+            movies = state.movies,
+            onMovieClick = onNavigateDetail,
+            modifier = Modifier.padding(horizontal = BaseTheme.dimens.dp6),
+            contentPadding = PaddingValues(bottom = BaseTheme.dimens.dp10)
+        )
     }
 }
