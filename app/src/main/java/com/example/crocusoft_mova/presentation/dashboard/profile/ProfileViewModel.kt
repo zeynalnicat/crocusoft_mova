@@ -60,11 +60,17 @@ class ProfileViewModel @Inject constructor(
     private fun loadProfile() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val userProfile = getProfileInfoUseCase()
+            getProfileInfoUseCase().collect { result ->
+                when(result){
+                    is ContentState.Error ->{
+                        _effect.emit(ProfileContract.Effect.ShowError(result.message))
+                    }
+                    is ContentState.Success ->{
+                        _state.update { it.copy(profile = result.data, isLoading = false) }
+                    }
+                }
 
-            if (userProfile != null) {
-                _state.update { it.copy(profile = userProfile) }
-                _state.update { it.copy(isLoading = false) }
+
             }
         }
     }

@@ -1,21 +1,31 @@
 package com.example.crocusoft_mova.data.repository
 
+import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.core.constants.AppErrors
 import com.example.crocusoft_mova.core.constants.FirebaseConstants
 import com.example.crocusoft_mova.domain.models.MovieDetailUiModel
+import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.repository.BookmarkRepository
+import com.example.crocusoft_mova.domain.usecases.FetchMovieDetailUseCase
+import com.example.crocusoft_mova.presentation.dashboard.movie_detail.MovieDetailContract
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class BookmarkRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val fetchMovieDetailUseCase: FetchMovieDetailUseCase
 ) : BookmarkRepository {
 
     private fun getBookmarkCollection() = auth.currentUser?.uid?.let { userId ->
@@ -49,6 +59,7 @@ class BookmarkRepositoryImpl @Inject constructor(
     }
 
     override fun getBookmarks(): Flow<ContentState<List<MovieDetailUiModel>>> = callbackFlow {
+
         val collection = getBookmarkCollection()
         if (collection == null) {
             trySend(ContentState.Error(AppErrors.userNotFound))
@@ -57,28 +68,36 @@ class BookmarkRepositoryImpl @Inject constructor(
         }
 
         val subscription = collection.addSnapshotListener { snapshot, error ->
+
             if (error != null) {
                 trySend(ContentState.Error(error.message ?: AppErrors.unknownError))
                 return@addSnapshotListener
             }
 
-            val movies = snapshot?.documents?.mapNotNull { doc ->
-                MovieDetailUiModel(
-                    id = doc.getLong("id")?.toInt() ?: 0,
-                    title = doc.getString("title") ?: "",
-                    vote_average = doc.getDouble("vote_average") ?: 0.0,
-                    image = doc.getString("image") ?: "",
-                    mediaType = doc.getString("mediaType") ?: "",
-                    release_date = "", description = "", genres = emptyList(),
-                    production_companies = emptyList(), language = ""
-                )
+            val movieIds = snapshot?.documents?.mapNotNull {
+                it.getLong("id")?.toInt()
             } ?: emptyList()
 
-            trySend(ContentState.Success(movies))
+            launch {
+                val movies = coroutineScope {
+                    movieIds.map { id ->
+                        async {
+                            when (val res = fetchMovieDetailUseCase(id)) {
+                                is ContentState.Success -> res.data
+                                else -> null
+                            }
+                        }
+                    }.awaitAll().filterNotNull()
+                }
+
+                trySend(ContentState.Success(movies))
+            }
         }
 
         awaitClose { subscription.remove() }
     }
+
+
 
     override fun isBookmarked(movieId: Int): Flow<Boolean> = callbackFlow {
         val collection = getBookmarkCollection()

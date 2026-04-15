@@ -48,7 +48,7 @@ class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiServi
                 ContentState.Error(AppErrors.noCountries)
             } else {
                 val uiList = results.map { it.toUiModel() }.toMutableList()
-                uiList.add(0, RegionUiModel(isoCode = "", englishName = "All Regions "))
+                uiList.add(0, RegionUiModel(isoCode = "", englishName = "All Regions"))
                 ContentState.Success(uiList)
             }
 
@@ -125,7 +125,22 @@ class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiServi
             ContentState.Error(e.message ?: AppErrors.unknownError)
         }
 */
-    override suspend fun fetchDiscovers(category: String, region: String?, genre: String?, time: String?, sort: String
+   override suspend fun fetchDiscovers(category: String, region: String?, genre: String?, time: String?, sort: String
+   ): ContentState<List<MovieUiModel>> =
+       try {
+           val res  = when(category){
+               "movie" -> apiService.fetchDiscoverMovies(region,genre,time,sort)
+                   .results?.map { it.toUiModel() }
+               else -> apiService.fetchDiscoverTv(region,genre,time,sort)
+                   .results?.map { it.toUiModel() }
+           }
+           if(res.isNullOrEmpty()) ContentState.Error(AppErrors.noMovies)
+           else ContentState.Success(res)
+       } catch (e: Exception) {
+           ContentState.Error(e.message ?: AppErrors.unknownError)
+       }
+
+    /*override suspend fun fetchDiscovers(category: String, region: String?, genre: String?, time: String?, sort: String
     ): ContentState<List<MovieUiModel>> =
         try {
             val res = apiService.fetchDiscovers(category,region, genre, time, sort)
@@ -137,7 +152,7 @@ class ExploreRepositoryImpl @Inject constructor(private val apiService: ApiServi
             }
         } catch (e: Exception) {
             ContentState.Error(e.message ?: AppErrors.unknownError)
-        }
+        }*/
 
     }
 

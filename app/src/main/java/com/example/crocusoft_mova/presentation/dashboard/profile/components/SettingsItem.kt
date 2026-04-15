@@ -62,13 +62,15 @@ fun SettingsItem(item: SettingsItemModel) {
             }
             if(item.isSwitch){
                 Switch(
-                    checked = item.switchChecked,
-                    onCheckedChange = {item.action()},
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = colorResource(Colors.white),
-                        checkedTrackColor = colorResource(Colors.secondary)
-                    )
+                checked = item.switchChecked,
+                onCheckedChange = { isChecked ->
+                    item.onCheckedChange?.invoke(isChecked)
+                },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = colorResource(Colors.white),
+                    checkedTrackColor = colorResource(Colors.secondary)
                 )
+            )
             } else{
                 Icon(
                     painter = painterResource(Drawables.icon_right),
@@ -91,7 +93,8 @@ data class SettingsItemModel(
     val trailingText : String?=null,
     val isSwitch : Boolean = false,
     val switchChecked : Boolean = false,
-    val action: () -> Unit
+    val onCheckedChange: ((Boolean) -> Unit)? = null,
+    val action: () -> Unit = {}
     ) {
 
 

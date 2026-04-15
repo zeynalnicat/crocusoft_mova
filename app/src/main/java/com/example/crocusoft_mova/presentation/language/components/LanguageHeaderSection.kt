@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.dashboard.profile.language.components
+package com.example.crocusoft_mova.presentation.language.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text

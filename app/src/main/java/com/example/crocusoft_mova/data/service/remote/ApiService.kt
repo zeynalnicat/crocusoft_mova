@@ -13,9 +13,9 @@ import com.example.crocusoft_mova.data.service.remote.model.VideoResponseModel
 interface ApiService {
 
 
-  /*  suspend fun fetchDiscoverMovies(region: String?,genre: String?,time:String?,sort:String): ResponseModel<MovieModel>
+    suspend fun fetchDiscoverMovies(region: String?,genre: String?,time:String?,sort:String): ResponseModel<MovieModel>
 
-    suspend fun fetchDiscoverTv(region: String?,genre: String?,time:String?,sort:String): ResponseModel<TvModel>*/
+    suspend fun fetchDiscoverTv(region: String?,genre: String?,time:String?,sort:String): ResponseModel<TvModel>
 
     suspend fun fetchSimilarMovies(movieId : Int): ResponseModel<MovieModel>
 
@@ -23,7 +23,7 @@ interface ApiService {
 
     suspend fun fetchNowPlaying(): ResponseModel<MovieModel>
 
-    suspend fun fetchDiscovers(category : String ,region: String?,genre: String?,time:String?,sort:String) : ResponseModel<DiscoverModel>
+    //suspend inline fun fetchDiscovers <reifed T>(category : String ,region: String?,genre: String?,time:String?,sort:String) : ResponseModel<DiscoverModel>
 
     suspend fun fetchRegions() : List<RegionModel>
 

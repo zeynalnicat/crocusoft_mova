@@ -21,15 +21,18 @@ import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Strings
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract
+import com.example.crocusoft_mova.presentation.dashboard.explore.util.CategoryType
+import com.example.crocusoft_mova.presentation.dashboard.explore.util.ExplorePeriod
+import com.example.crocusoft_mova.presentation.dashboard.explore.util.SortOption
 
 @Composable
 fun FilterDesignContent(
   state : ExploreContract.State,
   onIntent : (ExploreContract.Intent) -> Unit
 ) {
-    val categories = listOf("Movie", "Tv", "K-Drama", "Anime")
-    val periods = listOf("All Periods", "2022", "2021", "2020")
-    val sortOptions = listOf("Popularity", "Latest Release")
+    val categories = CategoryType.entries.map {it.displayName}
+    val periods = ExplorePeriod.getPeriodOption()
+    val sortOptions = SortOption.entries.map { it.displayName }
     Column(
         modifier = Modifier
             .fillMaxWidth()

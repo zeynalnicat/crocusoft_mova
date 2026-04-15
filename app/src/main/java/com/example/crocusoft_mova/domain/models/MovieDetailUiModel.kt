@@ -29,7 +29,6 @@ data class MovieDetailUiModel(
             mediaType = ""
         )
 
-
     }
 }
 

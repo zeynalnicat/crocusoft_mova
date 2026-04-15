@@ -1,19 +1,13 @@
 package com.example.crocusoft_mova.presentation.dashboard.explore.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.crocusoft_mova.common.components.MovieCoverItem
 import com.example.crocusoft_mova.common.components.MovieGrid
 import com.example.crocusoft_mova.common.components.VerticalSpacer
 import com.example.crocusoft_mova.core.BaseTheme
@@ -43,7 +37,7 @@ fun GridResultsSection(
             movies = state.movies,
             onMovieClick = onNavigateDetail,
             modifier = Modifier.padding(horizontal = BaseTheme.dimens.dp6),
-            contentPadding = PaddingValues(bottom = BaseTheme.dimens.dp10)
+            contentPadding = PaddingValues(bottom = BaseTheme.dimens.dp20)
         )
     }
 }

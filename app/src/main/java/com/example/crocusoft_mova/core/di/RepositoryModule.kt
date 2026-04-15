@@ -21,6 +21,7 @@ import com.example.crocusoft_mova.domain.repository.PinRepository
 import com.example.crocusoft_mova.domain.repository.ProfileRepository
 import com.example.crocusoft_mova.domain.repository.SignInRepository
 import com.example.crocusoft_mova.domain.repository.SignUpRepository
+import com.example.crocusoft_mova.domain.usecases.FetchMovieDetailUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -75,8 +76,9 @@ object RepositoryModule {
     @Provides
     fun provideBookmarkRepository(
         firebaseAuth: FirebaseAuth,
-        firebaseFirestore: FirebaseFirestore
-    ) : BookmarkRepository = BookmarkRepositoryImpl(firebaseAuth,firebaseFirestore)
+        firebaseFirestore: FirebaseFirestore,
+        fetchMovieDetailUseCase: FetchMovieDetailUseCase
+    ) : BookmarkRepository = BookmarkRepositoryImpl(firebaseAuth,firebaseFirestore, fetchMovieDetailUseCase)
 
 
     @Singleton

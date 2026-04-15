@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface ProfileRepository {
 
     suspend fun logOut(): ContentState<Unit>
-    suspend fun getCurrentUser(): ProfileUiModel?
+    fun getCurrentUser(): Flow<ContentState<ProfileUiModel>>
 }

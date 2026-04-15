@@ -2,7 +2,6 @@ package com.example.crocusoft_mova.ui.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,14 +20,16 @@ import com.example.crocusoft_mova.presentation.dashboard.my_list.MyListView
 import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileView
 import com.example.crocusoft_mova.presentation.auth.splash.OnboardingView
 import com.example.crocusoft_mova.presentation.dashboard.movie_list.MovieListView
-import com.example.crocusoft_mova.presentation.dashboard.profile.language.LanguageView
+import com.example.crocusoft_mova.presentation.language.LanguageView
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun MainRoutes(
     innerPadding: PaddingValues,
     navController: NavHostController,
-    firebaseAuth: FirebaseAuth
+    firebaseAuth: FirebaseAuth,
+    isDarkMode: Boolean,
+    onDarkModeChange: (Boolean) -> Unit
 ) {
 
     val currentUser = firebaseAuth.currentUser
@@ -112,12 +113,15 @@ fun MainRoutes(
         composable<AppRoutes.DashboardRoute.Download> {
             DownloadView(
                 navController = navController,
+
             )
         }
 
         composable<AppRoutes.DashboardRoute.Profile> {
             ProfileView(
                 navController = navController,
+                isDarkMode = isDarkMode,
+                onDarkModeChange = onDarkModeChange
             )
         }
         composable<AppRoutes.DashboardRoute.Language>{

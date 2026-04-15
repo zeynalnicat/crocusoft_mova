@@ -19,9 +19,5 @@ enum class AppLanguage(
             return entries.find { it.code == code } ?: EN
         }
 
-        fun positionOf(code: String?): Int {
-            return entries.indexOfFirst { it.code == code }
-                .takeIf { it != -1 } ?: 0
-        }
     }
 }

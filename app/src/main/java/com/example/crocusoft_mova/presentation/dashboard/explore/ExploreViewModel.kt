@@ -1,25 +1,25 @@
 package com.example.crocusoft_mova.presentation.dashboard.explore
 
-import android.util.Log
-import androidx.compose.ui.util.fastCbrt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.ContentState
 import com.example.crocusoft_mova.domain.models.GenreUiModel
 import com.example.crocusoft_mova.domain.models.MovieUiModel
 import com.example.crocusoft_mova.domain.models.RegionUiModel
-import com.example.crocusoft_mova.domain.usecases.FetchDiscoverMovieUseCase
-import com.example.crocusoft_mova.domain.usecases.FetchDiscoverTVUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchDiscoversUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchMovieGenresUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchRegionsUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchTrendingMoviesUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchTvGenresUseCase
 import com.example.crocusoft_mova.domain.usecases.SearchUseCase
-import com.example.crocusoft_mova.presentation.dashboard.explore.util.MovieCategory
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_CATEGORY
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_GENRE
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_REGION
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_SORT
+import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_TIME
+import com.example.crocusoft_mova.presentation.dashboard.explore.util.CategoryType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -37,8 +37,6 @@ class ExploreViewModel @Inject constructor(
     private val fetchRegionsUseCase: FetchRegionsUseCase,
     private val fetchMovieGenresUseCase: FetchMovieGenresUseCase,
     private val fetchTvGenresUseCase: FetchTvGenresUseCase,
-    /*private val fetchDiscoverTVUseCase: FetchDiscoverTVUseCase,
-    private val fetchDiscoverMovieUseCase: FetchDiscoverMovieUseCase*/
     private val fetchDiscoversUseCase: FetchDiscoversUseCase
 ) : ViewModel() {
 
@@ -91,7 +89,7 @@ class ExploreViewModel @Inject constructor(
             is ExploreContract.Intent.SelectCategory ->{
                 _state.update { it.copy(
                     selectedCategory = intent.category,
-                    selectedGenre = "All Genres") }
+                    selectedGenre = DEFAULT_GENRE) }
 
             }
             is ExploreContract.Intent.SelectRegion ->{
@@ -116,12 +114,12 @@ class ExploreViewModel @Inject constructor(
                  val genreId = currentState.getGenreId()
                  val regionCode = currentState.getRegionCode()
                  val apiSort = currentState.getApiSortOrder()
-                 val releaseYear = currentState.selectedPeriod.takeIf { it != "All Periods" }
+                 val releaseYear = currentState.selectedPeriod.takeIf { it != DEFAULT_TIME }
 
-                 val apiCategory = if(currentState.selectedCategory== MovieCategory.MOVIE.title){
-                     "movie"
+                 val apiCategory = if(currentState.selectedCategory== CategoryType.MOVIE.displayName){
+                     CategoryType.MOVIE.apiValue
                  } else{
-                     "tv"
+                     CategoryType.TV.apiValue
                  }
                  val result =
                      fetchDiscoversUseCase(apiCategory,regionCode,genreId,releaseYear,apiSort)
@@ -131,15 +129,13 @@ class ExploreViewModel @Inject constructor(
             }
             is ExploreContract.Intent.ResetFilters ->{
               _state.update { it.copy(
-                  selectedCategory = ExploreContract.State.DEFAULT_CATEGORY,
-                  selectedRegion = ExploreContract.State.DEFAULT_REGION,
-                  selectedGenre = ExploreContract.State.DEFAULT_GENRE,
-                  selectedSort = ExploreContract.State.DEFAULT_SORT,
+                  selectedCategory = DEFAULT_CATEGORY,
+                  selectedRegion = DEFAULT_REGION,
+                  selectedGenre = DEFAULT_GENRE,
+                  selectedSort = DEFAULT_SORT,
                   isLoading = false
               ) }
-            }
-        }
-
+            } }
     }
 
     private suspend fun handleResult(result: ContentState<List<MovieUiModel>>) {
@@ -190,11 +186,9 @@ class ExploreViewModel @Inject constructor(
         viewModelScope.launch {
             when(val res = fetchTvGenresUseCase()){
                 is ContentState.Error<*> -> {
-                    Log.i("TvGenreError",res.message)
                     _effect.emit(ExploreContract.Effect.ShowError(res.message))
                 }
                 is ContentState.Success<List<GenreUiModel>> -> {
-                    Log.i("MovieGenre :", res.data.toString())
                     _state.update {
                         it.copy(tvGenres = res.data)
                     }

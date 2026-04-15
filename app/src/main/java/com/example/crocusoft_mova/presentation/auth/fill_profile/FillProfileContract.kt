@@ -34,6 +34,7 @@ sealed interface FillProfileContract {
         val phoneNumber:String = "",
         val gender: String = "",
         val imgUri: Uri? = null,
-        val isEditMode: Boolean = false
+        val isEditMode: Boolean = false,
+        val isLoading : Boolean = false
     )
 }

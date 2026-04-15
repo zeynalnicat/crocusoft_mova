@@ -9,6 +9,9 @@ import com.example.crocusoft_mova.domain.repository.ProfileRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import jakarta.inject.Inject
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
@@ -28,19 +31,32 @@ class ProfileRepositoryImpl @Inject constructor(private val firebaseAuth: Fireba
             }
         }
 
-    override suspend fun getCurrentUser(): ProfileUiModel? {
-        val user = firebaseAuth.currentUser ?: return null
+    override fun getCurrentUser(): Flow<ContentState<ProfileUiModel>> = callbackFlow {
 
-        return try {
-            val querySnapshot = fireStore.collection(FirebaseConstants.userCollection)
-                .whereEqualTo("userId", user.uid)
-                .get()
-                .await()
+        val user = firebaseAuth.currentUser
+        if (user == null) {
+            trySend(ContentState.Error(AppErrors.userNotFound))
+            close()
+            return@callbackFlow
+        }
 
-            if (!querySnapshot.isEmpty) {
-                val document = querySnapshot.documents[0]
+        val listener = fireStore.collection(FirebaseConstants.userCollection)
+            .whereEqualTo("userId", user.uid)
+            .addSnapshotListener { snapshots, exception ->
 
-                ProfileUiModel(
+                if (exception != null) {
+                    trySend(ContentState.Error(exception.message ?: AppErrors.unknownError))
+                    return@addSnapshotListener
+                }
+
+                val document = snapshots?.documents?.firstOrNull()
+
+                if (document == null) {
+                    trySend(ContentState.Error(AppErrors.unknownError))
+                    return@addSnapshotListener
+                }
+
+                val profile = ProfileUiModel(
                     profileId = user.uid,
                     email = user.email ?: "",
                     fullName = document.getString("fullName") ?: "",
@@ -49,12 +65,12 @@ class ProfileRepositoryImpl @Inject constructor(private val firebaseAuth: Fireba
                     gender = document.getString("gender") ?: "",
                     imageUri = document.getString("profileUri") ?: ""
                 )
-            } else {
-                null
+
+                trySend(ContentState.Success(profile))
             }
-        } catch (e: Exception) {
-            Log.e("getCurrentUser", "Error: ${e.message}")
-            null
+
+        awaitClose {
+            listener.remove()
         }
     }
 

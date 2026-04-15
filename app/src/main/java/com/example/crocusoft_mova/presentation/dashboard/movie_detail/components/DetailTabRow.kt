@@ -9,13 +9,14 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.crocusoft_mova.core.BaseTheme
 import com.example.crocusoft_mova.core.Colors
+import com.example.crocusoft_mova.presentation.dashboard.movie_detail.util.HeaderOption
 
 @Composable
 fun DetailTabRow(
@@ -23,7 +24,7 @@ fun DetailTabRow(
     selectedTab: Int,
     onTabSelected: (Int) -> Unit
 ) {
-    val tabs = listOf("Trailers", "More Like This", "Comments")
+    val tabs = HeaderOption.entries.map {it.id}
 
     TabRow(
         modifier = modifier.padding(horizontal = BaseTheme.dimens.dp6),
@@ -40,20 +41,20 @@ fun DetailTabRow(
         },
         divider = {
             HorizontalDivider(
-                //modifier = Modifier.padding(horizontal = 16.dp),
                 thickness = BaseTheme.dimens.dp02,
                 color = colorResource(Colors.dark_gray)
             )
         }
     ) {
-        tabs.forEachIndexed { index, title ->
+        tabs.forEachIndexed { index, textId ->
+
             val isSelected = selectedTab == index
             Tab(
                 selected = isSelected,
                 onClick = { onTabSelected(index) },
                 text = {
                     Text(
-                        text = title,
+                        text = stringResource( textId),
                         style = if (isSelected) BaseTheme.textStyle.t16BoldRed.copy(fontWeight = FontWeight.W600)
                         else BaseTheme.textStyle.t16Bold.copy(color = colorResource(Colors.dark_gray),
                             fontWeight = FontWeight.W600),

@@ -81,19 +81,31 @@ class FillProfileViewModel @Inject constructor(
     }
 
     private fun loadExistingUserData() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            val user = getProfileInfoUseCase()
-            user?.let { data ->
-                Log.e("GELEN DATALAR","${data.fullName},${data.nickName}")
-                _state.update {
-                    it.copy(
-                        fullName = data.fullName,
-                        nickName = data.nickName,
-                        phoneNumber = data.phoneNumber,
-                        gender = data.gender,
-                        imgUri = if (data.imageUri.isNotEmpty()) data.imageUri.toUri() else null
-                    )
-                }
+           getProfileInfoUseCase().collect { result ->
+                when(result){
+                    is ContentState.Error -> {
+                        _effect.emit(FillProfileContract.Effect.ShowError(result.message))
+                        _state.update { it.copy(isLoading = false) }
+
+                    }
+                    is ContentState.Success -> {
+                        val data = result.data
+                        _state.update {
+                            it.copy(
+                                fullName = data.fullName,
+                                nickName = data.nickName,
+                                phoneNumber = data.phoneNumber,
+                                gender = data.gender,
+                                imgUri = if (data.imageUri.isNotEmpty()) data.imageUri.toUri() else null
+                            )
+                        }
+                        _state.update { it.copy(isLoading = false) }
+
+                    }
+            }
+
             }
         }
     }

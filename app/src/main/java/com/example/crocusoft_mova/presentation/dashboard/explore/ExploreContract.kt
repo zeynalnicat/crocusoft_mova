@@ -8,9 +8,10 @@ import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_REGION
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_SORT
 import com.example.crocusoft_mova.presentation.dashboard.explore.ExploreContract.State.Companion.DEFAULT_TIME
+import com.example.crocusoft_mova.presentation.dashboard.explore.util.CategoryType
+import com.example.crocusoft_mova.presentation.dashboard.explore.util.SortOption
 
 sealed interface ExploreContract {
-
     sealed interface Intent {
         data class SetQuery(val query: String) : Intent
         data class ToggleFilterSheet(val visibility : Boolean) : Intent
@@ -44,11 +45,11 @@ sealed interface ExploreContract {
         val periods: List<String> = emptyList(),
         val sortOptions: List<String> = emptyList(),
 
-        val selectedCategory: String = "Movie",
-        val selectedRegion: String = "All Regions",
-        val selectedGenre: String = "All Genres",
-        val selectedPeriod: String = "All Periods",
-        val selectedSort: String = "Popularity"
+        val selectedCategory: String = DEFAULT_CATEGORY,
+        val selectedRegion: String = DEFAULT_REGION,
+        val selectedGenre: String = DEFAULT_GENRE,
+        val selectedPeriod: String = DEFAULT_TIME,
+        val selectedSort: String = DEFAULT_SORT
 
     ){
         companion object {
@@ -58,10 +59,9 @@ sealed interface ExploreContract {
             const val DEFAULT_SORT = "Popularity"
             const val DEFAULT_TIME = "All Periods"
 
-            fun initial() = State()
         }
         val currentGenresToDisplay: List<GenreUiModel>
-            get() = if (selectedCategory == "Movie") movieGenres else tvGenres
+            get() = if (selectedCategory == CategoryType.MOVIE.displayName) movieGenres else tvGenres
     }
 }
 fun ExploreContract.State.isAnyFilteredApplied() : Boolean{
@@ -76,8 +76,7 @@ fun ExploreContract.State.selectedFilterTags() : List<String>{
     return listOf(selectedCategory,selectedRegion,selectedGenre,selectedPeriod,selectedSort)
 }
 fun ExploreContract.State.getGenreId(): String? {
-    val genreList = if (selectedCategory == "Movie") movieGenres else tvGenres
-    return genreList.find { it.name == selectedGenre }?.id?.let {
+     return currentGenresToDisplay.find { it.name == selectedGenre }?.id?.let {
         if (it == -1) null else it.toString()
     }
 }
@@ -86,11 +85,9 @@ fun ExploreContract.State.getRegionCode(): String? {
     return regions.find { it.englishName == selectedRegion }?.isoCode?.takeIf { it.isNotEmpty() }
 }
 
+
 fun ExploreContract.State.getApiSortOrder(): String {
-    return when (selectedSort) {
-        "Popularity" -> "popularity.desc"
-        "Latest Release" -> "primary_release_date.desc"
-        "Top Rated" -> "vote_average.desc"
-        else -> "popularity.desc"
-    }
+   return SortOption.entries.find { it.displayName == selectedSort}?.apiValue
+       ?: SortOption.POPULARITY.apiValue
 }
+

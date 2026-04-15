@@ -54,12 +54,6 @@ fun TrailerItem(
 
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
-                onSuccess = {
-                    Log.d("COIL", "SUCCESS")
-                },
-                onError = {
-                    Log.e("COIL", "ERROR: ${it.result.throwable}")
-                }
             )
             Icon(
                 painter = painterResource(id = Drawables.icon_play),

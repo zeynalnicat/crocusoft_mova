@@ -13,6 +13,7 @@ import com.example.crocusoft_mova.domain.usecases.FetchTopRatedUseCase
 import com.example.crocusoft_mova.domain.usecases.FetchUpcomingMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -81,30 +82,19 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchUpcomingMovies() {
-        viewModelScope.launch {
-            _state.update { it.copy(isUpcomingLoading = true) }
+        fetchData({ fetchUpcomingMoviesUseCase.invoke() })
 
-            when (val res = fetchUpcomingMoviesUseCase()) {
-                is ContentState.Error<*> -> {
-                    _state.update { it.copy(isUpcomingLoading = false) }
-                    _effect.emit(HomeContract.Effect.ShowError(res.message))
-                }
-
-                is ContentState.Success<List<MovieUiModel>> -> {
-                    _state.update {
-                        it.copy(upcomingMovies = res.data, isUpcomingLoading = false
-                        )
-                    }
-                }
-            }
-        }
     }
 
     private fun fetchTopRatedMovies() {
-        viewModelScope.launch {
+       fetchData({ fetchTopRatedUseCase.invoke() })
+    }
+
+    private fun fetchData( useCae:suspend ()-> ContentState<List<MovieUiModel>> ){
+        viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(isTopRatedLoading = true) }
 
-            when (val res = fetchTopRatedUseCase()) {
+            when (val res = useCae.invoke()) {
                 is ContentState.Error<*> -> {
                     _state.update { it.copy(isTopRatedLoading = false) }
                     _effect.emit(HomeContract.Effect.ShowError(res.message))

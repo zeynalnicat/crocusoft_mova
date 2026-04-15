@@ -1,9 +1,8 @@
-package com.example.crocusoft_mova.presentation.dashboard.profile.language
+package com.example.crocusoft_mova.presentation.language
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.crocusoft_mova.core.language.LanguageManager
-import com.example.crocusoft_mova.presentation.dashboard.profile.ProfileContract
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +16,6 @@ class LanguageViewModel() : ViewModel() {
         private val _state = MutableStateFlow(LanguageContract.State())
         val state = _state.asStateFlow()
 
-        private val _effect = MutableSharedFlow<LanguageContract.Effect>()
-        val effect = _effect.asSharedFlow()
 
         fun onIntent(intent: LanguageContract.Intent) {
             when (intent) {

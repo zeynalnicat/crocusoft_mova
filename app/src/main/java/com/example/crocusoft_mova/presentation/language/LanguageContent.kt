@@ -1,4 +1,4 @@
-package com.example.crocusoft_mova.presentation.dashboard.profile.language
+package com.example.crocusoft_mova.presentation.language
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -18,21 +18,19 @@ import com.example.crocusoft_mova.core.Colors
 import com.example.crocusoft_mova.core.Drawables
 import com.example.crocusoft_mova.core.Strings
 import com.example.crocusoft_mova.core.language.AppLanguage
-import com.example.crocusoft_mova.presentation.dashboard.profile.language.components.LanguageHeaderSection
-import com.example.crocusoft_mova.presentation.dashboard.profile.language.components.LanguageItem
+import com.example.crocusoft_mova.presentation.language.components.LanguageHeaderSection
+import com.example.crocusoft_mova.presentation.language.components.LanguageItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LanguageScreen(
+fun LanguageContent(
     state: LanguageContract.State,
     postIntent: (LanguageContract.Intent) -> Unit,
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        postIntent(LanguageContract.Intent.LoadCurrentLanguage(context))
-    }
+
 
     val suggestedLanguages = remember(state.selectedLanguageCode) {
         listOf(

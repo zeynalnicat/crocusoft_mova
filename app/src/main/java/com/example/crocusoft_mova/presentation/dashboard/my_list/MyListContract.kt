@@ -7,7 +7,6 @@ sealed interface MyListContract {
     sealed interface Intent{
      object GetMarkedMovies : Intent
         data class OnSelectCategory(val category : String) : Intent
-        //data class DeleteMovieFromList(val movieId : Int) : Intent
         data class OnMovieClick(val movieId: Int) : Intent
     }
 

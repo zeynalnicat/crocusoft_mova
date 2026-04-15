@@ -32,6 +32,7 @@ class MovieDetailViewModel @Inject constructor(
     private val _effect = MutableSharedFlow<MovieDetailContract.Effect>()
     val effect = _effect.asSharedFlow()
 
+
     fun onIntent(intent: MovieDetailContract.Intent) {
         when (intent) {
             is MovieDetailContract.Intent.FetchMovieDetail -> {
@@ -68,12 +69,12 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
     private fun fetchAllData(movieId: Int) {
-        fetchMovieDetail(movieId)
+        fetchMovieDetailById(movieId)
         fetchSimilarMovies(movieId)
         fetchMovieVideos(movieId)
     }
 
-    private fun fetchMovieDetail(movieId: Int) {
+    private fun fetchMovieDetailById(movieId: Int) {
         viewModelScope.launch {
             when (val res = fetchMovieDetailUseCase(movieId)) {
                 is ContentState.Success -> {
